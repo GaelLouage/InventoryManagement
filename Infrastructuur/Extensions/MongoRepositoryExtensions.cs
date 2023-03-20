@@ -9,27 +9,37 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration.Json;
 
 namespace Infrastructuur.Extensions
 {
     public static class MongoRepositoryExtensions
     {
         // use where T class : to ensure that T is a reference type. 
-        private static IServiceCollection MongoRepositorySetter<T>(this IServiceCollection services, string databaseName, string collectionName) where T : class
+        private static IServiceCollection MongoRepositorySetter<T>(this IServiceCollection services, string databaseName, string collectionName, string connectionString, string myMongoDBConnection) where T : class
         {
             return services.AddScoped<IRepository<T>>(provider =>
             {
                 var configuration = provider.GetService<IConfiguration>();
-                return new MongoRepository<T>(configuration, collectionName, databaseName);
+                return new MongoRepository<T>(configuration, collectionName, databaseName, connectionString,myMongoDBConnection);
             });
         }
-        public static IServiceCollection AddMongoRepository(this IServiceCollection services, string databaseName) 
+        public static IServiceCollection AddMongoRepository(this IServiceCollection services, string databaseName, string connectionString, string myMongoDBConnection) 
         {
             return services
-                   .MongoRepositorySetter<CategoryEntity>(databaseName, DbCollection.CATEGORY)
-                   .MongoRepositorySetter<InventoryItemEntity>(databaseName, DbCollection.INVENTORY)
-                   .MongoRepositorySetter<ProductEntity>(databaseName, DbCollection.PRODUCT)
-                   .MongoRepositorySetter<SupplierEntity>(databaseName, DbCollection.SUPPLIER);
+                   .MongoRepositorySetter<CategoryEntity>(databaseName, DbCollection.CATEGORY, connectionString, myMongoDBConnection)
+                   .MongoRepositorySetter<InventoryItemEntity>(databaseName, DbCollection.INVENTORY, connectionString, myMongoDBConnection)
+                   .MongoRepositorySetter<ProductEntity>(databaseName, DbCollection.PRODUCT, connectionString, myMongoDBConnection)
+                   .MongoRepositorySetter<SupplierEntity>(databaseName, DbCollection.SUPPLIER, connectionString, myMongoDBConnection);
+        }
+        public static string AddMongdbConnectionString(string connectionString, string myMongoDBConnection)
+        {
+            IConfiguration configuration = new ConfigurationBuilder()
+                .AddJsonFile(connectionString)
+                .Build();
+
+            return  configuration.GetConnectionString(myMongoDBConnection);
+
         }
     }
 }

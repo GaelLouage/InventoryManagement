@@ -1,8 +1,13 @@
-﻿namespace Infrastructuur.Entities
+﻿using MongoDB.Bson;
+using Newtonsoft.Json;
+
+namespace Infrastructuur.Entities
 {
     public class CategoryEntity
     {
-        public int Id { get; set; }
+        [JsonProperty("_id")]
+        public ObjectId Id { get; set; }
+        public int CategoryId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
     }

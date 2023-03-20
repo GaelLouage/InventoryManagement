@@ -12,7 +12,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 // add mongo database
-builder.Services.AddMongoRepository(DbName.INVENTORYMANAGEMENTSYSTEM);
+builder.Services.AddMongoRepository(DbName.INVENTORYMANAGEMENTSYSTEM, "C:/Users/louag/OneDrive/Bureau/jsonmongodbConnection/appsettings.json", "MyMongoDBConnection");
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

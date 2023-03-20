@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Infrastructuur.Extensions;
+using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -14,9 +15,9 @@ namespace Infrastructuur.Repositories.Interfaces
     {
         private readonly IMongoCollection<T> _collection;
 
-        public MongoRepository(IConfiguration configuration, string collectionName, string databaseName)
+        public MongoRepository(IConfiguration configuration, string collectionName, string databaseName,string connectionString, string myMongoDBConnection)
         {
-            var client = new MongoClient(configuration.GetConnectionString("MyMongoDBConnection"));
+            var client = new MongoClient(MongoRepositoryExtensions.AddMongdbConnectionString(connectionString,myMongoDBConnection));
             var database = client.GetDatabase(databaseName);
             _collection = database.GetCollection<T>(collectionName);
         }

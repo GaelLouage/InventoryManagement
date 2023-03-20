@@ -8,7 +8,7 @@ namespace Infrastructuur.Constants
 {
     public static class DbCollection
     {
-        public const string CATEGORY = "category";
+        public const string CATEGORY = "Category";
         public const string INVENTORY = "Inventory";
         public const string PRODUCT = "Product";
         public const string SUPPLIER = "Supplier";

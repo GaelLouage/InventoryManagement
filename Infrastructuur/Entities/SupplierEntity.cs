@@ -1,8 +1,13 @@
-﻿namespace Infrastructuur.Entities
+﻿using MongoDB.Bson;
+using Newtonsoft.Json;
+
+namespace Infrastructuur.Entities
 {
     public class SupplierEntity
     {
-        public int Id { get; set; }
+        [JsonProperty("_id")]
+        public ObjectId Id { get; set; }
+        public int SupplierId { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
         public string Phone { get; set; }

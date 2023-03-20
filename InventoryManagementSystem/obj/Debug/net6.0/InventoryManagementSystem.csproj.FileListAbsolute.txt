@@ -46,3 +46,13 @@ C:\Users\louag\source\repos\InventoryManagementSystem\InventoryManagementSystem\
 C:\Users\louag\source\repos\InventoryManagementSystem\InventoryManagementSystem\obj\Debug\net6.0\InventoryManagementSystem.pdb
 C:\Users\louag\source\repos\InventoryManagementSystem\InventoryManagementSystem\obj\Debug\net6.0\InventoryManagementSystem.genruntimeconfig.cache
 C:\Users\louag\source\repos\InventoryManagementSystem\InventoryManagementSystem\obj\Debug\net6.0\ref\InventoryManagementSystem.dll
+C:\Users\louag\source\repos\InventoryManagementSystem\InventoryManagementSystem\bin\Debug\net6.0\Microsoft.Extensions.Configuration.dll
+C:\Users\louag\source\repos\InventoryManagementSystem\InventoryManagementSystem\bin\Debug\net6.0\Microsoft.Extensions.Configuration.FileExtensions.dll
+C:\Users\louag\source\repos\InventoryManagementSystem\InventoryManagementSystem\bin\Debug\net6.0\Microsoft.Extensions.Configuration.Json.dll
+C:\Users\louag\source\repos\InventoryManagementSystem\InventoryManagementSystem\bin\Debug\net6.0\Microsoft.Extensions.FileProviders.Abstractions.dll
+C:\Users\louag\source\repos\InventoryManagementSystem\InventoryManagementSystem\bin\Debug\net6.0\Microsoft.Extensions.FileProviders.Physical.dll
+C:\Users\louag\source\repos\InventoryManagementSystem\InventoryManagementSystem\bin\Debug\net6.0\Microsoft.Extensions.FileSystemGlobbing.dll
+C:\Users\louag\source\repos\InventoryManagementSystem\InventoryManagementSystem\bin\Debug\net6.0\System.Text.Encodings.Web.dll
+C:\Users\louag\source\repos\InventoryManagementSystem\InventoryManagementSystem\bin\Debug\net6.0\System.Text.Json.dll
+C:\Users\louag\source\repos\InventoryManagementSystem\InventoryManagementSystem\bin\Debug\net6.0\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
+C:\Users\louag\source\repos\InventoryManagementSystem\InventoryManagementSystem\bin\Debug\net6.0\Newtonsoft.Json.dll

@@ -2,6 +2,7 @@
 using Infrastructuur.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualBasic;
+using MongoDB.Bson;
 
 namespace InventoryManagementSystem.Controllers
 {
@@ -23,31 +24,39 @@ namespace InventoryManagementSystem.Controllers
             return Ok(categories);
         }
         [HttpPost]
-        public async Task<IActionResult> PostCategory([FromBody] CategoryEntity category)
+        public async Task<IActionResult> CreateCategory([FromBody] CategoryEntity category)
         {
-            category.Id = (await _repository.GetAllAsync()).Max(x => x.Id) + 1;
+            category.CategoryId = (await _repository.GetAllAsync()).Max(x => x.CategoryId) + 1;
             await _repository.AddAsync(category);
-            return Ok(await _repository.GetAllAsync());
+            return CreatedAtAction(nameof(GetCategoryById), new { id = category.CategoryId }, category);
         }
         [HttpGet("GetCategoryById{id}")]
         public async Task<IActionResult> GetCategoryById(int id)
         {
-            var category = await _repository.GetByIdAsync(x => x.Id == id);
+            var category = await _repository.GetByIdAsync(x => x.CategoryId == id);
             if(category == null) return NotFound(); 
             return Ok(category);
         }
-        [HttpPut]
-        public async Task<IActionResult> UpdateCategoryById(int id, [FromBody] CategoryEntity category)
+        [HttpPut("id")]
+        public async Task<IActionResult> UpdateCategoryById(int id,  CategoryEntity category)
         {
-            category.Id = id;
-            var cat = await _repository.UpdateAsync(x => x.Id == id , category);
-            return Ok(cat);
+            var existingCategory = await _repository.GetByIdAsync(x => x.CategoryId == id);
+            if (existingCategory == null) return NotFound();
+
+            category.CategoryId = id;
+            category.Id = existingCategory.Id;
+            await _repository.UpdateAsync(x => x.CategoryId == id, category);
+
+            return NoContent();
         }
         [HttpDelete("DeleteCategoryById/{id}")]
         public async Task<IActionResult> DeleteCategoryById(int id)
         {
-            await _repository.DeleteAsync(x => x.Id == id);
-            return Ok(await _repository.GetAllAsync());
+            var existingCategory = await _repository.GetByIdAsync(x => x.CategoryId == id);
+            if (existingCategory == null) return NotFound();
+
+            await _repository.DeleteAsync(x => x.CategoryId == id);
+            return NoContent();
         }
     }
 }
