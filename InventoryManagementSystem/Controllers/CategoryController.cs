@@ -1,6 +1,8 @@
 ﻿using Infrastructuur.Entities;
+using Infrastructuur.Helpers;
 using Infrastructuur.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.VisualBasic;
 using MongoDB.Bson;
 
@@ -11,16 +13,24 @@ namespace InventoryManagementSystem.Controllers
     public class CategoryController : ControllerBase 
     {
         private readonly IRepository<CategoryEntity> _repository;
-
-        public CategoryController(IRepository<CategoryEntity> repository)
+        private readonly IMemoryCache _memoryCache;
+        private static CancellationTokenSource _resetCacheToken = new CancellationTokenSource();
+        public CategoryController(IRepository<CategoryEntity> repository, IMemoryCache memoryCache)
         {
             _repository = repository;
+            _memoryCache = memoryCache;
         }
         [HttpGet("GetAllCategories")]
         public async Task<IActionResult> GetAllCategories()
         {
+            if (_memoryCache.TryGetValue(_resetCacheToken, out List<CategoryEntity> cat))
+            {
+                return Ok(cat);
+            }
             var categories = await _repository.GetAllAsync();
-            if(categories == null) return NotFound();
+            //set a timespan to keep the data into memory
+            _memoryCache.Set(_resetCacheToken, categories, TimeSpan.FromMinutes(10));
+            if (categories == null) return NotFound();
             return Ok(categories);
         }
         [HttpPost]
@@ -28,13 +38,22 @@ namespace InventoryManagementSystem.Controllers
         {
             category.CategoryId = (await _repository.GetAllAsync()).Max(x => x.CategoryId) + 1;
             await _repository.AddAsync(category);
+            // removes the mem cache to reste it with new values
+            _memoryCache.Remove(_resetCacheToken);
             return CreatedAtAction(nameof(GetCategoryById), new { id = category.CategoryId }, category);
         }
         [HttpGet("GetCategoryById{id}")]
         public async Task<IActionResult> GetCategoryById(int id)
         {
+            if (_memoryCache.TryGetValue(_resetCacheToken, out List<CategoryEntity> cat))
+            {
+                var memCategory = cat.FirstOrDefault(x => x.CategoryId == id);
+                if(memCategory == null) return NotFound();  
+                return Ok(memCategory);
+            }
             var category = await _repository.GetByIdAsync(x => x.CategoryId == id);
-            if(category == null) return NotFound(); 
+            _memoryCache.Set(_resetCacheToken, category, TimeSpan.FromMinutes(10));
+            if (category == null) return NotFound(); 
             return Ok(category);
         }
         [HttpPut("id")]
@@ -42,11 +61,10 @@ namespace InventoryManagementSystem.Controllers
         {
             var existingCategory = await _repository.GetByIdAsync(x => x.CategoryId == id);
             if (existingCategory == null) return NotFound();
-
             category.CategoryId = id;
             category.Id = existingCategory.Id;
             await _repository.UpdateAsync(x => x.CategoryId == id, category);
-
+            _memoryCache.Remove(_resetCacheToken);
             return NoContent();
         }
         [HttpDelete("DeleteCategoryById/{id}")]
@@ -54,7 +72,7 @@ namespace InventoryManagementSystem.Controllers
         {
             var existingCategory = await _repository.GetByIdAsync(x => x.CategoryId == id);
             if (existingCategory == null) return NotFound();
-
+            _memoryCache.Remove(_resetCacheToken);
             await _repository.DeleteAsync(x => x.CategoryId == id);
             return NoContent();
         }
