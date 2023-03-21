@@ -9,7 +9,7 @@ using MongoDB.Bson;
 namespace InventoryManagementSystem.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class CategoryController : ControllerBase 
     {
         private readonly IRepository<CategoryEntity> _repository;

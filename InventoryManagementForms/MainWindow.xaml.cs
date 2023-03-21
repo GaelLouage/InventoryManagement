@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,16 +25,17 @@ namespace InventoryManagementForms
         {
             InitializeComponent();
         }
-
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-
+            //TODO: make the login logic with algorithm HMCA2
+            var dashBoard = new Dashboard();
+            dashBoard.Show();
+            this.Close();
         }
-
         private void btnExit_Click(object sender, RoutedEventArgs e)
         {
-            // exit the application
-            Environment.Exit(0);
+            // close the application because it ensures that all resources are properly released and any remaining background threads are terminated.
+            Application.Current.Shutdown();
         }
     }
 }

@@ -16,6 +16,16 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IMemoryCache, MemoryCache>();
 // add mongo database
 builder.Services.AddMongoRepository(DbName.INVENTORYMANAGEMENTSYSTEM, "C:/Users/louag/OneDrive/Bureau/jsonmongodbConnection/appsettings.json", "MyMongoDBConnection");
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy("cc",
+//                          policy =>
+//                          {
+//                              policy
+//                              .AllowAnyHeader()
+//                              .AllowAnyMethod();
+//                          });
+//});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -26,7 +36,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+/*app.UseCors("cc");*/
 app.UseAuthorization();
 
 app.MapControllers();
