@@ -46,7 +46,7 @@ namespace InventoryManagementSystem.Controllers
             return CreatedAtAction(nameof(GetCategoryById), new { id = category.CategoryId }, category);
         }
 
-        [HttpGet("GetCategoryById{id}")]
+        [HttpGet("GetCategoryById/{id}")]
         public async Task<IActionResult> GetCategoryById(int id)
         {
             if (_memoryCache.TryGetValue(_resetCacheToken, out List<CategoryEntity> cat))
@@ -61,7 +61,7 @@ namespace InventoryManagementSystem.Controllers
             return Ok(category);
         }
 
-        [HttpPut("id")]
+        [HttpPut("UpdateCategoryById/{id}")]
         public async Task<IActionResult> UpdateCategoryById(int id,  CategoryEntity category)
         {
             var existingCategory = await _repository.GetByIdAsync(x => x.CategoryId == id);
