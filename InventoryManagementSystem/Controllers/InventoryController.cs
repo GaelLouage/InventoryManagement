@@ -26,7 +26,7 @@ namespace InventoryManagementSystem.Controllers
             _categoryRepository = categoryRepository;
             _supplierRepository = supplierRepository;
         }
-        [HttpGet]
+        [HttpGet("GetAllInventoryItems")]
         public async Task<IActionResult> GetAllInventoryItems()
         {
             if (_inventoryCache.TryGetValue(_resetCacheToken, out List<InventoryItemEntity> inventory))
@@ -51,7 +51,7 @@ namespace InventoryManagementSystem.Controllers
             if (inventory is null) return NotFound();
             return Ok(inventory);
         }
-        [HttpPost]
+        [HttpPost("CreateInventoryItem")]
         public async Task<IActionResult> CreateInventoryItem([FromBody] InventoryItemDto inventoryEntity)
         {
             var inventoryItemToAdd = await InventoryItemMapper.Map(inventoryEntity, await inventoryEntity.MapInventoryRecord(_inventoryRepository), _productRepository, _supplierRepository, _categoryRepository);
@@ -60,7 +60,7 @@ namespace InventoryManagementSystem.Controllers
             _inventoryCache.Remove(_resetCacheToken);
             return CreatedAtAction(nameof(GetInventoryById), new { id = inventoryItemToAdd.CategoryId }, inventoryItemToAdd);
         }
-        [HttpPut("{id}")]
+        [HttpPut("UpdateInventoryItem/{id}")]
         public async Task<IActionResult> UpdateInventoryItem([FromRoute]int id, [FromBody] InventoryItemDto inventoryEntity)
         {
             var inv = await _inventoryRepository.GetByIdAsync(x => x.InventoryItemId == id);
@@ -73,8 +73,8 @@ namespace InventoryManagementSystem.Controllers
 
             return Ok(inventoryItemToAdd);
         }
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteInventoryItemDto(int id)
+        [HttpDelete("DeleteInventoryItem/{id}")]
+        public async Task<IActionResult> DeleteInventoryItem(int id)
         {
             await _inventoryRepository.DeleteAsync(x => x.InventoryItemId == id);
             _inventoryCache.Remove(_resetCacheToken);

@@ -10,5 +10,6 @@ namespace Infrastructuur.Repositories.Interfaces
         Task<T> GetByIdAsync(Expression<Func<T, bool>> predicate);
         Task<IEnumerable<T>> GetAllAsync();
         Task DeleteRangeAsync(Expression<Func<T, bool>> predicate);
+
     }
 }

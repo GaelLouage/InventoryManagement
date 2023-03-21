@@ -23,7 +23,7 @@ namespace InventoryManagementSystem.Controllers
             _productRepository = productRepository;
             _memoryCache = memoryCache;
         }
-        [HttpGet]
+        [HttpGet("GetAllProducts")]
         public async Task<IActionResult> GetAllProducts()
         {
             if(_memoryCache.TryGetValue(_resetCacheToken, out List<ProductEntity> productCache))

@@ -36,7 +36,7 @@ namespace InventoryManagementSystem.Controllers
             return Ok(categories);
         }
 
-        [HttpPost]
+        [HttpPost("CreateCategory")]
         public async Task<IActionResult> CreateCategory([FromBody] CategoryEntity category)
         {
             category.CategoryId = (await _repository.GetAllAsync()).Max(x => x.CategoryId) + 1;
