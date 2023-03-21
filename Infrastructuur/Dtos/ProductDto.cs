@@ -6,13 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infrastructuur.Entities
+namespace Infrastructuur.Dtos
 {
-    public class ProductEntity
+    public class ProductDto
     {
-        [JsonProperty("_id")]
-        public ObjectId Id { get; set; }
-        public int ProductId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }

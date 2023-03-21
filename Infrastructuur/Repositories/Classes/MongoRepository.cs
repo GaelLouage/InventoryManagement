@@ -32,7 +32,11 @@ namespace Infrastructuur.Repositories.Interfaces
             var filter = Builders<T>.Filter.Where(predicate);
             await _collection.DeleteOneAsync(filter);
         }
-
+        public async Task DeleteRangeAsync(Expression<Func<T, bool>> predicate)
+        {
+            var filter = Builders<T>.Filter.Where(predicate);
+            await _collection.DeleteManyAsync(filter);
+        }
         public async Task<T> UpdateAsync(Expression<Func<T, bool>> predicate, T entity)
         {
             var filter = Builders<T>.Filter.Where(predicate);
