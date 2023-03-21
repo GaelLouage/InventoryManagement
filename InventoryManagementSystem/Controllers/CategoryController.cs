@@ -13,6 +13,7 @@ namespace InventoryManagementSystem.Controllers
     public class CategoryController : ControllerBase 
     {
         private readonly IRepository<CategoryEntity> _repository;
+        // caching categories
         private readonly IMemoryCache _memoryCache;
         private static CancellationTokenSource _resetCacheToken = new CancellationTokenSource();
         public CategoryController(IRepository<CategoryEntity> repository, IMemoryCache memoryCache)
@@ -23,25 +24,28 @@ namespace InventoryManagementSystem.Controllers
         [HttpGet("GetAllCategories")]
         public async Task<IActionResult> GetAllCategories()
         {
+            // keeping data in memory
             if (_memoryCache.TryGetValue(_resetCacheToken, out List<CategoryEntity> cat))
             {
                 return Ok(cat);
             }
             var categories = await _repository.GetAllAsync();
-            //set a timespan to keep the data into memory
+            //set a timespan to keep the data into memory (10min)
             _memoryCache.Set(_resetCacheToken, categories, TimeSpan.FromMinutes(10));
             if (categories == null) return NotFound();
             return Ok(categories);
         }
+
         [HttpPost]
         public async Task<IActionResult> CreateCategory([FromBody] CategoryEntity category)
         {
             category.CategoryId = (await _repository.GetAllAsync()).Max(x => x.CategoryId) + 1;
             await _repository.AddAsync(category);
-            // removes the mem cache to reste it with new values
+            // removes the mem cache to reset it
             _memoryCache.Remove(_resetCacheToken);
             return CreatedAtAction(nameof(GetCategoryById), new { id = category.CategoryId }, category);
         }
+
         [HttpGet("GetCategoryById{id}")]
         public async Task<IActionResult> GetCategoryById(int id)
         {
@@ -56,6 +60,7 @@ namespace InventoryManagementSystem.Controllers
             if (category == null) return NotFound(); 
             return Ok(category);
         }
+
         [HttpPut("id")]
         public async Task<IActionResult> UpdateCategoryById(int id,  CategoryEntity category)
         {

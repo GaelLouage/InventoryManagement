@@ -14,7 +14,6 @@ namespace Infrastructuur.Repositories.Interfaces
     public class MongoRepository<T> : IRepository<T> where T : class
     {
         private readonly IMongoCollection<T> _collection;
-
         public MongoRepository(IConfiguration configuration, string collectionName, string databaseName,string connectionString, string myMongoDBConnection)
         {
             var client = new MongoClient(MongoRepositoryExtensions.AddMongdbConnectionString(connectionString,myMongoDBConnection));

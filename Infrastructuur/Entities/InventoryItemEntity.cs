@@ -7,7 +7,7 @@ namespace Infrastructuur.Entities
     {
         [JsonProperty("_id")]
         public ObjectId Id { get; set; }
-        public int InventoryIteId { get; set; }
+        public int InventoryItemId { get; set; }
         public int ProductId { get; set; }
         public int CategoryId { get; set; }
         public int SupplierId { get; set; }
