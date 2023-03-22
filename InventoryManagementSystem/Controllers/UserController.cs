@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ActionConstraints;
 using System.Security.Claims;
+using Infrastructuur.Mappers;
 
 namespace InventoryManagementSystem.Controllers
 {
@@ -42,14 +43,7 @@ namespace InventoryManagementSystem.Controllers
             var users = await _userRepository.GetAllAsync();
             if (users.Any(x => x.UserName == user.UserName || x.Email == user.Email)) return BadRequest();
             // TODO : map this
-            var userToAdd = new UserEntity();
-            userToAdd.UserName = user.UserName;
-            userToAdd.Password = user.Password;
-            userToAdd.Email = user.Email;
-            userToAdd.Address = user.Address;
-            userToAdd.Name = user.Name;
-            userToAdd.Role = user.Role;
-            userToAdd.UserId = 1;
+            var userToAdd = UserMapper.Map(user, users.Max(x=>x.UserId) +1);
             if (users.Any(x => x.UserId > 0))
             {
                 userToAdd.UserId = users.Max(x => x.UserId) + 1;
@@ -63,14 +57,10 @@ namespace InventoryManagementSystem.Controllers
         {
             // TODO : map this
             var existingUser = await _userRepository.GetByIdAsync(x => x.UserId == id);
+          
             if (existingUser is null) return NotFound();
-            existingUser.UserName = user.UserName;
-            existingUser.Password = user.Password;
-            existingUser.Email = user.Email;
-            existingUser.Address = user.Address;
-            existingUser.Name = user.Name;
-            existingUser.Role = user.Role;
-            existingUser.Password = existingUser.Password.HashToPassword();
+            var exUserId = existingUser.Id;
+            existingUser = UserMapper.Map(user, exUserId, id);
             await _userRepository.UpdateAsync(x => x.UserId == id, existingUser);
             return NoContent();
         }
@@ -107,13 +97,9 @@ namespace InventoryManagementSystem.Controllers
             if (existingUser == null) return NotFound();
 
             if (!HashPassword.VerifyPassword(userE.Password, existingUser.Password)) return BadRequest();
-            existingUser.UserName = userDto.UserName;
-            existingUser.Password = userDto.Password;
-            existingUser.Email = userDto.Email;
-            existingUser.Address = userDto.Address;
-            existingUser.Name = userDto.Name;
-            existingUser.Role = userDto.Role;
-            existingUser.Password = existingUser.Password.HashToPassword();
+            var exUserId = existingUser.Id;
+            var uId = existingUser.UserId;
+            existingUser = UserMapper.Map(userDto, exUserId, uId);
             await _userRepository.UpdateAsync(x => x.UserId == existingUser.UserId, existingUser);
             return NoContent();
         }

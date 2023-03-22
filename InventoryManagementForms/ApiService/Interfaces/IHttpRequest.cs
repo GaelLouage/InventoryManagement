@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Infrastructuur.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Policy;
@@ -11,5 +12,6 @@ namespace InventoryManagementForms.ApiService.Interfaces
     {
         Task<List<T>> GetRequestListAsync(string endPoint);
         Task<T> GetRequestByIdAsync(int id, string endPoint);
+        Task<T> GetRequestByCredentials(LoginRequestEnity login, string endPoint);
     }
 }

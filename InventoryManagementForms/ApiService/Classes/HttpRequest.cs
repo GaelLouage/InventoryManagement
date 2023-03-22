@@ -27,8 +27,6 @@ namespace InventoryManagementForms.ApiService.Classes
         {
             using (_httpClientHandler)
             {
-                // allow the bad certificate
-               
                 using (var httpClient = new HttpClient(_httpClientHandler))
                 {
                     var response = await httpClient.GetAsync(_baseUrl + endPoint);
@@ -47,7 +45,7 @@ namespace InventoryManagementForms.ApiService.Classes
             {
                 using (var httpClient = new HttpClient(_httpClientHandler))
                 {
-                    var response = await httpClient.GetAsync("${_baseUrl}{endPoint}/{id}");
+                    var response = await httpClient.GetAsync($"{_baseUrl}{endPoint}/{id}");
                     if (response.IsSuccessStatusCode)
                     {
                         var content = await response.Content.ReadAsStringAsync();
@@ -57,5 +55,28 @@ namespace InventoryManagementForms.ApiService.Classes
             }
             return default(T);
         }
+        public async Task<T> GetRequestByCredentials(LoginRequestEnity login, string endPoint)
+        {
+            using (_httpClientHandler)
+            {
+                using (var httpClient = new HttpClient(_httpClientHandler))
+                {
+                    var json = JsonConvert.SerializeObject(login);
+
+                    // Create a StringContent object with the JSON data
+                    var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    var response = await httpClient.PostAsync($"{_baseUrl}{endPoint}", content);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var responseJson = await response.Content.ReadAsStringAsync();
+
+                        return JsonConvert.DeserializeObject<T>(responseJson);
+                    }
+                }
+            }
+            return default(T);
+        }
+
     }
 }

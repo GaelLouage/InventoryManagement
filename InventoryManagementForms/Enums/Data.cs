@@ -11,6 +11,7 @@ namespace InventoryManagementForms.Enums
         Product,
         Supplier,
         Inventory,
-        Category
+        Category,
+        User
     }
 }

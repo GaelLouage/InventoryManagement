@@ -30,24 +30,28 @@ namespace Infrastructuur.Extensions
 
         public static bool VerifyPassword(string password, string hashedPassword)
         {
-            // Extract the salt from the hashed password
-            var hashBytes = Convert.FromBase64String(hashedPassword);
-            var salt = new byte[16];
-            Array.Copy(hashBytes, 0, salt, 0, 16);
-
-            // Use the salt to derive a password-based key using the PBKDF2 algorithm
-            var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 10000);
-            var hash = pbkdf2.GetBytes(20);
-
-            // Compare the derived hash to the one stored in the database
-            for (int i = 0; i < 20; i++)
+            try
             {
-                if (hashBytes[i + 16] != hash[i])
+                // Extract the salt from the hashed password
+                var hashBytes = Convert.FromBase64String(hashedPassword);
+                var salt = new byte[16];
+                Array.Copy(hashBytes, 0, salt, 0, 16);
+
+                // Use the salt to derive a password-based key using the PBKDF2 algorithm
+                var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 10000);
+                var hash = pbkdf2.GetBytes(20);
+
+                // Compare the derived hash to the one stored in the database
+                for (int i = 0; i < 20; i++)
                 {
-                    return false;
+                    if (hashBytes[i + 16] != hash[i])
+                    {
+                        return false;
+                    }
                 }
-            }
-            return true;
+                return true;
+            } catch { return false; }
+           
         }
     }
 }
