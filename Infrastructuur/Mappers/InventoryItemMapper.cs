@@ -34,7 +34,6 @@ namespace Infrastructuur.Mappers
         public static async Task<InventoryItemMapParams> MapInventoryRecord(this InventoryItemDto inventoryEntity,IRepository<InventoryItemEntity> inventoryRepository)
         {
             return new InventoryItemMapParams(
-
                 (await inventoryRepository.GetAllAsync()).Max(x => x.InventoryItemId) + 1,
                   inventoryEntity.CategoryId,
                   inventoryEntity.SupplierId,

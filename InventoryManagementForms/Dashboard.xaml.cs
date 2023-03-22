@@ -91,31 +91,35 @@ namespace InventoryManagementForms
         private async void txtProductSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
             dGProducts.ItemsSource = (await productsTask)
-                                     .Where(x => x.Name.ToLower().StartsWith(txtProductSearch.Text.ToLower()) || 
-                                            x.Description.ToLower().StartsWith(txtProductSearch.Text.ToLower()));
+                                     .Where(x => x.Name.StartsWith(txtProductSearch.Text, StringComparison.OrdinalIgnoreCase) || 
+                                            x.Description.StartsWith(txtProductSearch.Text, StringComparison.OrdinalIgnoreCase));
         }
 
         private async void txtCategoriesSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
             dGCategories.ItemsSource = (await categoriesTask).Where(
-                                          x => x.Name.ToLower().StartsWith(txtCategoriesSearch.Text.ToLower()) ||
-                                          x.Description.ToLower().StartsWith(txtCategoriesSearch.Text.ToLower()));
+                                          x => x.Name.StartsWith(txtCategoriesSearch.Text, StringComparison.OrdinalIgnoreCase) ||
+                                          x.Description.StartsWith(txtCategoriesSearch.Text, StringComparison.OrdinalIgnoreCase));
         }
       
         private async void txtSupplierSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
-            dGSupplier.ItemsSource = (await supplierTask)
-                                      .Where(x => x.Name.ToLower().StartsWith(txtSupplierSearch.Text.ToLower()) ||
-                                          x.Address .ToLower().StartsWith(txtSupplierSearch.Text.ToLower()) ||
-                                          x.Email.ToLower().StartsWith(txtSupplierSearch.Text.ToLower()));
+            var suppliers = await supplierTask;
+
+            var filteredSuppliers = suppliers
+                .Where(x => x.Name.StartsWith(txtSupplierSearch.Text, StringComparison.OrdinalIgnoreCase) ||
+                            x.Address.StartsWith(txtSupplierSearch.Text, StringComparison.OrdinalIgnoreCase) ||
+                            x.Email.StartsWith(txtSupplierSearch.Text, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+            dGSupplier.ItemsSource = filteredSuppliers;
         }
 
         private async void txtInventorySearch_TextChanged(object sender, TextChangedEventArgs e)
         {
             dGInventory.ItemsSource = (await inventoryTask)
-                                      .Where(x => x.Product.Name.ToLower().StartsWith(txtInventorySearch.Text.ToLower()) ||
-                                             x.Category.Name.ToLower().StartsWith(txtInventorySearch.Text.ToLower()) ||
-                                              x.Supplier.Name.ToLower().StartsWith(txtInventorySearch.Text.ToLower()));
+                                      .Where(x => x.Product.Name.StartsWith(txtInventorySearch.Text, StringComparison.OrdinalIgnoreCase) ||
+                                             x.Category.Name.StartsWith(txtInventorySearch.Text, StringComparison.OrdinalIgnoreCase) ||
+                                              x.Supplier.Name.StartsWith(txtInventorySearch.Text, StringComparison.OrdinalIgnoreCase));
         }
         //print documents
         private void btnPrintProductGrid_Click(object sender, RoutedEventArgs e)
@@ -138,4 +142,5 @@ namespace InventoryManagementForms
             Printer.PrintData(dGInventory, Data.Inventory);
         }
     }
+
 }

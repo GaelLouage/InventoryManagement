@@ -13,5 +13,6 @@ namespace InventoryManagementForms.Enums
         public const string CATEGORY = "Category/GetAllCategories";
         public const string INVENTORY = "Inventory/GetAllInventoryItems";
         public const string SUPPLIER = "Supplier/GetAllSuppliers";
+        public const string USER = "Supplier/GetAllSuppliers";
     }
 }
