@@ -30,6 +30,10 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="0">
+                        <Button x:Name="btnPrintProductGrid" Content="Print" Width="50" Height="50" Click="btnPrintProductGrid_Click" />
+                    </StackPanel>
+               
                     <TextBox x:Name="txtProductSearch" Grid.Row="0" Grid.Column="6" Margin="5,50,5,0" Padding="3 5 8 3" TextChanged="txtProductSearch_TextChanged" FontSize="16px" Height="35" VerticalAlignment="Top"/>
                     <!-- Add content for Products tab here -->
                     <DataGrid x:Name="dGProducts" RowHeight="30"  VerticalAlignment="Top" Margin="10,0,5,0"  Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="6" Grid.RowSpan="3" Height="800" AutoGenerateColumns="False" 
@@ -79,6 +83,10 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="0">
+                        <Button x:Name="btnPrintCategoryGrid" Content="Print" Width="50" Height="50" Click="btnPrintCategoryGrid_Click"  />
+                    </StackPanel>
+
                     <TextBox x:Name="txtCategoriesSearch" Grid.Row="0" Grid.Column="6" Margin="5,50,5,0" VerticalAlignment="Top" Padding="3 5 8 3"  TextChanged="txtCategoriesSearch_TextChanged" FontSize="16px" Height="35"/>
                     <!-- Add content for Categories tab here -->
                     <DataGrid x:Name="dGCategories" RowHeight="30"  VerticalAlignment="Top"  Margin="10,0,5,0"  Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="9" Grid.RowSpan="3" Height="800"  AutoGenerateColumns="False" 
@@ -120,6 +128,9 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="0">
+                        <Button x:Name="btnPrintSupplierGrid" Content="Print" Width="50" Height="50" Click="btnPrintSupplierGrid_Click"  />
+                    </StackPanel>
                     <TextBox x:Name="txtSupplierSearch"  Grid.Row="0" Grid.Column="6" Margin="5,50,5,0" VerticalAlignment="Top" Padding="3 5 8 3" TextChanged="txtSupplierSearch_TextChanged" FontSize="16px" Height="35"/>
                     <!-- Add content for Supplier tab here -->
                     <DataGrid x:Name="dGSupplier" RowHeight="30" VerticalAlignment="Top"  Margin="10,0,5,0"  Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="6" Grid.RowSpan="3" Height="800" AutoGenerateColumns="False" 
@@ -162,6 +173,9 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="0">
+                        <Button x:Name="btnPrintInventoryGrid" Content="Print" Width="50" Height="50" Click="btnPrintInventoryGrid_Click"  />
+                    </StackPanel>
                     <TextBox x:Name="txtInventorySearch" Grid.Row="0" Grid.Column="6" Margin="5,50,5,0" VerticalAlignment="Top" Padding="3 5 8 3" TextChanged="txtInventorySearch_TextChanged" FontSize="16px" Height="35"/>
                     <!-- Add content for Inventory tab here -->
                     <DataGrid x:Name="dGInventory" RowHeight="30"  VerticalAlignment="Top"  Margin="10,0,5,0"  Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="9" Grid.RowSpan="3" Height="800" AutoGenerateColumns="False" 

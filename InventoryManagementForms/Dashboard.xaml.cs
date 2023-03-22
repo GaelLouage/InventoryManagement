@@ -1,11 +1,15 @@
 ﻿using Infrastructuur.Entities;
 using InventoryManagementForms.ApiService.Classes;
 using InventoryManagementForms.ApiService.Interfaces;
+using InventoryManagementForms.Enums;
+using InventoryManagementForms.Helpers;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Net;
 using System.Net.Http;
 using System.Net.Security;
@@ -18,6 +22,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
@@ -39,7 +44,7 @@ namespace InventoryManagementForms
         private Task<List<CategoryEntity>> categoriesTask;
         private Task<List<SupplierEntity>> supplierTask;
         private Task<List<InventoryItemEntity>> inventoryTask;
-        private const string URL = "https://localhost:7071/api/";
+
         public Dashboard(IHttpRequest<ProductEntity> httpRequestProduct, IHttpRequest<CategoryEntity> httpRequestCategory, IHttpRequest<InventoryItemEntity> httpRequestInventoryItem, IHttpRequest<SupplierEntity> httpRequestSupplier)
         {
             _httpRequestProduct = httpRequestProduct;
@@ -47,10 +52,10 @@ namespace InventoryManagementForms
             _httpRequestInventoryItem = httpRequestInventoryItem;
             _httpRequestSupplier = httpRequestSupplier;
         }
-        public Dashboard() : this(new HttpRequest<ProductEntity>(URL),
-                                 new HttpRequest<CategoryEntity>(URL),
-                             new HttpRequest<InventoryItemEntity>(URL),
-                                 new HttpRequest<SupplierEntity>(URL))
+        public Dashboard() : this(new HttpRequest<ProductEntity>(Api.BASEURL),
+                                 new HttpRequest<CategoryEntity>(Api.BASEURL),
+                             new HttpRequest<InventoryItemEntity>(Api.BASEURL),
+                                 new HttpRequest<SupplierEntity>(Api.BASEURL))
         {
             InitializeComponent();
         }
@@ -60,10 +65,10 @@ namespace InventoryManagementForms
          * Invoke to switch back to the UI thread and set the ItemsSource properties of the data grids.*/
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
-             productsTask = _httpRequestProduct.GetRequestListAsync("Product/GetAllProducts");
-             categoriesTask = _httpRequestCategory.GetRequestListAsync("Category/GetAllCategories");
-             inventoryTask = _httpRequestInventoryItem.GetRequestListAsync("Inventory/GetAllInventoryItems");
-             supplierTask = _httpRequestSupplier.GetRequestListAsync("Supplier/GetAllSuppliers");
+             productsTask = _httpRequestProduct.GetRequestListAsync(Api.PRODUCT);
+             categoriesTask = _httpRequestCategory.GetRequestListAsync(Api.CATEGORY);
+             inventoryTask = _httpRequestInventoryItem.GetRequestListAsync(Api.INVENTORY);
+             supplierTask = _httpRequestSupplier.GetRequestListAsync(Api.SUPPLIER);
 
             await Task.WhenAll(productsTask, categoriesTask, inventoryTask, supplierTask);
 
@@ -82,7 +87,7 @@ namespace InventoryManagementForms
             login.Show();
             this.Close();
         }
-
+        // sort documents
         private async void txtProductSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
             dGProducts.ItemsSource = (await productsTask)
@@ -92,11 +97,11 @@ namespace InventoryManagementForms
 
         private async void txtCategoriesSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
-            dGCategories.ItemsSource = (await categoriesTask)
-                                        .Where(x => x.Name.ToLower().StartsWith(txtCategoriesSearch.Text.ToLower()) ||
-                                            x.Description.ToLower().StartsWith(txtCategoriesSearch.Text.ToLower()));
+            dGCategories.ItemsSource = (await categoriesTask).Where(
+                                          x => x.Name.ToLower().StartsWith(txtCategoriesSearch.Text.ToLower()) ||
+                                          x.Description.ToLower().StartsWith(txtCategoriesSearch.Text.ToLower()));
         }
-
+      
         private async void txtSupplierSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
             dGSupplier.ItemsSource = (await supplierTask)
@@ -111,6 +116,26 @@ namespace InventoryManagementForms
                                       .Where(x => x.Product.Name.ToLower().StartsWith(txtInventorySearch.Text.ToLower()) ||
                                              x.Category.Name.ToLower().StartsWith(txtInventorySearch.Text.ToLower()) ||
                                               x.Supplier.Name.ToLower().StartsWith(txtInventorySearch.Text.ToLower()));
+        }
+        //print documents
+        private void btnPrintProductGrid_Click(object sender, RoutedEventArgs e)
+        {
+            Printer.PrintData(dGProducts, Data.Product);
+        }
+
+        private void btnPrintCategoryGrid_Click(object sender, RoutedEventArgs e)
+        {
+            Printer.PrintData(dGCategories, Data.Category);
+        }
+
+        private void btnPrintSupplierGrid_Click(object sender, RoutedEventArgs e)
+        {
+            Printer.PrintData(dGSupplier, Data.Supplier);
+        }
+
+        private void btnPrintInventoryGrid_Click(object sender, RoutedEventArgs e)
+        {
+            Printer.PrintData(dGInventory, Data.Inventory);
         }
     }
 }
