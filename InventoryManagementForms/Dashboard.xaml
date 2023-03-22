@@ -13,56 +13,138 @@
         </Grid.RowDefinitions>
         <TabControl Grid.Row="0" Margin="10" Height="900" >
             <TabItem Header="Products">
-                <!-- Add content for Products tab here -->
-                <DataGrid x:Name="dGProducts" VerticalAlignment="Top" Margin="10,60,5,0" Height="800" Grid.Row="1"  AutoGenerateColumns="False">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Product ID" Binding="{Binding ProductId}" Width="*" />
-                        <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*" />
-                        <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*" />
-                        <DataGridTextColumn Header="Price" Binding="{Binding Price}" Width="*" />
-                        <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="*" />
-                    </DataGrid.Columns>
-                </DataGrid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="10"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBox x:Name="txtProductSearch" Grid.Row="0" Grid.Column="6" Margin="5,50,5,0" VerticalAlignment="Top" TextChanged="txtProductSearch_TextChanged"/>
+                    <!-- Add content for Products tab here -->
+                    <DataGrid x:Name="dGProducts" VerticalAlignment="Top" Margin="10,0,5,0"  Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="6" Grid.RowSpan="3" Height="800"  AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Product ID" Binding="{Binding ProductId}" Width="*" />
+                            <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*" />
+                            <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*" />
+                            <DataGridTextColumn Header="Price" Binding="{Binding Price}" Width="*" />
+                            <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="*" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                </Grid>
+
+
             </TabItem>
+
             <TabItem Header="Categories">
-                <!-- Add content for Categories tab here -->
-                <DataGrid x:Name="dGCategories"  VerticalAlignment="Top" Margin="10,60,5,0" Height="800" Grid.Row="1" AutoGenerateColumns="False" >
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Category ID" Binding="{Binding CategoryId}" Width="*" />
-                        <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*" />
-                        <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*" />
-                    </DataGrid.Columns>
-                </DataGrid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="10"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBox x:Name="txtCategoriesSearch" Grid.Row="0" Grid.Column="6" Margin="5,50,5,0" VerticalAlignment="Top"  TextChanged="txtCategoriesSearch_TextChanged" />
+                    <!-- Add content for Categories tab here -->
+                    <DataGrid x:Name="dGCategories"  VerticalAlignment="Top"  Margin="10,0,5,0"  Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="9" Grid.RowSpan="3" Height="800"  AutoGenerateColumns="False" >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Category ID" Binding="{Binding CategoryId}" Width="*" />
+                            <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*" />
+                            <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Grid/>
+                </Grid>
             </TabItem>
             <TabItem Header="Supplier">
-                <!-- Add content for Supplier tab here -->
-                <DataGrid x:Name="dGSupplier" VerticalAlignment="Top" Margin="10,60,5,0"  Height="900"  AutoGenerateColumns="False" >
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Supplier ID" Binding="{Binding SupplierId}" Width="*" />
-                        <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*" />
-                        <DataGridTextColumn Header="Address" Binding="{Binding Address}" Width="*" />
-                        <DataGridTextColumn Header="Phone" Binding="{Binding Phone}" Width="*" />
-                        <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="*" />
-                    </DataGrid.Columns>
-                </DataGrid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="10"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBox x:Name="txtSupplierSearch" Grid.Row="0" Grid.Column="6" Margin="5,50,5,0" VerticalAlignment="Top" TextChanged="txtSupplierSearch_TextChanged" />
+                    <!-- Add content for Supplier tab here -->
+                    <DataGrid x:Name="dGSupplier" VerticalAlignment="Top"  Margin="10,0,5,0"  Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="6" Grid.RowSpan="3" Height="800" AutoGenerateColumns="False" >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Supplier ID" Binding="{Binding SupplierId}" Width="*" />
+                            <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*" />
+                            <DataGridTextColumn Header="Address" Binding="{Binding Address}" Width="*" />
+                            <DataGridTextColumn Header="Phone" Binding="{Binding Phone}" Width="*" />
+                            <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="*" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
             </TabItem>
             <TabItem Header="Inventory">
-                <!-- Add content for Inventory tab here -->
-                <DataGrid x:Name="dGInventory" Grid.Row="1" VerticalAlignment="Top" Margin="10,60,5,0"  Height="900" AutoGenerateColumns="False" >
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Inventory Item ID" Binding="{Binding InventoryItemId}" Width="*" />
-                        <DataGridTextColumn Header="Product ID" Binding="{Binding ProductId}" Width="*" />
-                        <DataGridTextColumn Header="Category ID" Binding="{Binding CategoryId}" Width="*" />
-                        <DataGridTextColumn Header="Supplier ID" Binding="{Binding SupplierId}" Width="*" />
-                        <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="*" />
-                        <DataGridTextColumn Header="Date Added" Binding="{Binding DateAdded}" Width="*" />
-                        <DataGridTextColumn Header="Last Updated" Binding="{Binding LastUpdated}" Width="*" />
-                        <DataGridTextColumn Header="Product Name" Binding="{Binding Product.Name}" Width="*" />
-                        <DataGridTextColumn Header="Category Name" Binding="{Binding Category.Name}" Width="*" />
-                        <DataGridTextColumn Header="Supplier Name" Binding="{Binding Supplier.Name}" Width="*" />
-                    </DataGrid.Columns>
-                </DataGrid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="10"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBox x:Name="txtInventorySearch" Grid.Row="0" Grid.Column="6" Margin="5,50,5,0" VerticalAlignment="Top" TextChanged="txtInventorySearch_TextChanged" />
+                    <!-- Add content for Inventory tab here -->
+                    <DataGrid x:Name="dGInventory"  VerticalAlignment="Top"  Margin="10,0,5,0"  Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="9" Grid.RowSpan="3" Height="800" AutoGenerateColumns="False" >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Inventory Item ID" Binding="{Binding InventoryItemId}" Width="*" />
+                            <DataGridTextColumn Header="Product ID" Binding="{Binding ProductId}" Width="*" />
+                            <DataGridTextColumn Header="Category ID" Binding="{Binding CategoryId}" Width="*" />
+                            <DataGridTextColumn Header="Supplier ID" Binding="{Binding SupplierId}" Width="*" />
+                            <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="*" />
+                            <DataGridTextColumn Header="Date Added" Binding="{Binding DateAdded}" Width="*" />
+                            <DataGridTextColumn Header="Last Updated" Binding="{Binding LastUpdated}" Width="*" />
+                            <DataGridTextColumn Header="Product Name" Binding="{Binding Product.Name}" Width="*" />
+                            <DataGridTextColumn Header="Category Name" Binding="{Binding Category.Name}" Width="*" />
+                            <DataGridTextColumn Header="Supplier Name" Binding="{Binding Supplier.Name}" Width="*" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
             </TabItem>
+
         </TabControl>
         <Grid Grid.Row="1">
             <!-- Add content for each tab's view here -->

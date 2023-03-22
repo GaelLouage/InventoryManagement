@@ -35,7 +35,10 @@ namespace InventoryManagementForms
         private readonly IHttpRequest<CategoryEntity> _httpRequestCategory;
         private readonly IHttpRequest<InventoryItemEntity> _httpRequestInventoryItem;
         private readonly IHttpRequest<SupplierEntity> _httpRequestSupplier;
-
+        private Task<List<ProductEntity>> productsTask;
+        private Task<List<CategoryEntity>> categoriesTask;
+        private Task<List<SupplierEntity>> supplierTask;
+        private Task<List<InventoryItemEntity>> inventoryTask;
         public Dashboard(IHttpRequest<ProductEntity> httpRequestProduct, IHttpRequest<CategoryEntity> httpRequestCategory, IHttpRequest<InventoryItemEntity> httpRequestInventoryItem, IHttpRequest<SupplierEntity> httpRequestSupplier)
         {
             _httpRequestProduct = httpRequestProduct;
@@ -56,10 +59,10 @@ namespace InventoryManagementForms
          * Invoke to switch back to the UI thread and set the ItemsSource properties of the data grids.*/
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            var productsTask = _httpRequestProduct.GetRequestListAsync("Product/GetAllProducts");
-            var categoriesTask = _httpRequestCategory.GetRequestListAsync("Category/GetAllCategories");
-            var inventoryTask = _httpRequestInventoryItem.GetRequestListAsync("Inventory/GetAllInventoryItems");
-            var supplierTask = _httpRequestSupplier.GetRequestListAsync("Supplier/GetAllSuppliers");
+             productsTask = _httpRequestProduct.GetRequestListAsync("Product/GetAllProducts");
+             categoriesTask = _httpRequestCategory.GetRequestListAsync("Category/GetAllCategories");
+             inventoryTask = _httpRequestInventoryItem.GetRequestListAsync("Inventory/GetAllInventoryItems");
+             supplierTask = _httpRequestSupplier.GetRequestListAsync("Supplier/GetAllSuppliers");
 
             await Task.WhenAll(productsTask, categoriesTask, inventoryTask, supplierTask);
 
@@ -70,6 +73,7 @@ namespace InventoryManagementForms
                 dGInventory.ItemsSource = inventoryTask.Result;
                 dGSupplier.ItemsSource = supplierTask.Result;
             });
+            
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
@@ -77,6 +81,36 @@ namespace InventoryManagementForms
             var login = new MainWindow();
             login.Show();
             this.Close();
+        }
+
+        private async void txtProductSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            dGProducts.ItemsSource = (await productsTask)
+                                     .Where(x => x.Name.ToLower().StartsWith(txtProductSearch.Text.ToLower()) || 
+                                            x.Description.ToLower().StartsWith(txtProductSearch.Text.ToLower()));
+        }
+
+        private async void txtCategoriesSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            dGCategories.ItemsSource = (await categoriesTask)
+                                        .Where(x => x.Name.ToLower().StartsWith(txtCategoriesSearch.Text.ToLower()) ||
+                                            x.Description.ToLower().StartsWith(txtCategoriesSearch.Text.ToLower()));
+        }
+
+        private async void txtSupplierSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            dGSupplier.ItemsSource = (await supplierTask)
+                                      .Where(x => x.Name.ToLower().StartsWith(txtSupplierSearch.Text.ToLower()) ||
+                                          x.Address .ToLower().StartsWith(txtSupplierSearch.Text.ToLower()) ||
+                                          x.Email.ToLower().StartsWith(txtSupplierSearch.Text.ToLower()));
+        }
+
+        private async void txtInventorySearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            dGInventory.ItemsSource = (await inventoryTask)
+                                      .Where(x => x.Product.Name.ToLower().StartsWith(txtInventorySearch.Text.ToLower()) ||
+                                             x.Category.Name.ToLower().StartsWith(txtInventorySearch.Text.ToLower()) ||
+                                              x.Supplier.Name.ToLower().StartsWith(txtInventorySearch.Text.ToLower()));
         }
     }
 }
