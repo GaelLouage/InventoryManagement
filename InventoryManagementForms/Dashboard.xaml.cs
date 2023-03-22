@@ -39,6 +39,7 @@ namespace InventoryManagementForms
         private Task<List<CategoryEntity>> categoriesTask;
         private Task<List<SupplierEntity>> supplierTask;
         private Task<List<InventoryItemEntity>> inventoryTask;
+        private const string URL = "https://localhost:7071/api/";
         public Dashboard(IHttpRequest<ProductEntity> httpRequestProduct, IHttpRequest<CategoryEntity> httpRequestCategory, IHttpRequest<InventoryItemEntity> httpRequestInventoryItem, IHttpRequest<SupplierEntity> httpRequestSupplier)
         {
             _httpRequestProduct = httpRequestProduct;
@@ -46,10 +47,10 @@ namespace InventoryManagementForms
             _httpRequestInventoryItem = httpRequestInventoryItem;
             _httpRequestSupplier = httpRequestSupplier;
         }
-        public Dashboard() : this(new HttpRequest<ProductEntity>("https://localhost:7071/api/"),
-            new HttpRequest<CategoryEntity>("https://localhost:7071/api/"),
-            new HttpRequest<InventoryItemEntity>("https://localhost:7071/api/"),
-            new HttpRequest<SupplierEntity>("https://localhost:7071/api/"))
+        public Dashboard() : this(new HttpRequest<ProductEntity>(URL),
+                                 new HttpRequest<CategoryEntity>(URL),
+                             new HttpRequest<InventoryItemEntity>(URL),
+                                 new HttpRequest<SupplierEntity>(URL))
         {
             InitializeComponent();
         }
@@ -73,7 +74,6 @@ namespace InventoryManagementForms
                 dGInventory.ItemsSource = inventoryTask.Result;
                 dGSupplier.ItemsSource = supplierTask.Result;
             });
-            
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
