@@ -16,7 +16,7 @@ namespace Infrastructuur.Repositories.Interfaces
         private readonly IMongoCollection<T> _collection;
         public MongoRepository(IConfiguration configuration, string collectionName, string databaseName,string connectionString, string myMongoDBConnection)
         {
-            var client = new MongoClient(MongoRepositoryExtensions.AddMongdbConnectionString(connectionString,myMongoDBConnection));
+            var client = new MongoClient(MongoRepositoryExtensions.AddMongoConnectionString(configuration,connectionString,myMongoDBConnection));
             var database = client.GetDatabase(databaseName);
             _collection = database.GetCollection<T>(collectionName);
         }
@@ -40,18 +40,17 @@ namespace Infrastructuur.Repositories.Interfaces
         public async Task<T> UpdateAsync(Expression<Func<T, bool>> predicate, T entity)
         {
             var filter = Builders<T>.Filter.Where(predicate);
+            if (filter is null) return default(T);
             await _collection.ReplaceOneAsync(filter, entity);
             return entity;
         }
+        // valueTask instead of task for better performance
+        public async ValueTask<T> GetByIdAsync(Expression<Func<T, bool>> predicate) =>
+            await _collection.Find(predicate).FirstOrDefaultAsync();
+        
 
-        public async Task<T> GetByIdAsync(Expression<Func<T, bool>> predicate)
-        {
-            return await _collection.Find(predicate).FirstOrDefaultAsync();
-        }
-
-        public async Task<IEnumerable<T>> GetAllAsync()
-        {
-            return await _collection.Find(Builders<T>.Filter.Empty).ToListAsync();
-        }
+        public async ValueTask<IEnumerable<T>> GetAllAsync() =>
+             await _collection.Find(Builders<T>.Filter.Empty).ToListAsync() ?? Enumerable.Empty<T>();
+       
     }
 }

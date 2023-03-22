@@ -7,8 +7,8 @@ namespace Infrastructuur.Repositories.Interfaces
         Task<T> AddAsync(T entity);
         Task DeleteAsync(Expression<Func<T, bool>> predicate);
         Task<T> UpdateAsync(Expression<Func<T, bool>> predicate, T entity);
-        Task<T> GetByIdAsync(Expression<Func<T, bool>> predicate);
-        Task<IEnumerable<T>> GetAllAsync();
+        ValueTask<T> GetByIdAsync(Expression<Func<T, bool>> predicate);
+        ValueTask<IEnumerable<T>> GetAllAsync();
         Task DeleteRangeAsync(Expression<Func<T, bool>> predicate);
 
     }

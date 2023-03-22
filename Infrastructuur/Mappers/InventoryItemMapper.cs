@@ -47,10 +47,13 @@ namespace Infrastructuur.Mappers
                                                       IRepository<SupplierEntity> supplierRepository,
                                                       IRepository<CategoryEntity> categoryRepository)
         {
-            var product = await productRepository.GetByIdAsync(x => x.ProductId == productId);
-            var supplier = await supplierRepository.GetByIdAsync(x => x.SupplierId == supplierId);
-            var category = await categoryRepository.GetByIdAsync(x => x.CategoryId == categoryId);
-            return (valid:product != null && supplier != null && category != null, product:product, supplier : supplier, category:category);
+            // parralel loading
+            var product =  productRepository.GetByIdAsync(x => x.ProductId == productId);
+            var supplier =  supplierRepository.GetByIdAsync(x => x.SupplierId == supplierId);
+            var category =  categoryRepository.GetByIdAsync(x => x.CategoryId == categoryId);
+            await Task.WhenAll(product.AsTask(), supplier.AsTask(), category.AsTask());
+        
+            return (valid:product != null && supplier != null && category != null, product:product.Result, supplier : supplier.Result, category:category.Result);
         }
     }
 }

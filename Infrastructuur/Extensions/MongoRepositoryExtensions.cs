@@ -32,9 +32,9 @@ namespace Infrastructuur.Extensions
                    .MongoRepositorySetter<ProductEntity>(databaseName, DbCollection.PRODUCT, connectionString, myMongoDBConnection)
                    .MongoRepositorySetter<SupplierEntity>(databaseName, DbCollection.SUPPLIER, connectionString, myMongoDBConnection);
         }
-        public static string AddMongdbConnectionString(string connectionString, string myMongoDBConnection)
+        public static string AddMongoConnectionString(this IConfiguration configuration, string connectionString, string myMongoDBConnection)
         {
-            IConfiguration configuration = new ConfigurationBuilder()
+                 configuration = new ConfigurationBuilder()
                 .AddJsonFile(connectionString)
                 .Build();
 
