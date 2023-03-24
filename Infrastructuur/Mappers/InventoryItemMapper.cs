@@ -50,7 +50,7 @@ namespace Infrastructuur.Mappers
             var product =  productRepository.GetByIdAsync(x => x.ProductId == productId);
             var supplier =  supplierRepository.GetByIdAsync(x => x.SupplierId == supplierId);
             var category =  categoryRepository.GetByIdAsync(x => x.CategoryId == categoryId);
-            await Task.WhenAll(product.AsTask(), supplier.AsTask(), category.AsTask());
+            await Task.WhenAll(product, supplier, category);
         
             return (valid:product != null && supplier != null && category != null, product:product.Result, supplier : supplier.Result, category:category.Result);
         }

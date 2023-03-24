@@ -45,11 +45,11 @@ namespace Infrastructuur.Repositories.Interfaces
             return entity;
         }
         // valueTask instead of task for better performance
-        public async ValueTask<T> GetByIdAsync(Expression<Func<T, bool>> predicate) =>
+        public async Task<T> GetByIdAsync(Expression<Func<T, bool>> predicate) =>
             await _collection.Find(predicate).FirstOrDefaultAsync();
         
 
-        public async ValueTask<IEnumerable<T>> GetAllAsync() =>
+        public async Task<IEnumerable<T>> GetAllAsync() =>
              await _collection.Find(Builders<T>.Filter.Empty).ToListAsync() ?? Enumerable.Empty<T>();
        
     }
