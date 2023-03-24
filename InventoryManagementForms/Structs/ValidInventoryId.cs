@@ -6,6 +6,5 @@
         public int categoryId;
         public int supplierId;
         public int quantity;
-
     }
 }

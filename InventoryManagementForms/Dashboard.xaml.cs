@@ -50,6 +50,7 @@ namespace InventoryManagementForms
         private Task<List<InventoryItemEntity>> inventoryTask;
         private ValidInventoryId inventoryId = new ValidInventoryId();
         private ProductStruct productStruct = new ProductStruct();
+  
         public Dashboard(IHttpRequest<ProductEntity> httpRequestProduct, IHttpRequest<CategoryEntity> httpRequestCategory, IHttpRequest<InventoryItemEntity> httpRequestInventoryItem, IHttpRequest<SupplierEntity> httpRequestSupplier)
         {
             _httpRequestProduct = httpRequestProduct;
@@ -63,7 +64,7 @@ namespace InventoryManagementForms
                                  new HttpRequest<SupplierEntity>(Api.BASEURL))
         {
             InitializeComponent();
-          
+
         }
         /*In this code, we start all the HTTP requests in parallel using Task.WhenAll, 
          * and then wait for them to complete with await. Once all the tasks have completed, 
@@ -71,11 +72,14 @@ namespace InventoryManagementForms
          * Invoke to switch back to the UI thread and set the ItemsSource properties of the data grids.*/
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
-         
+
             await UpdateData();
+            // populate combobox with enum types
+            cmbProduct.ItemsSource = Enum.GetValues(typeof(ProductOrder)).Cast<ProductOrder>();
+            cmbCategory.ItemsSource = Enum.GetValues(typeof(Category)).Cast<Category>();
+            cmbSupplier.ItemsSource = Enum.GetValues(typeof(Supplier)).Cast<Supplier>();
+            cmbInventory.ItemsSource = Enum.GetValues(typeof(Inventory)).Cast<Inventory>();
         }
-
-
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
@@ -117,6 +121,68 @@ namespace InventoryManagementForms
                                              x.Category.Name.StartsWith(txtInventorySearch.Text, StringComparison.OrdinalIgnoreCase) ||
                                               x.Supplier.Name.StartsWith(txtInventorySearch.Text, StringComparison.OrdinalIgnoreCase));
         }
+        #region ComboboxOrderData
+        // combobox to order items
+        //using reflection allows for more flexibility and ease of maintenance in terms of adding or removing properties to sort by
+        private async void cmbProduct_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (productsTask is null)
+            {
+                return;
+            }
+            // order items 
+            var items = await productsTask;
+            var sortOption = (ProductOrder)cmbProduct.SelectedItem;
+            var sortExpression = OrderDictionary.SortingOptionsProduct[sortOption];
+            dGProducts.ItemsSource = items.OrderBy(sortExpression);
+        }
+        private async void cmbSupplier_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (supplierTask is null)
+            {
+                return;
+            }
+
+            var items = await supplierTask;
+            var sortOption = (Supplier)cmbSupplier.SelectedItem;
+            var sortExpression = OrderDictionary.SortingOptionsSupplier[sortOption];
+            dGSupplier.ItemsSource = items.OrderBy(sortExpression);
+        }
+
+        private async void cmbCategory_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (categoriesTask is null)
+            {
+                return;
+            }
+
+            var items = await categoriesTask;
+            var sortOption = (Category)cmbCategory.SelectedItem;
+            var sortExpression = OrderDictionary.SortingOptionsCategory[sortOption];
+            dGCategories.ItemsSource = items.OrderBy(sortExpression);
+        }
+        private async void cmbInventory_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (inventoryTask is null)
+            {
+                return;
+            }
+
+            var items = await inventoryTask;
+            var sortOption = (Inventory)cmbInventory.SelectedItem;
+            var sortExpression = OrderDictionary.SortingOptionsInventory[sortOption];
+            dGInventory.ItemsSource = items.OrderBy(sortExpression);
+        }
+        #endregion
+
+        #region ProductNavigation
+        // navigations product
+        private void lblAddProduct_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            dGridAddProductForm.Visibility = Visibility.Visible;
+        }
+        #endregion
+        #region PrintButtons
         //print documents
         private void btnPrintProductGrid_Click(object sender, RoutedEventArgs e)
         {
@@ -137,6 +203,7 @@ namespace InventoryManagementForms
         {
             Printer.PrintData(dGInventory, Data.Inventory);
         }
+        #endregion
         // product forms
         private async void btnProductAddItem_Click(object sender, RoutedEventArgs e)
         {
@@ -177,7 +244,6 @@ namespace InventoryManagementForms
             return true;
         }
 
-
         // cateogory Forms
         private async void btnCategoryAddItem_Click(object sender, RoutedEventArgs e)
         {
@@ -210,7 +276,7 @@ namespace InventoryManagementForms
             ClearAddSupplier();
 
         }
-    
+
         // invenotry form
         private async void btnAddInventoryItem_Click(object sender, RoutedEventArgs e)
         {
@@ -218,7 +284,7 @@ namespace InventoryManagementForms
             {
                 return;
             }
-      
+
             var productIdTask = (await productsTask).SingleOrDefault(x => x.ProductId == inventoryId.productId);
             var supplierIdTask = (await supplierTask).SingleOrDefault(x => x.SupplierId == inventoryId.supplierId);
             var categoryIdTask = (await categoriesTask).SingleOrDefault(x => x.CategoryId == inventoryId.categoryId);
@@ -228,7 +294,7 @@ namespace InventoryManagementForms
             inventory.CategoryId = categoryIdTask.CategoryId;
             inventory.SupplierId = supplierIdTask.SupplierId;
             inventory.Quantity = inventoryId.quantity;
-          
+
             await _httpRequestInventoryItem.PostRequest(inventory, Api.ADDINVENTORYITEM);
             await UpdateData();
             ClearInventoryAddForm();
@@ -258,7 +324,7 @@ namespace InventoryManagementForms
         }
         private bool CheckValidInventory()
         {
-         
+
             if (string.IsNullOrEmpty(txtInventoryAddProductID.Text) || string.IsNullOrEmpty(txtInventoryAddCateogryID.Text) ||
               string.IsNullOrEmpty(txtInventoryAddSupplierID.Text) || string.IsNullOrEmpty(txtInventoryAddQuantity.Text) || !dtInvetoryAddDateAdded.SelectedDate.HasValue)
             {
@@ -283,7 +349,7 @@ namespace InventoryManagementForms
                 MessageBox.Show("supplier id has to a number!");
                 return false;
             }
-            if (!int.TryParse(txtInventoryAddQuantity.Text, out  inventoryId.quantity))
+            if (!int.TryParse(txtInventoryAddQuantity.Text, out inventoryId.quantity))
             {
 
                 MessageBox.Show("quantity has to a number!");
@@ -358,10 +424,5 @@ namespace InventoryManagementForms
             dtInvetoryAddDateAdded.Text = string.Empty;
         }
         #endregion
-
-        private void lblAddProduct_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            dGridAddProductForm.Visibility = Visibility.Visible;
-        }
     }
 }

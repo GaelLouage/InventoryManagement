@@ -70,7 +70,6 @@ namespace InventoryManagementSystem.Controllers
         [HttpDelete("DeleteProduct/{id}")]
         public async Task<IActionResult> DeleteProduct([FromRoute] int id)
         {
-
             var existingInventoryItem = await _inventoryRepository.GetByIdAsync(x => x.ProductId == id);
             if(existingInventoryItem is null)
             {
