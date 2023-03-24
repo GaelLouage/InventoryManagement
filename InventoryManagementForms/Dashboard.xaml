@@ -5,13 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InventoryManagementForms"
         mc:Ignorable="d"
-       Title="Dashboard Example" Height="1080" Width="1920" Loaded="Window_Loaded">
+       Title="Dashboard Example" Height="1080" Width="1920" Loaded="Window_Loaded" Background="Gray">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TabControl Grid.Row="0" Margin="10" Height="900" >
+        <TabControl Grid.Row="0" Margin="10" Height="900"  BorderThickness="0">
             <TabItem Header="Products">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -30,20 +30,20 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="0">
+                    <StackPanel Orientation="Horizontal" Grid.Column="4" Grid.Row="0">
                         <Button x:Name="btnPrintProductGrid" Content="Print" Width="50" Height="50" Click="btnPrintProductGrid_Click" />
                     </StackPanel>
-               
+
                     <TextBox x:Name="txtProductSearch" Grid.Row="0" Grid.Column="6" Margin="5,50,5,0" Padding="3 5 8 3" TextChanged="txtProductSearch_TextChanged" FontSize="16px" Height="35" VerticalAlignment="Top"/>
                     <!-- Add content for Products tab here -->
-                    <DataGrid x:Name="dGProducts" RowHeight="30"  VerticalAlignment="Top" Margin="10,0,5,0"  Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="6" Grid.RowSpan="3" Height="800" AutoGenerateColumns="False" 
+                    <DataGrid x:Name="dGProducts" RowHeight="30"  VerticalAlignment="Top" Margin="10,0,5,0"  Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="6" Grid.RowSpan="3" Height="800" AutoGenerateColumns="False" 
                               BorderBrush="#FFD4DDE6" 
                               AlternatingRowBackground="#FFD4DDE6" FontSize="16">
                         <DataGrid.ColumnHeaderStyle>
                             <Style TargetType="DataGridColumnHeader">
-                                <Setter Property="Background" Value="LightBlue" />
+                                <Setter Property="Background" Value="Gray" />
                                 <Setter Property="Foreground" Value="white" />
-                                <Setter Property="FontSize" Value="20px" />
+                                <Setter Property="FontSize" Value="12px" />
                                 <Setter Property="HorizontalContentAlignment" Value="Center" />
                                 <Setter Property="Padding" Value="7 7 7 7" />
                             </Style>
@@ -59,10 +59,62 @@
                             <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="*" />
                         </DataGrid.Columns>
                     </DataGrid>
+                    <DockPanel  Grid.Column="1" LastChildFill="False" Grid.Row="0" Grid.RowSpan="4" Background="Gray" Margin="-15 -3 -5 -5">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="292"/>
+                                <ColumnDefinition Width="10"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="5" Content="Button" Foreground="white"/>
+                            <Label Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="5" Content="Button" Foreground="white"/>
+                            <Label Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="5" Content="Button" Foreground="white"/>
+                            <Label Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="5" Content="Button" Foreground="white"/>
+                            <Label Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="5" Content="Button" Foreground="white"/>
+                        </Grid>
 
+                    </DockPanel>
+                    <DockPanel Grid.Row="1" Grid.Column="2" Grid.RowSpan="3" LastChildFill="False" >
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="5"/>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="155"/>
+                                <ColumnDefinition Width="5"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Label Content="Add item form" Grid.Row="0" Grid.ColumnSpan="2"  Grid.Column="1" HorizontalContentAlignment="Center" FontWeight="Bold"/>
+                            <Label Content="Name" Grid.Row="1" Grid.Column="1"/>
+                            <Label Content="Description" Grid.Row="2" Grid.Column="1"/>
+                            <Label Content="Price" Grid.Row="3" Grid.Column="1"/>
+                            <Label Content="Quantity" Grid.Row="4" Grid.Column="1"/>
+                            <TextBox x:Name="txtProductName" Grid.Row="1" Grid.Column="2" VerticalAlignment="Top"/>
+                            <TextBox x:Name="txtProductDescription" Grid.Row="2" Grid.Column="2" VerticalAlignment="Top"/>
+                            <TextBox x:Name="txtProductPrice" Grid.Row="3" Grid.Column="2" VerticalAlignment="Top"/>
+                            <TextBox x:Name="txtProductQuantity" Grid.Row="4" Grid.Column="2" VerticalAlignment="Top"/>
+                            <Button x:Name="btnProductAddItem" Content="Add Product" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Margin="10 10 10 10" Click="btnProductAddItem_Click"/>
+                        </Grid>
+                    </DockPanel>
                 </Grid>
-
-
             </TabItem>
 
             <TabItem Header="Categories">
@@ -83,20 +135,20 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="0">
+                    <StackPanel Orientation="Horizontal" Grid.Column="4" Grid.Row="0">
                         <Button x:Name="btnPrintCategoryGrid" Content="Print" Width="50" Height="50" Click="btnPrintCategoryGrid_Click"  />
                     </StackPanel>
 
                     <TextBox x:Name="txtCategoriesSearch" Grid.Row="0" Grid.Column="6" Margin="5,50,5,0" VerticalAlignment="Top" Padding="3 5 8 3"  TextChanged="txtCategoriesSearch_TextChanged" FontSize="16px" Height="35"/>
                     <!-- Add content for Categories tab here -->
-                    <DataGrid x:Name="dGCategories" RowHeight="30"  VerticalAlignment="Top"  Margin="10,0,5,0"  Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="9" Grid.RowSpan="3" Height="800"  AutoGenerateColumns="False" 
+                    <DataGrid x:Name="dGCategories" RowHeight="30"  VerticalAlignment="Top"  Margin="10,0,5,0"  Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="9" Grid.RowSpan="3" Height="800"  AutoGenerateColumns="False" 
                                BorderBrush="#FFD4DDE6" 
                               AlternatingRowBackground="LightBlue">
                         <DataGrid.ColumnHeaderStyle>
                             <Style TargetType="DataGridColumnHeader">
-                                <Setter Property="Background" Value="LightBlue" />
+                                <Setter Property="Background"  Value="Gray" />
                                 <Setter Property="Foreground" Value="white" />
-                                <Setter Property="FontSize" Value="20px" />
+                                <Setter Property="FontSize" Value="12px" />
                                 <Setter Property="HorizontalContentAlignment" Value="Center" />
                                 <Setter Property="Padding" Value="7 7 7 7" />
                             </Style>
@@ -107,6 +159,31 @@
                             <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*" />
                         </DataGrid.Columns>
                     </DataGrid>
+                    <DockPanel  Grid.Column="1" LastChildFill="False" Grid.Row="0" Grid.RowSpan="4" Background="Gray"  Margin="-15 -3 -5 -5">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="292"/>
+                                <ColumnDefinition Width="10"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="5" Content="Button" Foreground="white"/>
+                            <Label Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="5" Content="Button" Foreground="white"/>
+                            <Label Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="5" Content="Button" Foreground="white"/>
+                            <Label Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="5" Content="Button" Foreground="white"/>
+                            <Label Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="5" Content="Button" Foreground="white"/>
+                        </Grid>
+
+                    </DockPanel>
                     <Grid/>
                 </Grid>
             </TabItem>
@@ -128,19 +205,19 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="0">
+                    <StackPanel Orientation="Horizontal" Grid.Column="4" Grid.Row="0">
                         <Button x:Name="btnPrintSupplierGrid" Content="Print" Width="50" Height="50" Click="btnPrintSupplierGrid_Click"  />
                     </StackPanel>
                     <TextBox x:Name="txtSupplierSearch"  Grid.Row="0" Grid.Column="6" Margin="5,50,5,0" VerticalAlignment="Top" Padding="3 5 8 3" TextChanged="txtSupplierSearch_TextChanged" FontSize="16px" Height="35"/>
                     <!-- Add content for Supplier tab here -->
-                    <DataGrid x:Name="dGSupplier" RowHeight="30" VerticalAlignment="Top"  Margin="10,0,5,0"  Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="6" Grid.RowSpan="3" Height="800" AutoGenerateColumns="False" 
+                    <DataGrid x:Name="dGSupplier" RowHeight="30" VerticalAlignment="Top"  Margin="10,0,5,0"  Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="6" Grid.RowSpan="3" Height="800" AutoGenerateColumns="False" 
                                BorderBrush="#FFD4DDE6" 
                               AlternatingRowBackground="LightBlue">
                         <DataGrid.ColumnHeaderStyle>
                             <Style TargetType="DataGridColumnHeader">
-                                <Setter Property="Background" Value="LightBlue" />
+                                <Setter Property="Background"  Value="Gray"  />
                                 <Setter Property="Foreground" Value="white" />
-                                <Setter Property="FontSize" Value="20px" />
+                                <Setter Property="FontSize" Value="12px" />
                                 <Setter Property="HorizontalContentAlignment" Value="Center" />
                                 <Setter Property="Padding" Value="7 7 7 7" />
                             </Style>
@@ -153,6 +230,31 @@
                             <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="*" />
                         </DataGrid.Columns>
                     </DataGrid>
+                    <DockPanel  Grid.Column="1" LastChildFill="False" Grid.Row="0" Grid.RowSpan="4" Background="Gray"  Margin="-15 -3 -5 -5">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="292"/>
+                                <ColumnDefinition Width="10"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="5" Content="Button" Foreground="white"/>
+                            <Label Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="5" Content="Button" Foreground="white"/>
+                            <Label Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="5" Content="Button" Foreground="white"/>
+                            <Label Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="5" Content="Button" Foreground="white"/>
+                            <Label Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="5" Content="Button" Foreground="white"/>
+                        </Grid>
+
+                    </DockPanel>
                 </Grid>
             </TabItem>
             <TabItem Header="Inventory">
@@ -173,19 +275,19 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="0">
+                    <StackPanel Orientation="Horizontal" Grid.Column="4" Grid.Row="0">
                         <Button x:Name="btnPrintInventoryGrid" Content="Print" Width="50" Height="50" Click="btnPrintInventoryGrid_Click"  />
                     </StackPanel>
                     <TextBox x:Name="txtInventorySearch" Grid.Row="0" Grid.Column="6" Margin="5,50,5,0" VerticalAlignment="Top" Padding="3 5 8 3" TextChanged="txtInventorySearch_TextChanged" FontSize="16px" Height="35"/>
                     <!-- Add content for Inventory tab here -->
-                    <DataGrid x:Name="dGInventory" RowHeight="30"  VerticalAlignment="Top"  Margin="10,0,5,0"  Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="9" Grid.RowSpan="3" Height="800" AutoGenerateColumns="False" 
+                    <DataGrid x:Name="dGInventory" RowHeight="30"  VerticalAlignment="Top"  Margin="10,0,5,0"  Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="9" Grid.RowSpan="3" Height="800" AutoGenerateColumns="False" 
                                BorderBrush="#FFD4DDE6" 
                               AlternatingRowBackground="LightBlue">
                         <DataGrid.ColumnHeaderStyle>
                             <Style TargetType="DataGridColumnHeader">
-                                <Setter Property="Background" Value="LightBlue" />
+                                <Setter Property="Background"  Value="Gray"  />
                                 <Setter Property="Foreground" Value="white" />
-                                <Setter Property="FontSize" Value="20px" />
+                                <Setter Property="FontSize" Value="12px" />
                                 <Setter Property="HorizontalContentAlignment" Value="Center" />
                                 <Setter Property="Padding" Value="7 7 7 7" />
                             </Style>
@@ -203,6 +305,31 @@
                             <DataGridTextColumn Header="Supplier Name" Binding="{Binding Supplier.Name}" Width="*" />
                         </DataGrid.Columns>
                     </DataGrid>
+                    <DockPanel  Grid.Column="1" LastChildFill="False" Grid.Row="0" Grid.RowSpan="4" Background="Gray"  Margin="-15 -3 -5 -5">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="292"/>
+                                <ColumnDefinition Width="10"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="5" Content="Button" Foreground="white"/>
+                            <Label Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="5" Content="Button" Foreground="white"/>
+                            <Label Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="5" Content="Button" Foreground="white"/>
+                            <Label Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="5" Content="Button" Foreground="white"/>
+                            <Label Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="5" Content="Button" Foreground="white"/>
+                        </Grid>
+
+                    </DockPanel>
                 </Grid>
             </TabItem>
 

@@ -1,9 +1,11 @@
-﻿using Infrastructuur.Entities;
+﻿using DnsClient;
+using Infrastructuur.Entities;
 using InventoryManagementForms.ApiService.Interfaces;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Security.Policy;
 using System.Text;
@@ -13,20 +15,18 @@ namespace InventoryManagementForms.ApiService.Classes
 {
     public class HttpRequest<T> : IHttpRequest<T>
     {
-        public readonly HttpClientHandler _httpClientHandler;
         private readonly string _baseUrl;
 
         public HttpRequest(string url)
         {
-            _httpClientHandler = new HttpClientHandler();
-            _httpClientHandler.ServerCertificateCustomValidationCallback = (request, cert, chain, errors) => true;
             _baseUrl = url;
         }
 
         public  async Task<List<T>> GetRequestListAsync(string endPoint)
         {
-            using (_httpClientHandler)
+            using (var _httpClientHandler = new HttpClientHandler())
             {
+                _httpClientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => true;
                 using (var httpClient = new HttpClient(_httpClientHandler))
                 {
                     var response = await httpClient.GetAsync(_baseUrl + endPoint);
@@ -41,8 +41,9 @@ namespace InventoryManagementForms.ApiService.Classes
         }
         public  async Task<T> GetRequestByIdAsync(int id, string endPoint)
         {
-            using (_httpClientHandler)
+            using (var _httpClientHandler = new HttpClientHandler())
             {
+                _httpClientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => true;
                 using (var httpClient = new HttpClient(_httpClientHandler))
                 {
                     var response = await httpClient.GetAsync($"{_baseUrl}{endPoint}/{id}");
@@ -57,8 +58,9 @@ namespace InventoryManagementForms.ApiService.Classes
         }
         public async Task<T> GetRequestByCredentials(LoginRequestEnity login, string endPoint)
         {
-            using (_httpClientHandler)
+            using (var _httpClientHandler = new HttpClientHandler())
             {
+                _httpClientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => true;
                 using (var httpClient = new HttpClient(_httpClientHandler))
                 {
                     var json = JsonConvert.SerializeObject(login);
@@ -78,5 +80,29 @@ namespace InventoryManagementForms.ApiService.Classes
             return default(T);
         }
 
+        public async Task<T> PostRequest(T item,string endPoint)
+        {
+            using (var httpClientHandler = new HttpClientHandler())
+            {
+                // ssl error fixer
+                httpClientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => true;
+                using (var httpClient = new HttpClient(httpClientHandler))
+                {
+                    var json = JsonConvert.SerializeObject(item);
+
+                    // Create a StringContent object with the JSON data
+                    var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    var response = await httpClient.PostAsync($"{_baseUrl}{endPoint}", content);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var responseJson = await response.Content.ReadAsStringAsync();
+
+                        return JsonConvert.DeserializeObject<T>(responseJson);
+                    }
+                }
+            }
+            return default(T);
+        }
     }
 }

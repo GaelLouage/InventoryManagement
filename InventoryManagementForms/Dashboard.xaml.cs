@@ -1,4 +1,6 @@
-﻿using Infrastructuur.Entities;
+﻿using Infrastructuur.Dtos;
+using Infrastructuur.Entities;
+using Infrastructuur.Mappers;
 using InventoryManagementForms.ApiService.Classes;
 using InventoryManagementForms.ApiService.Interfaces;
 using InventoryManagementForms.Enums;
@@ -65,10 +67,15 @@ namespace InventoryManagementForms
          * Invoke to switch back to the UI thread and set the ItemsSource properties of the data grids.*/
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
-             productsTask = _httpRequestProduct.GetRequestListAsync(Api.PRODUCT);
-             categoriesTask = _httpRequestCategory.GetRequestListAsync(Api.CATEGORY);
-             inventoryTask = _httpRequestInventoryItem.GetRequestListAsync(Api.INVENTORY);
-             supplierTask = _httpRequestSupplier.GetRequestListAsync(Api.SUPPLIER);
+            await UpdateData();
+        }
+
+        private async Task UpdateData()
+        {
+            productsTask = _httpRequestProduct.GetRequestListAsync(Api.PRODUCT);
+            categoriesTask = _httpRequestCategory.GetRequestListAsync(Api.CATEGORY);
+            inventoryTask = _httpRequestInventoryItem.GetRequestListAsync(Api.INVENTORY);
+            supplierTask = _httpRequestSupplier.GetRequestListAsync(Api.SUPPLIER);
 
             await Task.WhenAll(productsTask, categoriesTask, inventoryTask, supplierTask);
 
@@ -141,6 +148,28 @@ namespace InventoryManagementForms
         {
             Printer.PrintData(dGInventory, Data.Inventory);
         }
-    }
+        // product forms
+        private async void btnProductAddItem_Click(object sender, RoutedEventArgs e)
+        {
+            if(!string.IsNullOrEmpty(txtProductName.Text) && !string.IsNullOrEmpty(txtProductDescription.Text) &&
+                !string.IsNullOrEmpty(txtProductPrice.Text) && !string.IsNullOrEmpty(txtProductQuantity.Text))
+            {
+                txtProductPrice.Text = txtProductPrice.Text.Replace(",",".");
+                if (decimal.TryParse(txtProductPrice.Text, out decimal price) && int.TryParse(txtProductQuantity.Text, out int quantity))
+                {
 
+                    var productDto = new ProductDto();
+                    productDto.Name = txtProductName.Text;
+                    productDto.Description = txtProductDescription.Text;
+                    productDto.Price = price;
+                    productDto.Quantity = quantity;
+                    await _httpRequestProduct.PostRequest(ProductMapper.Map(productDto, (await productsTask).Max(x => x.ProductId) +1), Api.ADDPRODUCT);
+                    await UpdateData();
+                } else
+                {
+                    MessageBox.Show("ProductQuantity should be integer and price should be int or decimal");
+                }
+            }
+        }
+    }
 }
