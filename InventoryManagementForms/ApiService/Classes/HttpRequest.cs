@@ -80,7 +80,7 @@ namespace InventoryManagementForms.ApiService.Classes
             return default(T);
         }
 
-        public async Task<T> PostRequest(T item,string endPoint)
+        public async Task<T> PostRequest(T item, string endPoint)
         {
             using (var httpClientHandler = new HttpClientHandler())
             {
@@ -94,6 +94,30 @@ namespace InventoryManagementForms.ApiService.Classes
                     var content = new StringContent(json, Encoding.UTF8, "application/json");
 
                     var response = await httpClient.PostAsync($"{_baseUrl}{endPoint}", content);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var responseJson = await response.Content.ReadAsStringAsync();
+
+                        return JsonConvert.DeserializeObject<T>(responseJson);
+                    }
+                }
+            }
+            return default(T);
+        }
+        public async Task<T> UpdateRequest(T item, string endPoint,int id)
+        {
+            using (var httpClientHandler = new HttpClientHandler())
+            {
+                // ssl error fixer
+                httpClientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => true;
+                using (var httpClient = new HttpClient(httpClientHandler))
+                {
+                    var json = JsonConvert.SerializeObject(item);
+
+                    // Create a StringContent object with the JSON data
+                    var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    var response = await httpClient.PutAsync($"{_baseUrl}{endPoint}{id}", content);
                     if (response.IsSuccessStatusCode)
                     {
                         var responseJson = await response.Content.ReadAsStringAsync();

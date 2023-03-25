@@ -12,11 +12,13 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Drawing.Printing;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
 using System.Net.Http;
 using System.Net.Security;
+using System.Reflection.Metadata;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.Json;
@@ -30,8 +32,16 @@ using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
-
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using ClosedXML.Excel;
+using Microsoft.Win32;
+using System.Diagnostics;
+using System.Windows.Controls.Primitives;
+using System.ComponentModel;
+using OfficeOpenXml;
+using InventoryManagementForms.Extensions;
+using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace InventoryManagementForms
 {
@@ -72,13 +82,19 @@ namespace InventoryManagementForms
          * Invoke to switch back to the UI thread and set the ItemsSource properties of the data grids.*/
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
-
             await UpdateData();
             // populate combobox with enum types
             cmbProduct.ItemsSource = Enum.GetValues(typeof(ProductOrder)).Cast<ProductOrder>();
-            cmbCategory.ItemsSource = Enum.GetValues(typeof(Category)).Cast<Category>();
+            cmbCategory.ItemsSource = Enum.GetValues(typeof(InventoryManagementForms.Enums.Category)).Cast<InventoryManagementForms.Enums.Category>();
             cmbSupplier.ItemsSource = Enum.GetValues(typeof(Supplier)).Cast<Supplier>();
             cmbInventory.ItemsSource = Enum.GetValues(typeof(Inventory)).Cast<Inventory>();
+
+            // hide forms
+            //TODO: place in method
+            dGridUpdateProductForm.Visibility = Visibility.Hidden;
+            dPUpdateCategory.Visibility = Visibility.Hidden;
+            dPUpdateSupplier.Visibility = Visibility.Hidden;
+            dPUpdateInventory.Visibility = Visibility.Hidden;
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
@@ -157,7 +173,7 @@ namespace InventoryManagementForms
             }
 
             var items = await categoriesTask;
-            var sortOption = (Category)cmbCategory.SelectedItem;
+            var sortOption = (InventoryManagementForms.Enums.Category)cmbCategory.SelectedItem;
             var sortExpression = OrderDictionary.SortingOptionsCategory[sortOption];
             dGCategories.ItemsSource = items.OrderBy(sortExpression);
         }
@@ -175,11 +191,105 @@ namespace InventoryManagementForms
         }
         #endregion
 
-        #region ProductNavigation
+        #region Navigation
         // navigations product
         private void lblAddProduct_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             dGridAddProductForm.Visibility = Visibility.Visible;
+            dGridUpdateProductForm.Visibility = Visibility.Hidden;
+        }
+        private void lblUpdateProduct_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            dGridAddProductForm.Visibility = Visibility.Hidden;
+            dGridUpdateProductForm.Visibility = Visibility.Visible;
+        }
+        // navigation category
+        private void lblAddCategory_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            dPAddCategory.Visibility = Visibility.Visible;
+            dPUpdateCategory.Visibility = Visibility.Hidden;
+        }
+
+        private void lblUpdateCategory_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            dPAddCategory.Visibility = Visibility.Hidden;
+            dPUpdateCategory.Visibility = Visibility.Visible;
+        }
+        // navigation supplier
+        private void lblAddSupplier_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            dPAddSupplier.Visibility = Visibility.Visible;
+            dPUpdateSupplier.Visibility = Visibility.Hidden;
+        }
+
+        private void lblUpdateSupplier_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            dPAddSupplier.Visibility = Visibility.Hidden;
+            dPUpdateSupplier.Visibility = Visibility.Visible;
+        }
+        private void lblAddInventory_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            dPAddInvetory.Visibility = Visibility.Visible;
+            dPUpdateInventory.Visibility = Visibility.Hidden;
+        }
+
+        private void lblUpdateInventory_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            dPAddInvetory.Visibility = Visibility.Hidden;
+            dPUpdateInventory.Visibility = Visibility.Visible;
+        }
+        #endregion
+        #region PDFDocs
+        // pdf documents
+        private void btnPdfProductGrid_Click(object sender, RoutedEventArgs e)
+        {
+            string fileName = "Product";
+            string suffix = ".xlsx";
+            dGProducts.WriteToExcelFile(fileName,  new ProductEntity());
+            if (File.Exists($"{fileName}{suffix}"))
+            {
+                MessageBox.Show("File succesfully created");
+                return;
+            }
+            MessageBox.Show("Error creating excel file.");
+        }
+        private void btnPdfCategoryGrid_Click(object sender, RoutedEventArgs e)
+        {
+            string fileName = "Category";
+            string suffix = ".xlsx";
+            dGCategories.WriteToExcelFile(fileName, new CategoryEntity());
+            if (File.Exists($"{fileName}{suffix}"))
+            {
+                MessageBox.Show("File succesfully created");
+                return;
+            }
+            MessageBox.Show("Error creating excel file.");
+        }
+
+        private void btnPdfSupplierGrid_Click(object sender, RoutedEventArgs e)
+        {
+            string fileName = "Supplier";
+            string suffix = ".xlsx";
+            dGSupplier.WriteToExcelFile(fileName, new SupplierEntity());
+            if (File.Exists($"{fileName}{suffix}"))
+            {
+                MessageBox.Show("File succesfully created");
+                return;
+            }
+            MessageBox.Show("Error creating excel file.");
+        }
+
+        private void btnPdfInventoryGrid_Click(object sender, RoutedEventArgs e)
+        {
+            string fileName = "Inventory";
+            string suffix = ".xlsx";
+            dGInventory.WriteToExcelFile<InventoryItemEntity>(fileName, new InventoryItemEntity(),  _httpRequestProduct,_httpRequestCategory, _httpRequestSupplier);
+            if (File.Exists($"{fileName}{suffix}"))
+            {
+                MessageBox.Show("File succesfully created");
+                return;
+            }
+            MessageBox.Show("Error creating excel file.");
         }
         #endregion
         #region PrintButtons
@@ -207,7 +317,7 @@ namespace InventoryManagementForms
         // product forms
         private async void btnProductAddItem_Click(object sender, RoutedEventArgs e)
         {
-            if (!CheckAddProductValidation())
+            if (!CheckAddProductValidation(txtProductName.Text, txtProductDescription.Text, txtProductPrice.Text, txtProductQuantity.Text))
             {
                 return;
             }
@@ -220,23 +330,53 @@ namespace InventoryManagementForms
             await UpdateData();
             ClearAddProductForm();
         }
-        private bool CheckAddProductValidation()
+        private async void btnProductUpdateItem_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrEmpty(txtProductName.Text) || string.IsNullOrEmpty(txtProductDescription.Text) ||
-               string.IsNullOrEmpty(txtProductPrice.Text) || string.IsNullOrEmpty(txtProductQuantity.Text))
+            if (!CheckAddProductValidation(txtUpdateProductName.Text, txtUpdateProductPrice.Text, txtUpdateProductDescription.Text, txtUpdateProductQuantity.Text))
+            {
+                return;
+            }
+            if (dGProducts.SelectedValue is null) return;
+            //TODO: map this
+            var selectedProduct = dGProducts.SelectedValue as ProductEntity;
+
+            var productDto = new ProductDto();
+            productDto.Name = txtUpdateProductName.Text;
+            productDto.Description = txtUpdateProductDescription.Text;
+            productDto.Price = decimal.Parse(txtUpdateProductPrice.Text);
+            productDto.Quantity = int.Parse(txtUpdateProductQuantity.Text);
+            var b = dGProducts.SelectedIndex;
+            await _httpRequestProduct.UpdateRequest(ProductMapper.Map(productDto, (await productsTask).Max(x => x.ProductId) + 1), Api.UPDATEPRODUCT, selectedProduct.ProductId);
+            await UpdateData();
+            ClearAddProductForm();
+        }
+
+        private void dGProducts_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (dGProducts.SelectedValue is null) return;
+            var selectedProduct = dGProducts.SelectedValue as ProductEntity;
+            txtUpdateProductName.Text = selectedProduct.Name;
+            txtUpdateProductDescription.Text = selectedProduct.Description;
+            txtUpdateProductPrice.Text = selectedProduct.Price.ToString("F2");
+            txtUpdateProductQuantity.Text = selectedProduct.Quantity.ToString();
+        }
+        private bool CheckAddProductValidation(string productName, string ProductPrice, string productDescription, string productQuantity)
+        {
+            if (string.IsNullOrEmpty(productName) || string.IsNullOrEmpty(productDescription) ||
+               string.IsNullOrEmpty(ProductPrice) || string.IsNullOrEmpty(productQuantity))
             {
                 MessageBox.Show("All input field are required!");
                 return false;
             }
-            txtProductPrice.Text = txtProductPrice.Text.Replace(",", ".");
-            if (!decimal.TryParse(txtProductPrice.Text, out productStruct.price))
+            ProductPrice = ProductPrice.Replace(",", ".");
+            if (!decimal.TryParse(ProductPrice, out productStruct.price))
             {
 
                 MessageBox.Show("Product price has to a number!");
                 return false;
             }
 
-            if (!int.TryParse(txtProductQuantity.Text, out productStruct.quantity))
+            if (!int.TryParse(productQuantity, out productStruct.quantity))
             {
                 MessageBox.Show("ProductQuantity has to a number!");
                 return false;
@@ -259,10 +399,33 @@ namespace InventoryManagementForms
             await UpdateData();
             ClearAddCategoryForm();
         }
+        private async void btnUpdateCategory_Click(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtUpdateCategoryName.Text) && string.IsNullOrEmpty(txtUpdateCategoryDescription.Text))
+            {
+                MessageBox.Show("All input field are required!");
+                return;
+            }
+            
+            var selectedCategory = dGCategories.SelectedItem as CategoryEntity;
+            if (selectedCategory is null) return;
+            selectedCategory.Name = txtUpdateCategoryName.Text;
+            selectedCategory.Description = txtUpdateCategoryDescription.Text;
+            await _httpRequestCategory.UpdateRequest(selectedCategory, Api.UPDATECATEGORY, selectedCategory.CategoryId);
+            await UpdateData();
+            ClearAddCategoryForm();
+        }
+        private void dGCategories_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (dGCategories.SelectedItem is null) return;
+            var category = dGCategories.SelectedItem as CategoryEntity;
+            txtUpdateCategoryName.Text = category.Name;
+            txtUpdateCategoryDescription.Text = category.Description;
+        }
         // supplier form
         private async void btnAddSupplier_Click(object sender, RoutedEventArgs e)
         {
-            if (!CheckAddSupplierValidation())
+            if (!CheckAddSupplierValidation(txtSupplierName.Text, txtSupplierAddress.Text, txtSupplierPhone.Text, txtSupplierEmail.Text))
             {
                 return;
             }
@@ -276,7 +439,32 @@ namespace InventoryManagementForms
             ClearAddSupplier();
 
         }
-
+        private async void btnUpdateSupplier_Click(object sender, RoutedEventArgs e)
+        {
+            if (!CheckAddSupplierValidation(txtUpdateSupplierName.Text,txtUpdateSupplierAddress.Text, txtUpdateSupplierPhone.Text, txtUpdateSupplierEmail.Text))
+            {
+                return;
+            }
+            var supplier = dGSupplier.SelectedItem as SupplierEntity;
+            if (supplier is null) return;
+            // TODO map this
+            supplier.Name = txtUpdateSupplierName.Text;
+            supplier.Address = txtUpdateSupplierAddress.Text;
+            supplier.Phone = txtUpdateSupplierPhone.Text;
+            supplier.Email = txtUpdateSupplierEmail.Text;
+            await _httpRequestSupplier.UpdateRequest(supplier, Api.UPDATESUPPLIER, supplier.SupplierId);
+            await UpdateData();
+            ClearAddSupplier();
+        }
+        private void dGSupplier_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var supplier = dGSupplier.SelectedItem as SupplierEntity;
+            if(supplier is null) return;
+            txtUpdateSupplierName.Text = supplier.Name;
+            txtUpdateSupplierAddress.Text = supplier.Address;
+            txtUpdateSupplierEmail.Text = supplier.Email;
+            txtUpdateSupplierPhone.Text = supplier.Phone;
+        }
         // invenotry form
         private async void btnAddInventoryItem_Click(object sender, RoutedEventArgs e)
         {
@@ -300,22 +488,63 @@ namespace InventoryManagementForms
             ClearInventoryAddForm();
 
         }
-        #region Validations
-        private bool CheckAddSupplierValidation()
+        private async void btnUpdateInventoryItem_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrEmpty(txtSupplierName.Text) || string.IsNullOrEmpty(txtSupplierAddress.Text) ||
-                string.IsNullOrEmpty(txtSupplierPhone.Text) || string.IsNullOrEmpty(txtSupplierEmail.Text))
+            if (!CheckValidInventoryOnUpdate())
+            {
+                return;
+            }
+            var selectedInventory = (InventoryItemEntity)dGInventory.SelectedItem;
+            if (selectedInventory is null)
+            {
+                return;
+            }
+            var productIdTask = (await productsTask).SingleOrDefault(x => x.ProductId == int.Parse(txtInventoryUpdateProductID.Text));
+            var supplierIdTask = (await supplierTask).SingleOrDefault(x => x.SupplierId == int.Parse(txtInventoryUpdateSupplierID.Text));
+            var categoryIdTask = (await categoriesTask).SingleOrDefault(x => x.CategoryId == int.Parse(txtInventoryUpdateCateogryID.Text));
+            var inventoryIdTaks = (await inventoryTask).SingleOrDefault(x => x.InventoryItemId == selectedInventory.InventoryItemId);
+            if (!ValidIdOnProductSupplierCateogry(productIdTask, supplierIdTask, categoryIdTask)) return;
+            //TODO: map this
+            var inventory = new InventoryItemEntity();
+            inventory.Id = selectedInventory.Id;
+            inventory.ProductId = productIdTask.ProductId;
+            inventory.CategoryId = categoryIdTask.CategoryId;
+            inventory.SupplierId = supplierIdTask.SupplierId;
+            inventory.Quantity = inventoryId.quantity;
+            inventory.Product = productIdTask;
+            inventory.LastUpdated= DateTime.Now;
+            inventory.DateAdded = inventoryIdTaks.DateAdded;
+            inventory.Category = categoryIdTask;
+            inventory.Supplier = supplierIdTask;
+            await _httpRequestInventoryItem.UpdateRequest(inventory, Api.UPDATEINVENTORYITEM, selectedInventory.InventoryItemId);
+            await UpdateData();
+            ClearInventoryAddForm();
+        }
+        private void dGInventory_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selectedInventoryItem = (InventoryItemEntity)dGInventory.SelectedItem;
+            if(selectedInventoryItem is null) return;
+            txtInventoryUpdateCateogryID.Text = selectedInventoryItem.CategoryId.ToString();
+            txtInventoryUpdateProductID.Text = selectedInventoryItem.ProductId.ToString();
+            txtInventoryUpdateQuantity.Text = selectedInventoryItem.Quantity.ToString();
+            txtInventoryUpdateSupplierID.Text = selectedInventoryItem.SupplierId.ToString();
+        }
+        #region Validations
+        private bool CheckAddSupplierValidation(string name, string address, string phone, string email)
+        {
+            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(address) ||
+                string.IsNullOrEmpty(phone) || string.IsNullOrEmpty(email))
             {
                 MessageBox.Show("All input field are required!");
                 return false;
             }
-            if (!txtSupplierEmail.Text.IsValidEmail())
+            if (!email.IsValidEmail())
             {
                 MessageBox.Show("Email is not valid!");
                 return false;
 
             }
-            if (!txtSupplierPhone.Text.IsValidPhoneNumber())
+            if (!phone.IsValidPhoneNumber())
             {
                 MessageBox.Show("Phone number is not valid!");
                 return false;
@@ -350,6 +579,41 @@ namespace InventoryManagementForms
                 return false;
             }
             if (!int.TryParse(txtInventoryAddQuantity.Text, out inventoryId.quantity))
+            {
+
+                MessageBox.Show("quantity has to a number!");
+                return false;
+            }
+            return true;
+        }
+        private bool CheckValidInventoryOnUpdate()
+        {
+
+            if (string.IsNullOrEmpty(txtInventoryUpdateProductID.Text) || string.IsNullOrEmpty(txtInventoryUpdateCateogryID.Text) ||
+              string.IsNullOrEmpty(txtInventoryUpdateSupplierID.Text) || string.IsNullOrEmpty(txtInventoryUpdateQuantity.Text))
+            {
+                MessageBox.Show("All input field are required!");
+                return false;
+            }
+            if (!int.TryParse(txtInventoryUpdateProductID.Text, out inventoryId.productId))
+            {
+
+                MessageBox.Show("Product id has to a number!");
+                return false;
+            }
+            if (!int.TryParse(txtInventoryUpdateCateogryID.Text, out inventoryId.categoryId))
+            {
+
+                MessageBox.Show("category id has to a number!");
+                return false;
+            }
+            if (!int.TryParse(txtInventoryUpdateSupplierID.Text, out inventoryId.supplierId))
+            {
+
+                MessageBox.Show("supplier id has to a number!");
+                return false;
+            }
+            if (!int.TryParse(txtInventoryUpdateQuantity.Text, out inventoryId.quantity))
             {
 
                 MessageBox.Show("quantity has to a number!");
@@ -423,6 +687,10 @@ namespace InventoryManagementForms
             txtInventoryAddQuantity.Text = string.Empty;
             dtInvetoryAddDateAdded.Text = string.Empty;
         }
+
+
         #endregion
+
+  
     }
 }

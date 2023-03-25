@@ -12,7 +12,7 @@ namespace Infrastructuur.Entities
         public int CategoryId { get; set; }
         public int SupplierId { get; set; }
         public int Quantity { get; set; }
-        public DateTime DateAdded { get; set; } = DateTime.Now;
+        public DateTime DateAdded { get; set; }
         public DateTime LastUpdated { get; set; } = DateTime.Now;
         public ProductEntity Product { get; set; }
         public CategoryEntity Category { get; set; }

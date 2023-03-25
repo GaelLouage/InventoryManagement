@@ -12,5 +12,6 @@ namespace Infrastructuur.Dtos
         public int CategoryId { get; set; }
         public int SupplierId { get; set; }
         public int Quantity { get; set; }
+        public DateTime DateAdded { get; set; }
     }
 }

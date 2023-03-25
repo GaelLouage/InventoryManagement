@@ -56,6 +56,7 @@ namespace InventoryManagementSystem.Controllers
         {
             var inventoryItemToAdd = await InventoryItemMapper.Map(inventoryEntity, await inventoryEntity.MapInventoryRecord(_inventoryRepository), _productRepository, _supplierRepository, _categoryRepository);
             // removes the mem cache to reste it with new values
+            inventoryItemToAdd.DateAdded = DateTime.Now;
              await _inventoryRepository.AddAsync(inventoryItemToAdd);
             _inventoryCache.Remove(_resetCacheToken);
             return CreatedAtAction(nameof(GetInventoryById), new { id = inventoryItemToAdd.CategoryId }, inventoryItemToAdd);
@@ -67,7 +68,7 @@ namespace InventoryManagementSystem.Controllers
             var inventoryItemToAdd = await InventoryItemMapper.Map(inventoryEntity, await inventoryEntity.MapInventoryRecord(_inventoryRepository), _productRepository, _supplierRepository, _categoryRepository);
             inventoryItemToAdd.InventoryItemId = id;
             inventoryItemToAdd.Id = inv.Id;
-            
+            inventoryItemToAdd.DateAdded = inv.DateAdded;
             await _inventoryRepository.UpdateAsync(x => x.InventoryItemId == id, inventoryItemToAdd);
             _inventoryCache.Remove(_resetCacheToken);
 

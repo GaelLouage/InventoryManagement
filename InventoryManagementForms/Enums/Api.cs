@@ -13,17 +13,21 @@ namespace InventoryManagementForms.Enums
         //inventory
         public const string INVENTORY = "Inventory/GetAllInventoryItems";
         public const string ADDINVENTORYITEM = "Inventory/CreateInventoryItem";
+        public const string UPDATEINVENTORYITEM = "Inventory/UpdateInventoryItem/";
         // supplier
         public const string SUPPLIER = "Supplier/GetAllSuppliers";
         public const string ADDSUPPLIER = "Supplier/CreateSupplier";
+        public const string UPDATESUPPLIER = "Supplier/UpdateSupplierById/";
         // products
         public const string PRODUCT = "Product/GetAllProducts";
         public const string ADDPRODUCT = "Product/CreateProduct";
+        public const string UPDATEPRODUCT = "Product/UpdateProduct/";
         // users
         public const string USERS = "User/GetAllUsers";
         public const string USERSBYCREDENTIALS = "User/GetUserByUserNameAndPassWord";
         //category
         public const string ADDCATEGORY = "Category/CreateCategory";
         public const string CATEGORY = "Category/GetAllCategories";
+        public const string UPDATECATEGORY = "Category/UpdateCategoryById/";
     }
 }
