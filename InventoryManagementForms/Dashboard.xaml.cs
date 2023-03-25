@@ -42,6 +42,8 @@ using System.ComponentModel;
 using OfficeOpenXml;
 using InventoryManagementForms.Extensions;
 using DocumentFormat.OpenXml.Wordprocessing;
+using DocumentFormat.OpenXml.ExtendedProperties;
+using System.Reflection;
 
 namespace InventoryManagementForms
 {
@@ -529,6 +531,39 @@ namespace InventoryManagementForms
             txtInventoryUpdateQuantity.Text = selectedInventoryItem.Quantity.ToString();
             txtInventoryUpdateSupplierID.Text = selectedInventoryItem.SupplierId.ToString();
         }
+        #region DeleteButtons
+        // delete buttons
+        private async void btnDeleteProduct_Click(object sender, RoutedEventArgs e)
+        {
+            if (dGProducts.SelectedItem is not ProductEntity productEntity) return;
+            await dGProducts.DeleteItem<ProductEntity>(productEntity.ProductId, _httpRequestProduct, Api.DELETEPRODUCT, async task => await UpdateData());
+        }
+
+        private async void btnDeleteCategory_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedCategory = dGCategories.SelectedItem as CategoryEntity;
+            if (selectedCategory is null) return;
+
+            await dGCategories.DeleteItem<CategoryEntity>(selectedCategory.CategoryId, _httpRequestCategory, Api.DELETECATEGORY, async task => await UpdateData());
+        }
+
+        private async void btnDeleteSupplier_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedSupplier = dGSupplier.SelectedItem as SupplierEntity;
+            if (selectedSupplier is null) return;
+
+            await dGSupplier.DeleteItem<SupplierEntity>(selectedSupplier.SupplierId, _httpRequestSupplier, Api.DELETESUPPLIER, async task => await UpdateData());
+        }
+
+        private async void btnDeleteInventoryItem_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedInventoryItem = dGInventory.SelectedItem as InventoryItemEntity;
+            if (selectedInventoryItem is null) return;
+
+            await dGInventory.DeleteItem<InventoryItemEntity>(selectedInventoryItem.InventoryItemId, _httpRequestInventoryItem, Api.DELETEINVENTORYITEM, async task => await UpdateData());
+        }
+        #endregion
+        //validations
         #region Validations
         private bool CheckAddSupplierValidation(string name, string address, string phone, string email)
         {
@@ -687,10 +722,8 @@ namespace InventoryManagementForms
             txtInventoryAddQuantity.Text = string.Empty;
             dtInvetoryAddDateAdded.Text = string.Empty;
         }
-
-
         #endregion
 
-  
+
     }
 }

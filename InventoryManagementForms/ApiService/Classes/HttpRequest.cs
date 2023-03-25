@@ -1,4 +1,5 @@
 ﻿using DnsClient;
+using DocumentFormat.OpenXml.EMMA;
 using Infrastructuur.Entities;
 using InventoryManagementForms.ApiService.Interfaces;
 using Newtonsoft.Json;
@@ -118,6 +119,26 @@ namespace InventoryManagementForms.ApiService.Classes
                     var content = new StringContent(json, Encoding.UTF8, "application/json");
 
                     var response = await httpClient.PutAsync($"{_baseUrl}{endPoint}{id}", content);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var responseJson = await response.Content.ReadAsStringAsync();
+
+                        return JsonConvert.DeserializeObject<T>(responseJson);
+                    }
+                }
+            }
+            return default(T);
+        }
+
+        public async Task<T> DeleteRequest(string endPoint,int id)
+        {
+            using (var httpClientHandler = new HttpClientHandler())
+            {
+                // ssl error fixer
+                httpClientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => true;
+                using (var httpClient = new HttpClient(httpClientHandler))
+                {
+                    var response = await httpClient.DeleteAsync($"{_baseUrl}{endPoint}{id}");
                     if (response.IsSuccessStatusCode)
                     {
                         var responseJson = await response.Content.ReadAsStringAsync();

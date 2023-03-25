@@ -15,5 +15,6 @@ namespace InventoryManagementForms.ApiService.Interfaces
         Task<T> GetRequestByCredentials(LoginRequestEnity login, string endPoint);
         Task<T> PostRequest(T item, string endPoint);
         Task<T> UpdateRequest(T item, string endPoint, int id);
+        Task<T> DeleteRequest(string endPoint, int id);
     }
 }

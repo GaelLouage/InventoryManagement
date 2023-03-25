@@ -31,10 +31,21 @@ namespace Infrastructuur.Mappers
                 Category = validation.category
             };
         }
-        public static async Task<InventoryItemMapParams> MapInventoryRecord(this InventoryItemDto inventoryEntity,IRepository<InventoryItemEntity> inventoryRepository)
+        public static async Task<InventoryItemMapParams> MapInventoryRecord(this InventoryItemDto inventoryEntity, IRepository<InventoryItemEntity> inventoryRepository)
         {
+            var data = (await inventoryRepository.GetAllAsync());
+            if (data.Count() == 0)
+            {
+                return new InventoryItemMapParams(
+              1,
+             inventoryEntity.CategoryId,
+             inventoryEntity.SupplierId,
+             inventoryEntity.ProductId,
+             inventoryEntity.Quantity
+     );
+            }
             return new InventoryItemMapParams(
-                (await inventoryRepository.GetAllAsync()).Max(x => x.InventoryItemId) + 1,
+                  data.Max(x => x.InventoryItemId) + 1,
                   inventoryEntity.CategoryId,
                   inventoryEntity.SupplierId,
                   inventoryEntity.ProductId,
@@ -47,12 +58,12 @@ namespace Infrastructuur.Mappers
                                                       IRepository<CategoryEntity> categoryRepository)
         {
             // parralel loading
-            var product =  productRepository.GetByIdAsync(x => x.ProductId == productId);
-            var supplier =  supplierRepository.GetByIdAsync(x => x.SupplierId == supplierId);
-            var category =  categoryRepository.GetByIdAsync(x => x.CategoryId == categoryId);
+            var product = productRepository.GetByIdAsync(x => x.ProductId == productId);
+            var supplier = supplierRepository.GetByIdAsync(x => x.SupplierId == supplierId);
+            var category = categoryRepository.GetByIdAsync(x => x.CategoryId == categoryId);
             await Task.WhenAll(product, supplier, category);
-        
-            return (valid:product != null && supplier != null && category != null, product:product.Result, supplier : supplier.Result, category:category.Result);
+
+            return (valid: product != null && supplier != null && category != null, product: product.Result, supplier: supplier.Result, category: category.Result);
         }
     }
 }
