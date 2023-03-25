@@ -29,6 +29,7 @@ namespace InventoryManagementForms
     {
         private readonly IHttpRequest<UserEntity> _httpRequestUser;
         private List<UserEntity> _users;
+        private UserEntity user;
         public MainWindow(IHttpRequest<UserEntity> httpRequestUser)
         {
             _httpRequestUser = httpRequestUser;
@@ -62,11 +63,11 @@ namespace InventoryManagementForms
         // TODO: my methods set it to another folder
         private void CheckIfUserExist()
         {
-            var user = _users.SingleOrDefault(x => x.UserName == txtUsername.Text && HashPassword.VerifyPassword(txtPassword.Password, x.Password));
+             user = _users.SingleOrDefault(x => x.UserName == txtUsername.Text && HashPassword.VerifyPassword(txtPassword.Password, x.Password));
             if (user is not null)
             {
                 //TODO: make the login logic with algorithm HMCA2
-                var dashBoard = new Dashboard();
+                var dashBoard = new Dashboard(user);
                 dashBoard.Show();
                 this.Close();
             } else

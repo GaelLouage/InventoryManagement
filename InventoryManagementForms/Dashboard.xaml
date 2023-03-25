@@ -68,7 +68,8 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="10"/>
                                 <ColumnDefinition Width="26.5"/>
-                                <ColumnDefinition Width="265.5"/>
+                                <ColumnDefinition Width="228"/>
+                                <ColumnDefinition Width="37.5"/>
                                 <ColumnDefinition Width="10"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
@@ -81,11 +82,11 @@
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <Label x:Name="lblAddProduct" Grid.Column="0" Grid.ColumnSpan="4" Content="Add Product" Foreground="white" MouseLeftButtonUp="lblAddProduct_MouseLeftButtonUp" Margin="0,110,0,110" Grid.RowSpan="3" />
-                            <Label x:Name="lblUpdateProduct" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="4" Content="Update Porudct" Foreground="white" Margin="0,0,0,110" Grid.RowSpan="2" MouseLeftButtonUp="lblUpdateProduct_MouseLeftButtonUp"/>
-                            <Label Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="4" Content="Button" Foreground="white"/>
-                            <Label Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="4" Content="Button" Foreground="white" Margin="0,110,0,0" Grid.RowSpan="2"/>
-                            <Label Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="4" Content="Button" Foreground="white" Margin="0,110,0,110" Grid.RowSpan="3"/>
+                            <Label x:Name="lblAddProduct" Grid.Column="0" Grid.ColumnSpan="5" Content="Add Product" Foreground="white" MouseLeftButtonUp="lblAddProduct_MouseLeftButtonUp" Margin="0,110,0,110" Grid.RowSpan="3" />
+                            <Label x:Name="lblUpdateProduct" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="5" Content="Update Porudct" Foreground="white" Margin="0,0,0,110" Grid.RowSpan="2" MouseLeftButtonUp="lblUpdateProduct_MouseLeftButtonUp"/>
+                            <Label Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="5" Content="Button" Foreground="white"/>
+                            <Label Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="5" Content="Button" Foreground="white" Margin="0,110,0,0" Grid.RowSpan="2"/>
+                            <Label Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="5" Content="Button" Foreground="white" Margin="0,110,0,110" Grid.RowSpan="3"/>
                         </Grid>
                     </DockPanel>
                     <DockPanel x:Name="dGridAddProductForm" Grid.Row="1" Grid.Column="4" Grid.RowSpan="3" LastChildFill="False" >
@@ -550,7 +551,154 @@
                     <ComboBox x:Name="cmbInventory" Grid.Column="5" HorizontalAlignment="Center" Margin="0,50,0,0" VerticalAlignment="Top" Width="309" Height="34" SelectionChanged="cmbInventory_SelectionChanged"/>
                 </Grid>
             </TabItem>
+            <TabItem Header="User" x:Name="tbItemUsers">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="79*"/>
+                        <ColumnDefinition Width="24*"/>
+                        <ColumnDefinition Width="210*"/>
+                        <ColumnDefinition Width="313*"/>
+                        <ColumnDefinition Width="313*"/>
+                        <ColumnDefinition Width="313*"/>
+                        <ColumnDefinition Width="313*"/>
+                        <ColumnDefinition Width="313*"/>
+                        <ColumnDefinition Width="10"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal" Grid.Column="6" Grid.Row="0" Grid.ColumnSpan="2" Margin="0,0,312,0">
+                        <Button x:Name="btnPrintUserGrid" Content="Print" Width="50" Height="50" Click="btnPrintUserGrid_Click"/>
+                        <Button x:Name="btnPdfUserGrid" Content="Pdf" Width="50" Height="50" Click="btnPdfUserGrid_Click" />
+                        <Button x:Name="btnDeleteUser" Content="Delete User" Width="50" Height="50" Click="btnDeleteUser_Click"/>
+                    </StackPanel>
 
+                    <TextBox x:Name="txtUserSearch" Grid.Row="0" Grid.Column="8" Margin="5,50,5,0" Padding="3 5 8 3"  FontSize="16px" Height="35" VerticalAlignment="Top"  TextChanged="txtUserSearch_TextChanged"/>
+                    <!-- Add content for Products tab here -->
+                    <DataGrid x:Name="dGUser" RowHeight="30"  VerticalAlignment="Top" Margin="10,0,5,0"  Grid.Row="1" Grid.Column="5" Grid.ColumnSpan="5" Grid.RowSpan="3" Height="800" AutoGenerateColumns="False" 
+                              BorderBrush="#FFD4DDE6" 
+                              AlternatingRowBackground="#FFD4DDE6" FontSize="16" SelectionChanged="dGUser_SelectionChanged">
+                        <DataGrid.ColumnHeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="Background" Value="Gray" />
+                                <Setter Property="Foreground" Value="white" />
+                                <Setter Property="FontSize" Value="12px" />
+                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                <Setter Property="Padding" Value="7 7 7 7" />
+                            </Style>
+                        </DataGrid.ColumnHeaderStyle>
+                        <DataGrid.CellStyle>
+                            <Style/>
+                        </DataGrid.CellStyle>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="UserName" Binding="{Binding UserName}" Width="*"/>
+                            <DataGridTextColumn Header="Name" Binding="{Binding UserName}" Width="*" />
+                            <DataGridTextColumn Header="Password" Binding="{Binding Password}" Width="*" />
+                            <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="*" />
+                            <DataGridTextColumn Header="Address" Binding="{Binding Address}" Width="*" />
+                            <DataGridTextColumn Header="Role" Binding="{Binding Role}" Width="*" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <DockPanel LastChildFill="False" Grid.Row="0" Grid.RowSpan="4" Background="Gray" Margin="-5,-3,307,-5" Grid.ColumnSpan="5">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="26.5"/>
+                                <ColumnDefinition Width="265.5"/>
+                                <ColumnDefinition Width="10"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Label x:Name="lblAddUser" Grid.Column="0" Grid.ColumnSpan="4" Content="Add User" Foreground="white"  Margin="0,110,0,110" Grid.RowSpan="3" MouseLeftButtonUp="lblAddUser_MouseLeftButtonUp" />
+                            <Label x:Name="lblUpdateUser" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="4" Content="Update Porudct" Foreground="white" Margin="0,0,0,110" Grid.RowSpan="2" MouseLeftButtonUp="lblUpdateUser_MouseLeftButtonUp" />
+                            <Label Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="4" Content="Button" Foreground="white"/>
+                            <Label Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="4" Content="Button" Foreground="white" Margin="0,110,0,0" Grid.RowSpan="2"/>
+                            <Label Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="4" Content="Button" Foreground="white" Margin="0,110,0,110" Grid.RowSpan="3"/>
+                        </Grid>
+                    </DockPanel>
+                    <DockPanel x:Name="dGridUserForm" Grid.Row="1" Grid.Column="4" Grid.RowSpan="3" LastChildFill="False" >
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="5"/>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="155"/>
+                                <ColumnDefinition Width="5"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Label Content="Add User form" Grid.Row="0" Grid.ColumnSpan="2"  Grid.Column="1" HorizontalContentAlignment="Center" FontWeight="Bold"/>
+                            <Label Content="UserName" Grid.Row="1" Grid.Column="1"/>
+                            <Label Content="Name" Grid.Row="2" Grid.Column="1"/>
+                            <Label Content="Password" Grid.Row="3" Grid.Column="1"/>
+                            <Label Content="Email" Grid.Row="4" Grid.Column="1"/>
+                            <Label Content="Address" Grid.Row="5" Grid.Column="1"/>
+                            <Label Content="Role" Grid.Row="6" Grid.Column="1" VerticalAlignment="Bottom"/>
+                            <TextBox x:Name="txtAddUserNameUser" Grid.Row="1" Grid.Column="2" VerticalAlignment="Top"/>
+                            <TextBox x:Name="txtAddNameUser" Grid.Row="2" Grid.Column="2" VerticalAlignment="Top"/>
+                            <PasswordBox x:Name="txtUserPassword" Grid.Row="3" Grid.Column="2" VerticalAlignment="Top"/>
+                            <TextBox x:Name="txtUseremail" Grid.Row="4" Grid.Column="2" VerticalAlignment="Top"/>
+                            <TextBox x:Name="txtUserAddress" Grid.Row="5" Grid.Column="2" VerticalAlignment="Top"/>
+                            <TextBox x:Name="txtUserRole" Grid.Row="6" Grid.Column="2" VerticalAlignment="bottom"/>
+                            <Button x:Name="btnUserAddItem" Content="Add User" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" Margin="40,49,10,10" Click="btnUserAddItem_Click"/>
+                        </Grid>
+                    </DockPanel>
+                    <DockPanel x:Name="dGridUpdateUserForm" Grid.Row="1" Grid.Column="4" Grid.RowSpan="3" LastChildFill="False" >
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="5"/>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="155"/>
+                                <ColumnDefinition Width="5"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Label Content="Update User form" Grid.Row="0" Grid.ColumnSpan="2"  Grid.Column="1" HorizontalContentAlignment="Center" FontWeight="Bold"/>
+                            <Label Content="UserName" Grid.Row="1" Grid.Column="1"/>
+                            <Label Content="Name" Grid.Row="2" Grid.Column="1"/>
+                            <Label Content="Password" Grid.Row="3" Grid.Column="1"/>
+                            <Label Content="Email" Grid.Row="4" Grid.Column="1"/>
+                            <Label Content="Address" Grid.Row="5" Grid.Column="1"/>
+                            <Label Content="Role" Grid.Row="6" Grid.Column="1" VerticalAlignment="Bottom"/>
+                            <TextBox x:Name="txtUpdateAddUserNameUser" Grid.Row="1" Grid.Column="2" VerticalAlignment="Top"/>
+                            <TextBox x:Name="txtUpdateAddNameUser" Grid.Row="2" Grid.Column="2" VerticalAlignment="Top"/>
+                            <PasswordBox x:Name="txtUpdateUserPassword" Grid.Row="3" Grid.Column="2" VerticalAlignment="Top"/>
+                            <TextBox x:Name="txtUpdateUseremail" Grid.Row="4" Grid.Column="2" VerticalAlignment="Top"/>
+                            <TextBox x:Name="txtUpdateUserAddress" Grid.Row="5" Grid.Column="2" VerticalAlignment="Top"/>
+                            <TextBox x:Name="txtUpdateUserRole" Grid.Row="6" Grid.Column="2" VerticalAlignment="Bottom"/>
+                            <Button x:Name="btnUpdateUserAddItem" Content="Update User" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" Margin="10 10 10 10" Click="btnUpdateUserAddItem_Click"/>
+                        </Grid>
+                    </DockPanel>
+                    <ComboBox x:Name="cmbUser" Grid.Column="7" HorizontalAlignment="Center" Margin="0,50,0,0" VerticalAlignment="Top" Width="310" Height="34" SelectionChanged="cmbUser_SelectionChanged"/>
+                </Grid>
+            </TabItem>
         </TabControl>
         <Grid Grid.Row="1">
             <!-- Add content for each tab's view here -->

@@ -56,26 +56,31 @@ namespace InventoryManagementForms
         private readonly IHttpRequest<CategoryEntity> _httpRequestCategory;
         private readonly IHttpRequest<InventoryItemEntity> _httpRequestInventoryItem;
         private readonly IHttpRequest<SupplierEntity> _httpRequestSupplier;
+        private readonly IHttpRequest<UserEntity> _httpRequestUser;
         private Task<List<ProductEntity>> productsTask;
         private Task<List<CategoryEntity>> categoriesTask;
         private Task<List<SupplierEntity>> supplierTask;
         private Task<List<InventoryItemEntity>> inventoryTask;
+        private Task<List<UserEntity>> userTask;
         private ValidInventoryId inventoryId = new ValidInventoryId();
         private ProductStruct productStruct = new ProductStruct();
-  
-        public Dashboard(IHttpRequest<ProductEntity> httpRequestProduct, IHttpRequest<CategoryEntity> httpRequestCategory, IHttpRequest<InventoryItemEntity> httpRequestInventoryItem, IHttpRequest<SupplierEntity> httpRequestSupplier)
+        private UserEntity _user;
+        public Dashboard(IHttpRequest<ProductEntity> httpRequestProduct, IHttpRequest<CategoryEntity> httpRequestCategory, IHttpRequest<InventoryItemEntity> httpRequestInventoryItem, IHttpRequest<SupplierEntity> httpRequestSupplier, IHttpRequest<UserEntity> httpRequestUser)
         {
             _httpRequestProduct = httpRequestProduct;
             _httpRequestCategory = httpRequestCategory;
             _httpRequestInventoryItem = httpRequestInventoryItem;
             _httpRequestSupplier = httpRequestSupplier;
+            _httpRequestUser = httpRequestUser;
         }
-        public Dashboard() : this(new HttpRequest<ProductEntity>(Api.BASEURL),
+        public Dashboard(UserEntity user) : this(new HttpRequest<ProductEntity>(Api.BASEURL),
                                  new HttpRequest<CategoryEntity>(Api.BASEURL),
                              new HttpRequest<InventoryItemEntity>(Api.BASEURL),
-                                 new HttpRequest<SupplierEntity>(Api.BASEURL))
+                                 new HttpRequest<SupplierEntity>(Api.BASEURL),
+                                 new HttpRequest<UserEntity>(Api.BASEURL))
         {
             InitializeComponent();
+            _user = user;
 
         }
         /*In this code, we start all the HTTP requests in parallel using Task.WhenAll, 
@@ -90,13 +95,20 @@ namespace InventoryManagementForms
             cmbCategory.ItemsSource = Enum.GetValues(typeof(InventoryManagementForms.Enums.Category)).Cast<InventoryManagementForms.Enums.Category>();
             cmbSupplier.ItemsSource = Enum.GetValues(typeof(Supplier)).Cast<Supplier>();
             cmbInventory.ItemsSource = Enum.GetValues(typeof(Inventory)).Cast<Inventory>();
-
+            cmbUser.ItemsSource = Enum.GetValues(typeof(UserS)).Cast<UserS>();
             // hide forms
             //TODO: place in method
             dGridUpdateProductForm.Visibility = Visibility.Hidden;
             dPUpdateCategory.Visibility = Visibility.Hidden;
             dPUpdateSupplier.Visibility = Visibility.Hidden;
             dPUpdateInventory.Visibility = Visibility.Hidden;
+            dGridUpdateUserForm.Visibility = Visibility.Hidden;
+
+            // hide the user tab for non superadmins
+            if (_user.Role is not "SuperAdmin")
+            {
+                tbItemUsers.Visibility = Visibility.Hidden;
+            }
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
@@ -139,6 +151,14 @@ namespace InventoryManagementForms
                                              x.Category.Name.StartsWith(txtInventorySearch.Text, StringComparison.OrdinalIgnoreCase) ||
                                               x.Supplier.Name.StartsWith(txtInventorySearch.Text, StringComparison.OrdinalIgnoreCase));
         }
+        private async void txtUserSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            dGUser.ItemsSource = (await userTask)
+               .Where(x => x.UserName.StartsWith(txtUserSearch.Text, StringComparison.OrdinalIgnoreCase) ||
+                                         x.Name.StartsWith(txtUserSearch.Text, StringComparison.OrdinalIgnoreCase) ||
+                                          x.Email.StartsWith(txtUserSearch.Text, StringComparison.OrdinalIgnoreCase));
+        }
+
         #region ComboboxOrderData
         // combobox to order items
         //using reflection allows for more flexibility and ease of maintenance in terms of adding or removing properties to sort by
@@ -191,8 +211,15 @@ namespace InventoryManagementForms
             var sortExpression = OrderDictionary.SortingOptionsInventory[sortOption];
             dGInventory.ItemsSource = items.OrderBy(sortExpression);
         }
+        private async void cmbUser_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (userTask is null) return;
+            var items = await userTask;
+            var sortOption = (UserS)cmbUser.SelectedItem;
+            var sortExpression = OrderDictionary.SortingOptionsUser[sortOption];
+            dGUser.ItemsSource = items.OrderBy(sortExpression);
+        }
         #endregion
-
         #region Navigation
         // navigations product
         private void lblAddProduct_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -240,6 +267,17 @@ namespace InventoryManagementForms
             dPAddInvetory.Visibility = Visibility.Hidden;
             dPUpdateInventory.Visibility = Visibility.Visible;
         }
+        private void lblAddUser_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            dGridUserForm.Visibility = Visibility.Visible;
+            dGridUpdateUserForm.Visibility = Visibility.Hidden;
+        }
+
+        private void lblUpdateUser_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            dGridUserForm.Visibility = Visibility.Hidden;
+            dGridUpdateUserForm.Visibility = Visibility.Visible;
+        }
         #endregion
         #region PDFDocs
         // pdf documents
@@ -247,7 +285,7 @@ namespace InventoryManagementForms
         {
             string fileName = "Product";
             string suffix = ".xlsx";
-            dGProducts.WriteToExcelFile(fileName,  new ProductEntity());
+            dGProducts.WriteToExcelFile(fileName, new ProductEntity());
             if (File.Exists($"{fileName}{suffix}"))
             {
                 MessageBox.Show("File succesfully created");
@@ -285,7 +323,19 @@ namespace InventoryManagementForms
         {
             string fileName = "Inventory";
             string suffix = ".xlsx";
-            dGInventory.WriteToExcelFile<InventoryItemEntity>(fileName, new InventoryItemEntity(),  _httpRequestProduct,_httpRequestCategory, _httpRequestSupplier);
+            dGInventory.WriteToExcelFile<InventoryItemEntity>(fileName, new InventoryItemEntity(), _httpRequestProduct, _httpRequestCategory, _httpRequestSupplier);
+            if (File.Exists($"{fileName}{suffix}"))
+            {
+                MessageBox.Show("File succesfully created");
+                return;
+            }
+            MessageBox.Show("Error creating excel file.");
+        }
+        private void btnPdfUserGrid_Click(object sender, RoutedEventArgs e)
+        {
+            string fileName = "User";
+            string suffix = ".xlsx";
+            dGUser.WriteToExcelFile<UserEntity>(fileName, new UserEntity());
             if (File.Exists($"{fileName}{suffix}"))
             {
                 MessageBox.Show("File succesfully created");
@@ -314,6 +364,10 @@ namespace InventoryManagementForms
         private void btnPrintInventoryGrid_Click(object sender, RoutedEventArgs e)
         {
             Printer.PrintData(dGInventory, Data.Inventory);
+        }
+        private void btnPrintUserGrid_Click(object sender, RoutedEventArgs e)
+        {
+            Printer.PrintData(dGUser, Data.User);
         }
         #endregion
         // product forms
@@ -408,7 +462,7 @@ namespace InventoryManagementForms
                 MessageBox.Show("All input field are required!");
                 return;
             }
-            
+
             var selectedCategory = dGCategories.SelectedItem as CategoryEntity;
             if (selectedCategory is null) return;
             selectedCategory.Name = txtUpdateCategoryName.Text;
@@ -443,7 +497,7 @@ namespace InventoryManagementForms
         }
         private async void btnUpdateSupplier_Click(object sender, RoutedEventArgs e)
         {
-            if (!CheckAddSupplierValidation(txtUpdateSupplierName.Text,txtUpdateSupplierAddress.Text, txtUpdateSupplierPhone.Text, txtUpdateSupplierEmail.Text))
+            if (!CheckAddSupplierValidation(txtUpdateSupplierName.Text, txtUpdateSupplierAddress.Text, txtUpdateSupplierPhone.Text, txtUpdateSupplierEmail.Text))
             {
                 return;
             }
@@ -461,7 +515,7 @@ namespace InventoryManagementForms
         private void dGSupplier_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var supplier = dGSupplier.SelectedItem as SupplierEntity;
-            if(supplier is null) return;
+            if (supplier is null) return;
             txtUpdateSupplierName.Text = supplier.Name;
             txtUpdateSupplierAddress.Text = supplier.Address;
             txtUpdateSupplierEmail.Text = supplier.Email;
@@ -514,7 +568,7 @@ namespace InventoryManagementForms
             inventory.SupplierId = supplierIdTask.SupplierId;
             inventory.Quantity = inventoryId.quantity;
             inventory.Product = productIdTask;
-            inventory.LastUpdated= DateTime.Now;
+            inventory.LastUpdated = DateTime.Now;
             inventory.DateAdded = inventoryIdTaks.DateAdded;
             inventory.Category = categoryIdTask;
             inventory.Supplier = supplierIdTask;
@@ -525,11 +579,64 @@ namespace InventoryManagementForms
         private void dGInventory_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var selectedInventoryItem = (InventoryItemEntity)dGInventory.SelectedItem;
-            if(selectedInventoryItem is null) return;
+            if (selectedInventoryItem is null) return;
             txtInventoryUpdateCateogryID.Text = selectedInventoryItem.CategoryId.ToString();
             txtInventoryUpdateProductID.Text = selectedInventoryItem.ProductId.ToString();
             txtInventoryUpdateQuantity.Text = selectedInventoryItem.Quantity.ToString();
             txtInventoryUpdateSupplierID.Text = selectedInventoryItem.SupplierId.ToString();
+        }
+        // user form 
+        private async void btnUpdateUserAddItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (!ValideUser(txtUpdateAddNameUser.Text, txtUpdateAddNameUser.Text, txtUpdateUserRole.Text, txtUpdateUserPassword.Password, txtUpdateUseremail.Text, txtUpdateUserAddress.Text)) return;
+            var selectedUser = (UserEntity)dGUser.SelectedItem;
+            if (selectedUser is null) return;
+            selectedUser.UserName = txtUpdateAddNameUser.Text;
+            selectedUser.Name = txtUpdateAddNameUser.Text;
+            selectedUser.Role = txtUpdateUserRole.Text;
+            selectedUser.Password = txtUpdateUserPassword.Password;
+            selectedUser.Email = txtUpdateUseremail.Text;
+            selectedUser.Address = txtUpdateUserAddress.Text;
+            if (!txtUpdateUseremail.Text.IsValidEmail())
+            {
+                return;
+            }
+            selectedUser.Address = txtUpdateUserAddress.Text;
+            await _httpRequestUser.UpdateRequest(selectedUser, Api.UPDATEUSERBYID, selectedUser.UserId);
+            await UpdateData();
+            ClearTextBoxes();
+        }
+
+
+
+        private async void btnUserAddItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (!ValideUser(txtAddNameUser.Text, txtAddNameUser.Text, txtUserRole.Text, txtUserPassword.Password, txtUseremail.Text, txtUserAddress.Text)) return;
+            var userToAdd = new UserEntity();
+            userToAdd.UserName = txtAddUserNameUser.Text;
+            userToAdd.Name = txtAddNameUser.Text;
+            userToAdd.Role = txtUserRole.Text;
+            userToAdd.Password = txtUserPassword.Password;
+            userToAdd.Email = txtUseremail.Text;
+            userToAdd.Address = txtUserAddress.Text;
+            if (!txtUseremail.Text.IsValidEmail())
+            {
+                return;
+            }
+            await _httpRequestUser.PostRequest(userToAdd, Api.ADDUSER);
+            await UpdateData();
+            ClearTextBoxes();
+        }
+        private void dGUser_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selectedUser = (UserEntity)dGUser.SelectedItem;
+            if (selectedUser is null) return;
+            txtUpdateAddUserNameUser.Text = selectedUser.UserName;
+            txtUpdateAddNameUser.Text = selectedUser.Name;
+            txtUpdateUserRole.Text = selectedUser.Role;
+            txtUpdateUserPassword.Password = selectedUser.Password;
+            txtUpdateUseremail.Text = selectedUser.Email;
+            txtUpdateUserAddress.Text = selectedUser.Address;
         }
         #region DeleteButtons
         // delete buttons
@@ -561,6 +668,13 @@ namespace InventoryManagementForms
             if (selectedInventoryItem is null) return;
 
             await dGInventory.DeleteItem<InventoryItemEntity>(selectedInventoryItem.InventoryItemId, _httpRequestInventoryItem, Api.DELETEINVENTORYITEM, async task => await UpdateData());
+        }
+
+        private async void btnDeleteUser_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedUser = dGUser.SelectedItem as UserEntity;
+            if (selectedUser is null) return;
+            await dGUser.DeleteItem<UserEntity>(selectedUser.UserId, _httpRequestUser, Api.DELETEBYUSERBYID, async task => await UpdateData());
         }
         #endregion
         //validations
@@ -675,15 +789,50 @@ namespace InventoryManagementForms
             }
             return true;
         }
+        private bool ValideUser(string userName, string name, string password, string email, string addres, string role)
+        {
+            if(string.IsNullOrEmpty(userName))
+            {
+                MessageBox.Show("Username is empty!");
+                return false;
+            }
+            if (string.IsNullOrEmpty(name))
+            {
+                MessageBox.Show("Name is empty!");
+                return false;
+            }
+            if (string.IsNullOrEmpty(password))
+            {
+                MessageBox.Show("password is empty!");
+                return false;
+            }
+            if (string.IsNullOrEmpty(email))
+            {
+                MessageBox.Show("email is empty!");
+                return false;
+            }
+            if (string.IsNullOrEmpty(addres))
+            {
+                MessageBox.Show("addres is empty!");
+                return false;
+            }
+            if (string.IsNullOrEmpty(role))
+            {
+                MessageBox.Show("role is empty!");
+                return false;
+            }
+            return true;
+        }
         #endregion
+        // update grids
         private async Task UpdateData()
         {
             productsTask = _httpRequestProduct.GetRequestListAsync(Api.PRODUCT);
             categoriesTask = _httpRequestCategory.GetRequestListAsync(Api.CATEGORY);
             inventoryTask = _httpRequestInventoryItem.GetRequestListAsync(Api.INVENTORY);
             supplierTask = _httpRequestSupplier.GetRequestListAsync(Api.SUPPLIER);
-
-            await Task.WhenAll(productsTask, categoriesTask, inventoryTask, supplierTask);
+            userTask = _httpRequestUser.GetRequestListAsync(Api.USERS);
+            await Task.WhenAll(productsTask, categoriesTask, inventoryTask, supplierTask, userTask);
 
             Dispatcher.Invoke(() =>
             {
@@ -691,6 +840,7 @@ namespace InventoryManagementForms
                 dGCategories.ItemsSource = categoriesTask.Result;
                 dGInventory.ItemsSource = inventoryTask.Result;
                 dGSupplier.ItemsSource = supplierTask.Result;
+                dGUser.ItemsSource = userTask.Result;
             });
         }
         #region clearForms
@@ -722,8 +872,24 @@ namespace InventoryManagementForms
             txtInventoryAddQuantity.Text = string.Empty;
             dtInvetoryAddDateAdded.Text = string.Empty;
         }
-        #endregion
+        private void ClearTextBoxes()
+        {
+            txtUpdateAddNameUser.Text = string.Empty;
+            txtUpdateAddUserNameUser.Text = string.Empty;
+            txtUpdateUserRole.Text = string.Empty;
+            txtUpdateUserAddress.Text = string.Empty;
+            txtUpdateUserPassword.Password = string.Empty;
+            txtUpdateUseremail.Text = string.Empty;
 
+
+            txtAddNameUser.Text = string.Empty;
+            txtAddUserNameUser.Text = string.Empty;
+            txtUserRole.Text = string.Empty;
+            txtUseremail.Text = string.Empty;
+            txtUserPassword.Password = string.Empty;
+            txtUserAddress.Text = string.Empty;
+        }
+        #endregion
 
     }
 }

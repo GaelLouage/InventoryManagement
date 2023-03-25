@@ -28,7 +28,9 @@ namespace InventoryManagementForms.Enums
         // users
         public const string USERS = "User/GetAllUsers";
         public const string USERSBYCREDENTIALS = "User/GetUserByUserNameAndPassWord";
-        public const string DELETEBYUSERCREDENTIALS = "User/DeleteUserById/";
+        public const string UPDATEUSERBYID= "User/UpdateUserById/";
+        public const string DELETEBYUSERBYID = "User/DeleteUserById/";
+        public const string ADDUSER = "User/CreateUser";
         //category
         public const string ADDCATEGORY = "Category/CreateCategory";
         public const string CATEGORY = "Category/GetAllCategories";

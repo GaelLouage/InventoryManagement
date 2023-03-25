@@ -1,4 +1,5 @@
-﻿using Infrastructuur.Entities;
+﻿using DocumentFormat.OpenXml.Drawing.Charts;
+using Infrastructuur.Entities;
 using InventoryManagementForms.Enums;
 using System;
 using System.Collections.Generic;
@@ -47,6 +48,11 @@ namespace InventoryManagementForms.Helpers
                                   { Category.Description, x => x.Description },
                                   {Category.CategoryId, x => x.CategoryId}
          };
-
+        public static readonly Dictionary<UserS, Func<UserEntity, object>> SortingOptionsUser = new()
+        {
+                                  { UserS.Name, x => x.Name },
+                                  { UserS.UserName, x => x.UserName },
+                                  {UserS.Email, x => x.Email}
+         };
     }
 }
