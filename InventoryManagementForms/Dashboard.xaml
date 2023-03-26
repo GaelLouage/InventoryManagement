@@ -658,7 +658,7 @@
                             <PasswordBox x:Name="txtUserPassword" Grid.Row="3" Grid.Column="2" VerticalAlignment="Top"/>
                             <TextBox x:Name="txtUseremail" Grid.Row="4" Grid.Column="2" VerticalAlignment="Top"/>
                             <TextBox x:Name="txtUserAddress" Grid.Row="5" Grid.Column="2" VerticalAlignment="Top"/>
-                            <TextBox x:Name="txtUserRole" Grid.Row="6" Grid.Column="2" VerticalAlignment="bottom"/>
+                            <ComboBox x:Name="cmbUserRole" Grid.Row="6" Grid.Column="2" Margin="0,74,0,1"/>
                             <Button x:Name="btnUserAddItem" Content="Add User" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" Margin="40,49,10,10" Click="btnUserAddItem_Click"/>
                         </Grid>
                     </DockPanel>
@@ -692,7 +692,7 @@
                             <PasswordBox x:Name="txtUpdateUserPassword" Grid.Row="3" Grid.Column="2" VerticalAlignment="Top"/>
                             <TextBox x:Name="txtUpdateUseremail" Grid.Row="4" Grid.Column="2" VerticalAlignment="Top"/>
                             <TextBox x:Name="txtUpdateUserAddress" Grid.Row="5" Grid.Column="2" VerticalAlignment="Top"/>
-                            <TextBox x:Name="txtUpdateUserRole" Grid.Row="6" Grid.Column="2" VerticalAlignment="Bottom"/>
+                            <ComboBox x:Name="cmbUpdateUserRole" Grid.Row="6" Grid.Column="2" Margin="0,74,0,1"/>
                             <Button x:Name="btnUpdateUserAddItem" Content="Update User" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" Margin="10 10 10 10" Click="btnUpdateUserAddItem_Click"/>
                         </Grid>
                     </DockPanel>

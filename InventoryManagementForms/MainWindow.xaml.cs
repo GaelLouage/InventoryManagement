@@ -44,7 +44,7 @@ namespace InventoryManagementForms
         {
             _users = await _httpRequestUser.GetRequestListAsync(Api.USERS);
         }
-        private async void btnLogin_Click(object sender, RoutedEventArgs e)
+        private  void btnLogin_Click(object sender, RoutedEventArgs e)
         {
             if(!string.IsNullOrEmpty(txtUsername.Text) && !string.IsNullOrEmpty(txtPassword.Password))
             {

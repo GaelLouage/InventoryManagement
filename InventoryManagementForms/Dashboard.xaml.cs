@@ -44,6 +44,7 @@ using InventoryManagementForms.Extensions;
 using DocumentFormat.OpenXml.Wordprocessing;
 using DocumentFormat.OpenXml.ExtendedProperties;
 using System.Reflection;
+using Infrastructuur.Constants;
 
 namespace InventoryManagementForms
 {
@@ -65,6 +66,7 @@ namespace InventoryManagementForms
         private ValidInventoryId inventoryId = new ValidInventoryId();
         private ProductStruct productStruct = new ProductStruct();
         private UserEntity _user;
+        private string[] _roles = new string[2] { Role.SUPERADMIN, Role.ADMIN };
         public Dashboard(IHttpRequest<ProductEntity> httpRequestProduct, IHttpRequest<CategoryEntity> httpRequestCategory, IHttpRequest<InventoryItemEntity> httpRequestInventoryItem, IHttpRequest<SupplierEntity> httpRequestSupplier, IHttpRequest<UserEntity> httpRequestUser)
         {
             _httpRequestProduct = httpRequestProduct;
@@ -96,6 +98,10 @@ namespace InventoryManagementForms
             cmbSupplier.ItemsSource = Enum.GetValues(typeof(Supplier)).Cast<Supplier>();
             cmbInventory.ItemsSource = Enum.GetValues(typeof(Inventory)).Cast<Inventory>();
             cmbUser.ItemsSource = Enum.GetValues(typeof(UserS)).Cast<UserS>();
+            cmbUserRole.Items.Add(Role.SUPERADMIN);
+            cmbUserRole.Items.Add(Role.ADMIN);
+            cmbUpdateUserRole.Items.Add(Role.SUPERADMIN);
+            cmbUpdateUserRole.Items.Add(Role.ADMIN);
             // hide forms
             //TODO: place in method
             dGridUpdateProductForm.Visibility = Visibility.Hidden;
@@ -105,7 +111,7 @@ namespace InventoryManagementForms
             dGridUpdateUserForm.Visibility = Visibility.Hidden;
 
             // hide the user tab for non superadmins
-            if (_user.Role is not "SuperAdmin")
+            if (_user.Role is not Role.SUPERADMIN)
             {
                 tbItemUsers.Visibility = Visibility.Hidden;
             }
@@ -588,12 +594,12 @@ namespace InventoryManagementForms
         // user form 
         private async void btnUpdateUserAddItem_Click(object sender, RoutedEventArgs e)
         {
-            if (!ValideUser(txtUpdateAddNameUser.Text, txtUpdateAddNameUser.Text, txtUpdateUserRole.Text, txtUpdateUserPassword.Password, txtUpdateUseremail.Text, txtUpdateUserAddress.Text)) return;
+            if (!ValideUser(txtUpdateAddNameUser.Text, txtUpdateAddNameUser.Text, txtUpdateUserPassword.Password, txtUpdateUseremail.Text, txtUpdateUserAddress.Text, cmbUpdateUserRole)) return;
             var selectedUser = (UserEntity)dGUser.SelectedItem;
             if (selectedUser is null) return;
             selectedUser.UserName = txtUpdateAddNameUser.Text;
             selectedUser.Name = txtUpdateAddNameUser.Text;
-            selectedUser.Role = txtUpdateUserRole.Text;
+            selectedUser.Role = _roles[cmbUpdateUserRole.SelectedIndex];
             selectedUser.Password = txtUpdateUserPassword.Password;
             selectedUser.Email = txtUpdateUseremail.Text;
             selectedUser.Address = txtUpdateUserAddress.Text;
@@ -611,11 +617,11 @@ namespace InventoryManagementForms
 
         private async void btnUserAddItem_Click(object sender, RoutedEventArgs e)
         {
-            if (!ValideUser(txtAddNameUser.Text, txtAddNameUser.Text, txtUserRole.Text, txtUserPassword.Password, txtUseremail.Text, txtUserAddress.Text)) return;
+            if (!ValideUser(txtAddNameUser.Text, txtAddNameUser.Text, txtUserPassword.Password, txtUseremail.Text, txtUserAddress.Text, cmbUserRole)) return;
             var userToAdd = new UserEntity();
             userToAdd.UserName = txtAddUserNameUser.Text;
             userToAdd.Name = txtAddNameUser.Text;
-            userToAdd.Role = txtUserRole.Text;
+            userToAdd.Role = _roles[cmbUserRole.SelectedIndex];
             userToAdd.Password = txtUserPassword.Password;
             userToAdd.Email = txtUseremail.Text;
             userToAdd.Address = txtUserAddress.Text;
@@ -627,13 +633,14 @@ namespace InventoryManagementForms
             await UpdateData();
             ClearTextBoxes();
         }
+    
         private void dGUser_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var selectedUser = (UserEntity)dGUser.SelectedItem;
             if (selectedUser is null) return;
             txtUpdateAddUserNameUser.Text = selectedUser.UserName;
             txtUpdateAddNameUser.Text = selectedUser.Name;
-            txtUpdateUserRole.Text = selectedUser.Role;
+            cmbUpdateUserRole.SelectedValue = selectedUser.Role;
             txtUpdateUserPassword.Password = selectedUser.Password;
             txtUpdateUseremail.Text = selectedUser.Email;
             txtUpdateUserAddress.Text = selectedUser.Address;
@@ -789,7 +796,7 @@ namespace InventoryManagementForms
             }
             return true;
         }
-        private bool ValideUser(string userName, string name, string password, string email, string addres, string role)
+        private bool ValideUser(string userName, string name, string password, string email, string addres, ComboBox role)
         {
             if(string.IsNullOrEmpty(userName))
             {
@@ -816,7 +823,7 @@ namespace InventoryManagementForms
                 MessageBox.Show("addres is empty!");
                 return false;
             }
-            if (string.IsNullOrEmpty(role))
+            if (role.SelectedItem is null)
             {
                 MessageBox.Show("role is empty!");
                 return false;
@@ -876,7 +883,6 @@ namespace InventoryManagementForms
         {
             txtUpdateAddNameUser.Text = string.Empty;
             txtUpdateAddUserNameUser.Text = string.Empty;
-            txtUpdateUserRole.Text = string.Empty;
             txtUpdateUserAddress.Text = string.Empty;
             txtUpdateUserPassword.Password = string.Empty;
             txtUpdateUseremail.Text = string.Empty;
@@ -884,12 +890,12 @@ namespace InventoryManagementForms
 
             txtAddNameUser.Text = string.Empty;
             txtAddUserNameUser.Text = string.Empty;
-            txtUserRole.Text = string.Empty;
             txtUseremail.Text = string.Empty;
             txtUserPassword.Password = string.Empty;
             txtUserAddress.Text = string.Empty;
         }
         #endregion
 
+ 
     }
 }
