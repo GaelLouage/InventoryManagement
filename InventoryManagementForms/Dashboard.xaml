@@ -5,14 +5,103 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InventoryManagementForms"
         mc:Ignorable="d"
-       Title="Dashboard Example" Height="1080" Width="1920" Loaded="Window_Loaded" Background="Gray">
-    <Grid>
+        Height="1080" Width="1920" Loaded="Window_Loaded" Background="white">
+    <Grid x:Name="gridDashboard" Background="#FF0E314C">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <TabControl Grid.Row="0" Margin="10" Height="900"  BorderThickness="0">
-            <TabItem Header="Products">
+
+            <TabItem Header="Dashboard" x:Name="tbNavigation">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="25"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="25"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="25"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="10"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    
+                    <StackPanel x:Name="sPProduct" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2"  Background="#FF82DBEC" Cursor="Hand" MouseLeftButtonUp="sPProduct_MouseLeftButtonUp">
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal">
+                                <Label x:Name="lblTotalProducts" Content="0" Foreground="White" FontSize="50px"/>
+                                <Image Source="Images/product.png" Width="75" Margin="151 0 0 0"/>
+                            </StackPanel>
+                            <Label Content="Total Products" Foreground="White" FontSize="24"/>
+                            <StackPanel Background="#FF49D1FF"  Margin="0 10 0 0">
+                                <Label x:Name="lblMoreInfoProduct"  Content="More Info >>" HorizontalAlignment="Center"  Foreground="White" FontSize="24" VerticalAlignment="Bottom"/>
+                            </StackPanel>
+                           
+                        </StackPanel>
+                     
+                    </StackPanel>
+
+                    <StackPanel x:Name="sPCategory" Grid.Row="2" Grid.Column="5" Grid.ColumnSpan="2"  Background="#FF74B17D" Cursor="Hand" MouseLeftButtonUp="sPCategory_MouseLeftButtonUp">
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal">
+                                <Label x:Name="lblTotalCategories" Content="0" Foreground="White" FontSize="50px"/>
+                                <Image Source="Images/product.png" Width="75" Margin="151 0 0 0"/>
+                            </StackPanel>
+                            <Label Content="Total Categories" Foreground="White" FontSize="24"/>
+                            <StackPanel Background="#FF378434"  Margin="0 10 0 0">
+                                <Label x:Name="lblMoreInfoCategories"  Content="More Info >>" HorizontalAlignment="Center"  Foreground="White" FontSize="24" VerticalAlignment="Bottom"/>
+                            </StackPanel>
+
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel x:Name="sPTotalSupplier" Grid.Row="2" Grid.Column="8" Grid.ColumnSpan="2"  Background="#FFEC9706" Cursor="Hand" MouseLeftButtonUp="sPTotalSupplier_MouseLeftButtonUp"> 
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal">
+                                <Label x:Name="lblTotalSupplier" Content="0" Foreground="White" FontSize="50px"/>
+                                <Image Source="Images/product.png" Width="75" Margin="151 0 0 0"/>
+                            </StackPanel>
+                            <Label Content="Total Suppliers" Foreground="White" FontSize="24"/>
+                            <StackPanel Background="#FFCA8206"  Margin="0 10 0 0">
+                                <Label x:Name="lblMoreInfoSupplier"  Content="More Info >>" HorizontalAlignment="Center"  Foreground="White" FontSize="24" VerticalAlignment="Bottom"/>
+                            </StackPanel>
+
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel x:Name="sPInventoryItems" Grid.Row="2" Grid.Column="11" Grid.ColumnSpan="2"  Background="#FFF55835" Cursor="Hand" MouseLeftButtonUp="sPInventoryItems_MouseLeftButtonUp">
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal">
+                                <Label x:Name="lblTotalInventory" Content="0" Foreground="White" FontSize="50px"/>
+                                <Image Source="Images/inventory.png" Width="75" Margin="151 0 0 0"/>
+                            </StackPanel>
+                            <Label Content="Total InventoryItems" Foreground="White" FontSize="24"/>
+                            <StackPanel Background="#FFCA1806" Margin="0 10 0 0">
+                                <Label x:Name="lblMoreInfoInventoryItems"  Content="More Info >>" HorizontalAlignment="Center"  Foreground="White" FontSize="24" VerticalAlignment="Bottom"/>
+                            </StackPanel>
+
+                        </StackPanel>
+                    </StackPanel>
+
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Products"  x:Name="tbItemProduct">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="10"/>
@@ -45,7 +134,7 @@
                               AlternatingRowBackground="#FFD4DDE6" FontSize="16" SelectionChanged="dGProducts_SelectionChanged">
                         <DataGrid.ColumnHeaderStyle>
                             <Style TargetType="DataGridColumnHeader">
-                                <Setter Property="Background" Value="Gray" />
+                                <Setter Property="Background" Value="#FF0E314C" />
                                 <Setter Property="Foreground" Value="white" />
                                 <Setter Property="FontSize" Value="12px" />
                                 <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -63,7 +152,7 @@
                             <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="*" />
                         </DataGrid.Columns>
                     </DataGrid>
-                    <DockPanel LastChildFill="False" Grid.Row="0" Grid.RowSpan="4" Background="Gray" Margin="-5,-3,307,-5" Grid.ColumnSpan="5">
+                    <DockPanel LastChildFill="False" Grid.Row="0" Grid.RowSpan="4" Background="#FF0E314C" Margin="-5,-3,307,-5" Grid.ColumnSpan="5">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="10"/>
@@ -153,7 +242,7 @@
                 </Grid>
             </TabItem>
 
-            <TabItem Header="Categories">
+            <TabItem Header="Categories" x:Name="tbItemCategories">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="10"/>
@@ -186,7 +275,7 @@
                               AlternatingRowBackground="LightBlue" SelectionChanged="dGCategories_SelectionChanged">
                         <DataGrid.ColumnHeaderStyle>
                             <Style TargetType="DataGridColumnHeader">
-                                <Setter Property="Background"  Value="Gray" />
+                                <Setter Property="Background"  Value="#FF0E314C" />
                                 <Setter Property="Foreground" Value="white" />
                                 <Setter Property="FontSize" Value="12px" />
                                 <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -199,7 +288,7 @@
                             <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*" />
                         </DataGrid.Columns>
                     </DataGrid>
-                    <DockPanel LastChildFill="False" Grid.Row="0" Grid.RowSpan="4" Background="Gray"  Margin="-5,-3,307,-5" Grid.ColumnSpan="5">
+                    <DockPanel  LastChildFill="False" Grid.Row="0" Grid.RowSpan="4" Background="#FF0E314C"  Margin="-5,-3,307,-5" Grid.ColumnSpan="5">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="10"/>
@@ -280,7 +369,7 @@
                     <ComboBox x:Name="cmbCategory" Grid.Column="7" HorizontalAlignment="Center" Margin="0,50,0,0" VerticalAlignment="Top" Width="309" Height="34" SelectionChanged="cmbCategory_SelectionChanged" />
                 </Grid>
             </TabItem>
-            <TabItem Header="Supplier">
+            <TabItem Header="Supplier" x:Name="tItemSupplier">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="10"/>
@@ -310,7 +399,7 @@
                               AlternatingRowBackground="LightBlue" SelectionChanged="dGSupplier_SelectionChanged">
                         <DataGrid.ColumnHeaderStyle>
                             <Style TargetType="DataGridColumnHeader">
-                                <Setter Property="Background"  Value="Gray"  />
+                                <Setter Property="Background"  Value="#FF0E314C"  />
                                 <Setter Property="Foreground" Value="white" />
                                 <Setter Property="FontSize" Value="12px" />
                                 <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -325,7 +414,7 @@
                             <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="*" />
                         </DataGrid.Columns>
                     </DataGrid>
-                    <DockPanel  Grid.Column="1" LastChildFill="False" Grid.Row="0" Grid.RowSpan="4" Background="Gray"  Margin="-15 -3 -5 -5">
+                    <DockPanel  Grid.Column="1" LastChildFill="False" Grid.Row="0" Grid.RowSpan="4" Background="#FF0E314C"  Margin="-15 -3 -5 -5">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="10"/>
@@ -412,7 +501,7 @@
                     <ComboBox x:Name="cmbSupplier" Grid.Column="5" HorizontalAlignment="Center" Margin="0,50,0,0" VerticalAlignment="Top" Width="309" Height="34" SelectionChanged="cmbSupplier_SelectionChanged"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Inventory">
+            <TabItem Header="Inventory" x:Name="tItemInventory">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="10"/>
@@ -442,7 +531,7 @@
                               AlternatingRowBackground="LightBlue" SelectionChanged="dGInventory_SelectionChanged">
                         <DataGrid.ColumnHeaderStyle>
                             <Style TargetType="DataGridColumnHeader">
-                                <Setter Property="Background"  Value="Gray"  />
+                                <Setter Property="Background" Value="#FF0E314C"   />
                                 <Setter Property="Foreground" Value="white" />
                                 <Setter Property="FontSize" Value="12px" />
                                 <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -462,7 +551,7 @@
                             <DataGridTextColumn Header="Supplier Name" Binding="{Binding Supplier.Name}" Width="*" />
                         </DataGrid.Columns>
                     </DataGrid>
-                    <DockPanel  Grid.Column="1" LastChildFill="False" Grid.Row="0" Grid.RowSpan="4" Background="Gray"  Margin="-15 -3 -5 -5">
+                    <DockPanel  Grid.Column="1" LastChildFill="False" Grid.Row="0" Grid.RowSpan="4" Background="#FF0E314C" Margin="-15 -3 -5 -5">
                         <Grid >
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="10"/>
@@ -584,7 +673,7 @@
                               AlternatingRowBackground="#FFD4DDE6" FontSize="16" SelectionChanged="dGUser_SelectionChanged">
                         <DataGrid.ColumnHeaderStyle>
                             <Style TargetType="DataGridColumnHeader">
-                                <Setter Property="Background" Value="Gray" />
+                                <Setter Property="Background" Value="#FF0E314C" />
                                 <Setter Property="Foreground" Value="white" />
                                 <Setter Property="FontSize" Value="12px" />
                                 <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -603,7 +692,7 @@
                             <DataGridTextColumn Header="Role" Binding="{Binding Role}" Width="*" />
                         </DataGrid.Columns>
                     </DataGrid>
-                    <DockPanel LastChildFill="False" Grid.Row="0" Grid.RowSpan="4" Background="Gray" Margin="-5,-3,307,-5" Grid.ColumnSpan="5">
+                    <DockPanel LastChildFill="False" Grid.Row="0" Grid.RowSpan="4" Background="#FF0E314C" Margin="-5,-3,307,-5" Grid.ColumnSpan="5">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="10"/>

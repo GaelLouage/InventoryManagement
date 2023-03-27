@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InventoryManagementForms"
         mc:Ignorable="d"
-            Title="Login" Height="200" Width="463" Loaded="Window_Loaded">
-    <Grid>
+         Height="200" Width="463" Loaded="Window_Loaded">
+    <Grid Background="#FF0E314C">
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition Height="Auto"/>
@@ -18,13 +18,13 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Label Grid.Row="2" Grid.Column="0" Content="Username:" Margin="5"/>
+        <Label Grid.Row="2" Grid.Column="0" Content="Username:" Margin="5" Foreground="White"/>
         <TextBox Grid.Row="2" Grid.Column="1" Margin="5" Name="txtUsername" Width="310"/>
-        <Label Grid.Row="3" Grid.Column="0" Content="Password:" Margin="5"/>
+        <Label Grid.Row="3" Grid.Column="0" Content="Password:" Margin="5" Foreground="White"/>
         <PasswordBox Grid.Row="3" Grid.Column="1" Margin="5" Name="txtPassword"  Width="310"/>
         <StackPanel  Grid.Row="4" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Margin="5" Content="Log In" Name="btnLogin" Click="btnLogin_Click" Width="150" Height="30" Cursor="Hand" Background="Blue" Foreground="White"/>
-            <Button  Margin="5" Content="Exit" Name="btnExit" Click="btnExit_Click" Width="150" Height="30" Cursor="Hand" Background="Red" Foreground="White"/>
+            <Button Margin="5" Content="Log In" Name="btnLogin" Click="btnLogin_Click" Width="150" Height="30" Cursor="Hand" Background="#FF181C3E" Foreground="White" BorderThickness="0"/>
+            <Button  Margin="5" Content="Exit" Name="btnExit" Click="btnExit_Click" Width="150" Height="30" Cursor="Hand" Background="Red" Foreground="White" BorderThickness="0"/>
         </StackPanel>
       
         <Label Grid.Row="4" Grid.Column="1" Margin="5" Name="lblError" Foreground="Red" Visibility="Collapsed"/>

@@ -68,3 +68,6 @@ C:\Users\louag\source\repos\InventoryManagementSystem\InventoryManagementForms\b
 C:\Users\louag\source\repos\InventoryManagementSystem\InventoryManagementForms\bin\Debug\net6.0-windows\Microsoft.IO.RecyclableMemoryStream.dll
 C:\Users\louag\source\repos\InventoryManagementSystem\InventoryManagementForms\bin\Debug\net6.0-windows\System.Security.Cryptography.Pkcs.dll
 C:\Users\louag\source\repos\InventoryManagementSystem\InventoryManagementForms\bin\Debug\net6.0-windows\runtimes\win\lib\net6.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\louag\source\repos\InventoryManagementSystem\InventoryManagementForms\obj\Debug\net6.0-windows\InventoryManagementForms_Content.g.cs
+C:\Users\louag\source\repos\InventoryManagementSystem\InventoryManagementForms\bin\Debug\net6.0-windows\Images\product.png
+C:\Users\louag\source\repos\InventoryManagementSystem\InventoryManagementForms\bin\Debug\net6.0-windows\Images\inventory.png

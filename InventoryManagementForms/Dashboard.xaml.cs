@@ -110,6 +110,13 @@ namespace InventoryManagementForms
             dPUpdateInventory.Visibility = Visibility.Hidden;
             dGridUpdateUserForm.Visibility = Visibility.Hidden;
 
+
+            // dashboard
+            lblTotalProducts.Content = (await productsTask).Count();
+            lblTotalInventory.Content  = (await inventoryTask).Count();
+            lblTotalCategories.Content = (await categoriesTask).Count();
+            lblTotalSupplier.Content = (await supplierTask).Count();
+           
             // hide the user tab for non superadmins
             if (_user.Role is not Role.SUPERADMIN)
             {
@@ -894,8 +901,29 @@ namespace InventoryManagementForms
             txtUserPassword.Password = string.Empty;
             txtUserAddress.Text = string.Empty;
         }
-        #endregion
 
+        #endregion
+        // tabitems
  
+
+        private void sPProduct_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            tbItemProduct.IsSelected = true;
+        }
+
+        private void sPCategory_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            tbItemCategories.IsSelected = true;
+        }
+
+        private void sPTotalSupplier_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            tItemSupplier.IsSelected = true;
+        }
+
+        private void sPInventoryItems_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            tItemInventory.IsSelected = true;
+        }
     }
 }
