@@ -22,7 +22,13 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TabControl Grid.Row="0" Margin="10" Height="900"  BorderThickness="0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <TabControl Grid.Row="0" Margin="10 15 0 0" Height="1080" Grid.Column="1" Grid.ColumnSpan="3" BorderThickness="0">
             <TabItem Header="Dashboard" x:Name="tbNavigation" Width="100" Height="32" Margin="-11 0 0 0 ">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -52,14 +58,14 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <StackPanel x:Name="sPProduct" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="3"  Background="#FF82DBEC" Cursor="Hand" MouseLeftButtonUp="sPProduct_MouseLeftButtonUp" Margin="136,168,0,168" Grid.RowSpan="3">
+                    <StackPanel x:Name="sPProduct" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="3" Background="#FF82DBEC" Cursor="Hand" MouseLeftButtonUp="sPProduct_MouseLeftButtonUp" Margin="121,46,0,168" Grid.RowSpan="2">
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal">
                                 <Label x:Name="lblTotalProducts" Content="0" Foreground="White" FontSize="50px"/>
-                                <Image Source="Images/product.png" Width="50" Margin="220 30 0 0"/>
+                                <Image Source="Images/product.png" Width="50" Margin="180 30 0 0"/>
                             </StackPanel>
                             <Label Content="Total Products" Foreground="White" FontSize="24"/>
-                            <StackPanel Background="#FF49D1FF"  Margin="0 10 0 0">
+                            <StackPanel Background="#FF49D1FF"  Margin="0 30 0 0">
                                 <Label x:Name="lblMoreInfoProduct"  Content="More Info >>" HorizontalAlignment="Center"  Foreground="White" FontSize="24" VerticalAlignment="Bottom"/>
                             </StackPanel>
 
@@ -67,42 +73,42 @@
 
                     </StackPanel>
 
-                    <StackPanel x:Name="sPCategory" Grid.Row="1" Grid.Column="5" Grid.ColumnSpan="4"  Background="#FF74B17D" Cursor="Hand" MouseLeftButtonUp="sPCategory_MouseLeftButtonUp" Margin="25,168,25,168" Grid.RowSpan="3">
+                    <StackPanel x:Name="sPCategory" Grid.Row="2" Grid.Column="5" Grid.ColumnSpan="3"  Background="#FF74B17D" Cursor="Hand" MouseLeftButtonUp="sPCategory_MouseLeftButtonUp" Margin="24,46,10,168" Grid.RowSpan="2">
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal">
                                 <Label x:Name="lblTotalCategories" Content="0" Foreground="White" FontSize="50px"/>
-                                <Image Source="Images/options.png" Width="50" Margin="251 30 0 0"/>
+                                <Image Source="Images/options.png" Width="50" Margin="180 30 0 0"/>
                             </StackPanel>
                             <Label Content="Total Categories" Foreground="White" FontSize="24"/>
-                            <StackPanel Background="#FF378434"  Margin="0 10 0 0">
+                            <StackPanel Background="#FF378434"  Margin="0 30 0 0">
                                 <Label x:Name="lblMoreInfoCategories"  Content="More Info >>" HorizontalAlignment="Center"  Foreground="White" FontSize="24" VerticalAlignment="Bottom"/>
                             </StackPanel>
 
                         </StackPanel>
                     </StackPanel>
 
-                    <StackPanel x:Name="sPTotalSupplier" Grid.Row="1" Grid.Column="8" Grid.ColumnSpan="4"  Background="#FFEC9706" Cursor="Hand" MouseLeftButtonUp="sPTotalSupplier_MouseLeftButtonUp" Margin="24,168,25,168" Grid.RowSpan="3">
+                    <StackPanel x:Name="sPTotalSupplier" Grid.Row="2" Grid.Column="8" Grid.ColumnSpan="4"  Background="#FFEC9706" Cursor="Hand" MouseLeftButtonUp="sPTotalSupplier_MouseLeftButtonUp" Margin="24,46,25,168" Grid.RowSpan="2">
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal">
                                 <Label x:Name="lblTotalSupplier" Content="0" Foreground="White" FontSize="50px"/>
-                                <Image Source="Images/distribution.png" Width="50" Margin="251 30 0 0"/>
+                                <Image Source="Images/distribution.png" Width="50" Margin="180 30 0 0"/>
                             </StackPanel>
                             <Label Content="Total Suppliers" Foreground="White" FontSize="24"/>
-                            <StackPanel Background="#FFCA8206"  Margin="0 10 0 0">
-                                <Label x:Name="lblMoreInfoSupplier"  Content="More Info >>" HorizontalAlignment="Center"  Foreground="White" FontSize="24" VerticalAlignment="Bottom"/>
+                            <StackPanel Background="#FFCA8206"  Margin="0 30 0 0">
+                                <Label x:Name="lblMoreInfoSupplier"  Content="More Info >>" HorizontalAlignment="Center"  Foreground="White" FontSize="24"/>
                             </StackPanel>
 
                         </StackPanel>
                     </StackPanel>
 
-                    <StackPanel x:Name="sPInventoryItems" Grid.Row="1" Grid.Column="12" Grid.ColumnSpan="3"  Background="#FFF55835" Cursor="Hand" MouseLeftButtonUp="sPInventoryItems_MouseLeftButtonUp" Margin="0,168,180,168" Grid.RowSpan="3">
+                    <StackPanel x:Name="sPInventoryItems" Grid.Row="2" Grid.Column="12" Grid.ColumnSpan="2"  Background="#FFF55835" Cursor="Hand" MouseLeftButtonUp="sPInventoryItems_MouseLeftButtonUp" Margin="0,46,20,168" Grid.RowSpan="2">
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal">
                                 <Label x:Name="lblTotalInventory" Content="0" Foreground="White" FontSize="50px"/>
-                                <Image Source="Images/inventory.png" Width="50" Margin="251 30 0 0"/>
+                                <Image Source="Images/inventory.png" Width="50" Margin="180 30 0 0"/>
                             </StackPanel>
                             <Label Content="Total InventoryItems" Foreground="White" FontSize="24"/>
-                            <StackPanel Background="#FFCA1806" Margin="0 10 0 0">
+                            <StackPanel Background="#FFCA1806" Margin="0 30 0 0">
                                 <Label x:Name="lblMoreInfoInventoryItems"  Content="More Info >>" HorizontalAlignment="Center"  Foreground="White" FontSize="24" VerticalAlignment="Bottom"/>
                             </StackPanel>
 
@@ -110,14 +116,14 @@
                     </StackPanel>
 
 
-                    <StackPanel x:Name="sPUsers" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="3"  Background="#FFE85EFF" Cursor="Hand" MouseLeftButtonUp="sPUsers_MouseLeftButtonUp" Margin="136,168,0,168" Grid.RowSpan="3">
+                    <StackPanel x:Name="sPUsers" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="3"  Background="#FFE85EFF" Cursor="Hand" MouseLeftButtonUp="sPUsers_MouseLeftButtonUp" Margin="121,96,0,117" Grid.RowSpan="2">
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal">
                                 <Label x:Name="lblTotalUsers" Content="0" Foreground="White" FontSize="50px"/>
-                                <Image Source="Images/user.png" Width="50" Margin="251 30 0 0"/>
+                                <Image Source="Images/user.png" Width="50" Margin="180 30 0 0"/>
                             </StackPanel>
                             <Label Content="Total Users" Foreground="White" FontSize="24"/>
-                            <StackPanel Background="#FFAE06CA" Margin="0 10 0 0">
+                            <StackPanel Background="#FFAE06CA" Margin="0 30 0 0">
                                 <Label x:Name="lblUsers"  Content="More Info >>" HorizontalAlignment="Center"  Foreground="White" FontSize="24" VerticalAlignment="Bottom"/>
                             </StackPanel>
 
@@ -126,7 +132,7 @@
                 </Grid>
             </TabItem>
 
-            <TabItem Header="Products"  x:Name="tbItemProduct" Width="100" Height="32" Margin="-11 0 0 0 ">
+            <TabItem Header="Products"  x:Name="tbItemProduct" Width="100" Height="32" Margin="-11 0 0 0">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="10"/>
@@ -147,15 +153,17 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <StackPanel Orientation="Horizontal" Grid.Column="5" Grid.Row="0" Grid.ColumnSpan="3" Margin="0,0,312,0" >
-                        <Image x:Name="btnRemoveProductGrid" Source="Images/remove.png" Width="50" Height="50"  VerticalAlignment="Bottom" Margin="15 5 5 5" Cursor="Hand" MouseLeftButtonUp="btnRemoveProductGrid_MouseLeftButtonUp"/>
+                        <Image x:Name="btnAddProductGrid" Source="Images/add.png" Width="50" Height="50"  VerticalAlignment="Bottom" Margin="15 5 5 5" Cursor="Hand" ToolTip="Add" MouseLeftButtonUp="btnAddProductGrid_MouseLeftButtonUp"/>
+                        <Image x:Name="btnupdateProductGrid" Source="Images/updated.png" Width="50" Height="50"  VerticalAlignment="Bottom" Margin="15 5 5 5" Cursor="Hand" ToolTip="Update" MouseLeftButtonUp="btnupdateProductGrid_MouseLeftButtonUp"/>
+                        <Image x:Name="btnRemoveProductGrid" Source="Images/remove.png" Width="50" Height="50"  VerticalAlignment="Bottom" Margin="15 5 5 5" Cursor="Hand" MouseLeftButtonUp="btnRemoveProductGrid_MouseLeftButtonUp" ToolTip="Remove"/>
                         <Button x:Name="btnChartProduct" Content="Chart Product"  Width="130" Height="30"  Margin="11 5 5 5" VerticalAlignment="Bottom" Background="#FF0E314C" Foreground="white" Click="btnChartProduct_Click"/>
-                        <Image x:Name="btnPrintProductGrid" Source="Images/print.png" Width="50" Height="50"  VerticalAlignment="Bottom" Margin="15 5 5 5" Cursor="Hand" MouseLeftButtonUp="btnPrintProductGrid_MouseLeftButtonUp"/>
-                        <Image x:Name="btnPdfProductGrid" Source="Images/excel.png" Width="50" Height="50"  VerticalAlignment="Bottom" Margin="15 5 5 5" Cursor="Hand" MouseLeftButtonUp="btnPdfProductGrid_MouseLeftButtonUp"/>
+                        <Image x:Name="btnPrintProductGrid" Source="Images/print.png" Width="50" Height="50"  VerticalAlignment="Bottom" Margin="15 5 5 5" Cursor="Hand" MouseLeftButtonUp="btnPrintProductGrid_MouseLeftButtonUp" ToolTip="Print"/>
+                        <Image x:Name="btnPdfProductGrid" Source="Images/excel.png" Width="50" Height="50"  VerticalAlignment="Bottom" Margin="15 5 5 5" Cursor="Hand" MouseLeftButtonUp="btnPdfProductGrid_MouseLeftButtonUp" ToolTip="Save as PDF"/>
                     </StackPanel>
 
                     <TextBox x:Name="txtProductSearch" Grid.Row="0" Grid.Column="8" Margin="5,50,5,0" Padding="3 5 8 3" TextChanged="txtProductSearch_TextChanged" FontSize="16px" Height="35" VerticalAlignment="Top"/>
                     <!-- Add content for Products tab here -->
-                    <DataGrid x:Name="dGProducts" RowHeight="30"  VerticalAlignment="Top" Margin="10,0,5,0"  Grid.Row="1" Grid.Column="5" Grid.ColumnSpan="4" Grid.RowSpan="3" Height="800" AutoGenerateColumns="False" 
+                    <DataGrid x:Name="dGProducts" RowHeight="30"  VerticalAlignment="Top" Margin="10,0,5,0"  Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="5" Grid.RowSpan="3" Height="800" AutoGenerateColumns="False" 
                               BorderBrush="#FFD4DDE6" 
                               AlternatingRowBackground="#FFD4DDE6" FontSize="16" SelectionChanged="dGProducts_SelectionChanged">
                         <DataGrid.ColumnHeaderStyle>
@@ -180,7 +188,7 @@
 
                     </DataGrid>
 
-                    <syncfusion:SfChart x:Name="chartProducts"  Header="Inventory Levels"  Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="4" Grid.RowSpan="3" Height="800" >
+                    <syncfusion:SfChart x:Name="chartProducts"  Header="Inventory Levels"  Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="7" Grid.RowSpan="3" Height="650">
                         <!--Initialize the horizontal axis for SfChart-->
                         <syncfusion:SfChart.ColorModel>
                             <syncfusion:ChartColorModel>
@@ -218,14 +226,14 @@
                     </StackPanel>
                     <ListBox x:Name="lbProductLessThan5" Grid.Row="1" Grid.Column="8" Grid.RowSpan="2" Margin="5 52 5 5" SelectionChanged="lbProductLessThan5_SelectionChanged"/>
                     <Image x:Name="barcodeProductImage" Width="200" Height="100"  Grid.Row="3" Grid.Column="8"/>
-                    <DockPanel LastChildFill="False" Grid.Row="0" Grid.RowSpan="4" Background="#FF0E314C" Margin="-5,-3,307,-5" Grid.ColumnSpan="5">
+                    <DockPanel LastChildFill="False" Grid.Row="0" Grid.RowSpan="4"  Margin="-5,-3,307,-5" Grid.ColumnSpan="5">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="10"/>
-                                <ColumnDefinition Width="26.5"/>
-                                <ColumnDefinition Width="228"/>
-                                <ColumnDefinition Width="37.5"/>
-                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
@@ -237,20 +245,17 @@
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <Label x:Name="lblAddProduct" Grid.Column="0" Grid.ColumnSpan="5" Content="Add Product" Foreground="white" MouseLeftButtonUp="lblAddProduct_MouseLeftButtonUp" Margin="0,110,0,110" Grid.RowSpan="3" />
-                            <Label x:Name="lblUpdateProduct" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="5" Content="Update Porudct" Foreground="white" Margin="0,0,0,110" Grid.RowSpan="2" MouseLeftButtonUp="lblUpdateProduct_MouseLeftButtonUp"/>
-                            <Label Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="5" Content="Button" Foreground="white"/>
-                            <Label Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="5" Content="Button" Foreground="white" Margin="0,110,0,0" Grid.RowSpan="2"/>
-                            <Label Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="5" Content="Button" Foreground="white" Margin="0,110,0,110" Grid.RowSpan="3"/>
+
+
                         </Grid>
                     </DockPanel>
-                    <DockPanel x:Name="dGridAddProductForm" Grid.Row="1" Grid.Column="4" Grid.RowSpan="3" LastChildFill="False" >
+                    <DockPanel x:Name="dGridAddProductForm" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="3" Margin="0 -10 10 10" LastChildFill="False">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="5"/>
+                                <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="150"/>
-                                <ColumnDefinition Width="155"/>
-                                <ColumnDefinition Width="5"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
@@ -262,25 +267,30 @@
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <Label Content="Add item form" Grid.Row="0" Grid.ColumnSpan="2"  Grid.Column="1" HorizontalContentAlignment="Center" FontWeight="Bold"/>
-                            <Label Content="Name" Grid.Row="1" Grid.Column="1"/>
-                            <Label Content="Description" Grid.Row="2" Grid.Column="1"/>
-                            <Label Content="Price" Grid.Row="3" Grid.Column="1"/>
-                            <Label Content="Quantity" Grid.Row="4" Grid.Column="1"/>
-                            <TextBox x:Name="txtProductName" Grid.Row="1" Grid.Column="2" VerticalAlignment="Top"/>
-                            <TextBox x:Name="txtProductDescription" Grid.Row="2" Grid.Column="2" VerticalAlignment="Top"/>
-                            <TextBox x:Name="txtProductPrice" Grid.Row="3" Grid.Column="2" VerticalAlignment="Top"/>
-                            <TextBox x:Name="txtProductQuantity" Grid.Row="4" Grid.Column="2" VerticalAlignment="Top"/>
-                            <Button x:Name="btnProductAddItem" Content="Add Product" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Click="btnProductAddItem_Click" Width="130" Height="30"  Margin="15 5 5 5" Background="#FF0E314C" Foreground="white"/>
+                            <GroupBox  Grid.Row="0" Grid.ColumnSpan="4"  Grid.Column="0" Grid.RowSpan="5" Background="#FF0E314C" BorderBrush="#FF0E314C">
+                                <StackPanel>
+                                    <Label Content="Name" Grid.Row="1" Grid.Column="1" Margin="20 20 20 -10" Foreground="White"/>
+                                    <TextBox x:Name="txtProductName" Grid.Row="1" Grid.Column="2" VerticalAlignment="Top" Margin="20 20 20 20"/>
+                                    <Label Content="Description" Grid.Row="2" Grid.Column="1" Margin="20 20 20 -10" Foreground="White"/>
+                                    <TextBox x:Name="txtProductDescription" Grid.Row="2" Grid.Column="2" VerticalAlignment="Top"  Margin="20 20 20 20"/>
+                                    <Label Content="Price" Grid.Row="3" Grid.Column="1" Margin="20 20 20 -10" Foreground="White"/>
+                                    <TextBox x:Name="txtProductPrice" Grid.Row="3" Grid.Column="2" VerticalAlignment="Top"  Margin="20 20 20 20"/>
+                                    <Label Content="Quantity" Grid.Row="4" Grid.Column="1"  Margin="20 20 20 -10"  Foreground="White"/>
+
+                                    <TextBox x:Name="txtProductQuantity" Grid.Row="4" Grid.Column="2" VerticalAlignment="Top" Margin="20 20 20 -10"/>
+                                    <Button x:Name="btnProductAddItem" Content="Add Product" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Click="btnProductAddItem_Click" Width="130" Height="30"   Margin="20 50 20 20" Background="Green" Foreground="white" BorderThickness="0"  Cursor="Hand" />
+                                </StackPanel>
+                            </GroupBox>
+
                         </Grid>
                     </DockPanel>
-                    <DockPanel x:Name="dGridUpdateProductForm" Grid.Row="1" Grid.Column="4" Grid.RowSpan="3" LastChildFill="False" >
+                    <DockPanel x:Name="dGridUpdateProductForm"  Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="3" Margin="0 -10 10 10" LastChildFill="False" >
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="5"/>
+                                <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="150"/>
-                                <ColumnDefinition Width="155"/>
-                                <ColumnDefinition Width="5"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
@@ -292,29 +302,33 @@
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <Label Content="Update item form" Grid.Row="0" Grid.ColumnSpan="2"  Grid.Column="1" HorizontalContentAlignment="Center" FontWeight="Bold"/>
-                            <Label Content="Name" Grid.Row="1" Grid.Column="1"/>
-                            <Label Content="Description" Grid.Row="2" Grid.Column="1"/>
-                            <Label Content="Price" Grid.Row="3" Grid.Column="1"/>
-                            <Label Content="Quantity" Grid.Row="4" Grid.Column="1"/>
-                            <TextBox x:Name="txtUpdateProductName" Grid.Row="1" Grid.Column="2" VerticalAlignment="Top"/>
-                            <TextBox x:Name="txtUpdateProductDescription" Grid.Row="2" Grid.Column="2" VerticalAlignment="Top"/>
-                            <TextBox x:Name="txtUpdateProductPrice" Grid.Row="3" Grid.Column="2" VerticalAlignment="Top"/>
-                            <TextBox x:Name="txtUpdateProductQuantity" Grid.Row="4" Grid.Column="2" VerticalAlignment="Top"/>
-                            <Button x:Name="btnProductUpdateItem" Content="Update Product" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2"  Click="btnProductUpdateItem_Click" Width="130" Height="30"  Margin="15 5 5 5" Background="#FF0E314C" Foreground="white"/>
+                            <GroupBox  Grid.Row="0" Grid.ColumnSpan="4"  Grid.Column="0" Grid.RowSpan="5" Background="#FF0E314C" Foreground="White" BorderBrush="#FF0E314C">
+                                <StackPanel>
+                                    <Label Content="Name" Grid.Row="1" Grid.Column="1"  Margin="20 20 20 -10" Foreground="White"/>
+                                    <TextBox x:Name="txtUpdateProductName" Grid.Row="1" Grid.Column="2" VerticalAlignment="Top" Margin="20 20 20 20"/>
+                                    <Label Content="Description" Grid.Row="2" Grid.Column="1"  Margin="20 20 20 -10" Foreground="White"/>
+                                    <TextBox x:Name="txtUpdateProductDescription" Grid.Row="2" Grid.Column="2" VerticalAlignment="Top" Margin="20 20 20 20"/>
+                                    <Label Content="Price" Grid.Row="3" Grid.Column="1"  Margin="20 20 20 -10" Foreground="White"/>
+                                    <TextBox x:Name="txtUpdateProductPrice" Grid.Row="3" Grid.Column="2" VerticalAlignment="Top"  Margin="20 20 20 20"/>
+                                    <Label Content="Quantity" Grid.Row="4" Grid.Column="1" Margin="20 20 20 -10" Foreground="White"/>
+                                    <TextBox x:Name="txtUpdateProductQuantity" Grid.Row="4" Grid.Column="2" VerticalAlignment="Top"  Margin="20 20 20 -10"/>
+                                    <Button x:Name="btnProductUpdateItem" Content="Update Product" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2"  Click="btnProductUpdateItem_Click" Width="130" Height="30"   Margin="20 50 20 20" Background="Green" Foreground="white" BorderThickness="0"  Cursor="Hand"/>
+                                </StackPanel>
+                            </GroupBox>
+
                         </Grid>
                     </DockPanel>
                     <ComboBox x:Name="cmbProduct" Grid.Column="7" HorizontalAlignment="Center" Margin="0,50,0,0" VerticalAlignment="Top" Width="310" Height="34" SelectionChanged="cmbProduct_SelectionChanged"/>
                 </Grid>
             </TabItem>
 
-            <TabItem Header="Categories" x:Name="tbItemCategories" Width="100" Height="32" Margin="-11 0 0 0 ">
+            <TabItem Header="Categories" x:Name="tbItemCategories" Width="100" Height="32" Margin="-11 0 0 0">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="10"/>
-                        <ColumnDefinition Width="20*"/>
-                        <ColumnDefinition Width="111*"/>
-                        <ColumnDefinition Width="182*"/>
+                        <ColumnDefinition Width="79*"/>
+                        <ColumnDefinition Width="24*"/>
+                        <ColumnDefinition Width="210*"/>
                         <ColumnDefinition Width="313*"/>
                         <ColumnDefinition Width="313*"/>
                         <ColumnDefinition Width="313*"/>
@@ -329,6 +343,8 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <StackPanel Orientation="Horizontal" Grid.Column="5" Grid.Row="0" Grid.ColumnSpan="3" Margin="0,0,312,0">
+                        <Image x:Name="btnAddCategoryGrid" Source="Images/add.png" Width="50" Height="50"  VerticalAlignment="Bottom" Margin="15 5 5 5" Cursor="Hand" ToolTip="Add" MouseLeftButtonUp="btnAddCategoryGrid_MouseLeftButtonUp"/>
+                        <Image x:Name="btnupdateCategorytGrid" Source="Images/updated.png" Width="50" Height="50"  VerticalAlignment="Bottom" Margin="15 5 5 5" Cursor="Hand" ToolTip="Update" MouseLeftButtonUp="btnupdateCategorytGrid_MouseLeftButtonUp"/>
                         <Image x:Name="btnRemoveCategory" Source="Images/remove.png" Width="50" Height="50"  VerticalAlignment="Bottom" Margin="15 5 5 5" Cursor="Hand" MouseLeftButtonUp="btnRemoveCategory_MouseLeftButtonUp" />
                         <Image x:Name="btnPrintCategoryGrid" Source="Images/print.png" Width="50" Height="50"  VerticalAlignment="Bottom" Margin="15 5 5 5" Cursor="Hand" MouseLeftButtonUp="btnPrintCategoryGrid_MouseLeftButtonUp"/>
                         <Image x:Name="btnPdfCategoryGrid" Source="Images/excel.png" Width="50" Height="50"  VerticalAlignment="Bottom" Margin="15 5 5 5" Cursor="Hand" MouseLeftButtonUp="btnPdfCategoryGrid_MouseLeftButtonUp"/>
@@ -336,7 +352,7 @@
 
                     <TextBox x:Name="txtCategoriesSearch" Grid.Row="0" Grid.Column="8" Margin="5,50,5,0" VerticalAlignment="Top" Padding="3 5 8 3"  TextChanged="txtCategoriesSearch_TextChanged" FontSize="16px" Height="35"/>
                     <!-- Add content for Categories tab here -->
-                    <DataGrid x:Name="dGCategories" RowHeight="30"  VerticalAlignment="Top"  Margin="10,0,5,0"  Grid.Row="1" Grid.Column="5" Grid.ColumnSpan="5" Grid.RowSpan="3" Height="800"  AutoGenerateColumns="False" 
+                    <DataGrid x:Name="dGCategories" RowHeight="30"  VerticalAlignment="Top"  Margin="10,0,5,0"  Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="5" Grid.RowSpan="3" Height="800"  AutoGenerateColumns="False" 
                                BorderBrush="#FFD4DDE6" 
                               AlternatingRowBackground="LightBlue" SelectionChanged="dGCategories_SelectionChanged">
                         <DataGrid.ColumnHeaderStyle>
@@ -354,7 +370,7 @@
                             <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*" />
                         </DataGrid.Columns>
                     </DataGrid>
-                    <DockPanel  LastChildFill="False" Grid.Row="0" Grid.RowSpan="4" Background="#FF0E314C"  Margin="-5,-3,307,-5" Grid.ColumnSpan="5">
+                    <DockPanel  Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="3" Margin="0 -10 10 10" LastChildFill="False">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="10"/>
@@ -371,8 +387,7 @@
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <Label x:Name="lblAddCategory" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="5" Content="Add Category" Foreground="white" MouseLeftButtonUp="lblAddCategory_MouseLeftButtonUp"/>
-                            <Label x:Name="lblUpdateCategory" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="5" Content="Update Category" Foreground="white" MouseLeftButtonUp="lblUpdateCategory_MouseLeftButtonUp" />
+                       
                             <Label Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="5" Content="Button" Foreground="white"/>
                             <Label Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="5" Content="Button" Foreground="white"/>
                             <Label Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="5" Content="Button" Foreground="white"/>
@@ -380,13 +395,13 @@
 
                     </DockPanel>
                     <Grid/>
-                    <DockPanel x:Name="dPAddCategory" Grid.Row="1" Grid.Column="4" Grid.RowSpan="3" LastChildFill="False" >
+                    <DockPanel x:Name="dPAddCategory" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="3" Margin="0 -10 10 10" LastChildFill="False" >
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="5"/>
+                                <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="150"/>
-                                <ColumnDefinition Width="155"/>
-                                <ColumnDefinition Width="5"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
@@ -398,21 +413,24 @@
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <Label Content="Add Category form" Grid.Row="0" Grid.ColumnSpan="2"  Grid.Column="1" HorizontalContentAlignment="Center" FontWeight="Bold"/>
-                            <Label Content="Name" Grid.Row="1" Grid.Column="1"/>
-                            <Label Content="Description" Grid.Row="2" Grid.Column="1"/>
-                            <TextBox x:Name="txtCategoryName" Grid.Row="1" Grid.Column="2" VerticalAlignment="Top"/>
-                            <TextBox x:Name="txtCategoryDescription" Grid.Row="2" Grid.Column="2" VerticalAlignment="Top"/>
-                            <Button x:Name="btnCategoryAddItem" Content="Add Category" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2"  Click="btnCategoryAddItem_Click" Width="130" Height="30"  Margin="15 5 5 5" Background="#FF0E314C" Foreground="white" VerticalAlignment="Bottom"/>
+                            <GroupBox  Grid.Row="0" Grid.ColumnSpan="4"  Grid.Column="0" Grid.RowSpan="3" Background="#FF0E314C" Foreground="White" BorderBrush="#FF0E314C" >
+                                <StackPanel>
+                                    <Label Content="Name"  Margin="20 20 20 -10" Foreground="White"/>
+                                    <TextBox x:Name="txtCategoryName"  VerticalAlignment="Top" Margin="20 20 20 20" />
+                                    <Label Content="Description"  Margin="20 20 20 -10" Foreground="White"/>
+                                    <TextBox x:Name="txtCategoryDescription"  VerticalAlignment="Top" Margin="20 20 20 20" />
+                                    <Button x:Name="btnCategoryAddItem" Content="Add Category"  Click="btnCategoryAddItem_Click" Width="130" Height="30"   Margin="20 50 20 20" Background="Green" Foreground="white" BorderThickness="0"  Cursor="Hand"/>
+                                </StackPanel>
+                            </GroupBox>
                         </Grid>
                     </DockPanel>
-                    <DockPanel x:Name="dPUpdateCategory" Grid.Row="1" Grid.Column="4" Grid.RowSpan="3" LastChildFill="False" >
+                    <DockPanel x:Name="dPUpdateCategory" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="3" Margin="0 -10 10 10" LastChildFill="False" >
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="5"/>
+                                <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="150"/>
-                                <ColumnDefinition Width="155"/>
-                                <ColumnDefinition Width="5"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
@@ -424,12 +442,16 @@
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <Label Content="Update Category form" Grid.Row="0" Grid.ColumnSpan="2"  Grid.Column="1" HorizontalContentAlignment="Center" FontWeight="Bold"/>
-                            <Label Content="Name" Grid.Row="1" Grid.Column="1"/>
-                            <Label Content="Description" Grid.Row="2" Grid.Column="1"/>
-                            <TextBox x:Name="txtUpdateCategoryName" Grid.Row="1" Grid.Column="2" VerticalAlignment="Top"/>
-                            <TextBox x:Name="txtUpdateCategoryDescription" Grid.Row="2" Grid.Column="2" VerticalAlignment="Top"/>
-                            <Button x:Name="btnUpateCategory" Content="Update Category" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Click="btnUpdateCategory_Click" Width="130" Height="30"  Margin="15 5 5 5" Background="#FF0E314C" Foreground="white" VerticalAlignment="Bottom"/>
+                            <GroupBox   Grid.Row="0" Grid.ColumnSpan="4"  Grid.Column="0" Grid.RowSpan="3" Background="#FF0E314C" Foreground="White" BorderBrush="#FF0E314C" >
+                                <StackPanel>
+                                    <Label Content="Name" Grid.Row="1" Grid.Column="1"  Margin="20 20 20 -10" Foreground="white"/>
+                                    <TextBox x:Name="txtUpdateCategoryName" Grid.Row="1" Grid.Column="2" VerticalAlignment="Top"  Margin="20 20 20 20"/>
+                                    <Label Content="Description" Grid.Row="2" Grid.Column="1"  Margin="20 20 20 -10" Foreground="white"/>
+                                    <TextBox x:Name="txtUpdateCategoryDescription" Grid.Row="2" Grid.Column="2" VerticalAlignment="Top"  Margin="20 20 20 20"/>
+                                    <Button x:Name="btnUpateCategory" Content="Update Category" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Click="btnUpdateCategory_Click" Width="130" Height="30"   Margin="20 50 20 20" Background="Green" Foreground="white" BorderThickness="0"  Cursor="Hand"/>
+                                </StackPanel>
+                            </GroupBox>
+                           
                         </Grid>
                     </DockPanel>
                     <ComboBox x:Name="cmbCategory" Grid.Column="7" HorizontalAlignment="Center" Margin="0,50,0,0" VerticalAlignment="Top" Width="309" Height="34" SelectionChanged="cmbCategory_SelectionChanged" />
@@ -438,17 +460,17 @@
             <TabItem Header="Supplier" x:Name="tItemSupplier" Width="100" Height="32" Margin="-11 0 0 0 ">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="150"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="10"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
@@ -855,25 +877,37 @@
                 </Grid>
             </TabItem>
         </TabControl>
-        <Grid Grid.Row="1">
-            <!-- Add content for each tab's view here -->
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="10"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="10"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="10"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="10"/>
-            </Grid.RowDefinitions>
-            <Button x:Name="btnClose" Grid.Column="5" Grid.Row="1" Background="Red" Foreground="White" Cursor="Hand" Content="Exit" FontSize="25" Click="btnClose_Click" Width="120" Margin="0,0,10,0" HorizontalAlignment="Right" />
-        </Grid>
+
+        <StackPanel  Grid.Column="0" Grid.Row="0" Margin="0 50 0 0">
+            <StackPanel x:Name="sPNavHome" Orientation="Horizontal" Margin="0 20 0 20"  Cursor="Hand" MouseLeftButtonUp="sPNavHome_MouseLeftButtonUp">
+                <Image Source="Images/home.png" Width="40" Margin="10 10 10 10" />
+                <Label Foreground="White" Content="Home" FontSize="20" Margin="10 10 10 10"/>
+            </StackPanel>
+            <StackPanel x:Name="sPNavProducts" Orientation="Horizontal"  Margin="0 20 0 20"  Cursor="Hand" MouseLeftButtonUp="sPNavProducts_MouseLeftButtonUp">
+                <Image Source="Images/product.png" Width="50" Margin="10 10 10 10" />
+                <Label Foreground="White" Content="Products" FontSize="20" Margin="10 10 10 10" />
+            </StackPanel>
+            <StackPanel x:Name="sPNavCategories" Orientation="Horizontal"  Margin="0 20 0 20"  Cursor="Hand" MouseLeftButtonUp="sPNavCategories_MouseLeftButtonUp">
+                <Image Source="Images/options.png" Width="50" Margin="10 10 10 10"/>
+                <Label Foreground="White" Content="Categories" FontSize="20" Margin="10 10 10 10"/>
+            </StackPanel>
+            <StackPanel x:Name="sPNavSuppliers" Orientation="Horizontal" Margin="0 20 0 20"  Cursor="Hand" MouseLeftButtonUp="sPNavSuppliers_MouseLeftButtonUp">
+                <Image Source="Images/distribution.png" Width="50" Margin="10 10 10 10"/>
+                <Label Foreground="White" Content="Suppliers" FontSize="20" Margin="10 10 10 10"/>
+            </StackPanel>
+            <StackPanel x:Name="sPNavInventory" Orientation="Horizontal" Margin="0 20 0 20" Cursor="Hand" MouseLeftButtonUp="sPNavInventory_MouseLeftButtonUp">
+                <Image Source="Images/inventory.png" Width="50" Margin="10 10 10 10"/>
+                <Label Foreground="White" Content="Inventory" FontSize="20" Margin="10 10 10 10"/>
+            </StackPanel>
+            <StackPanel x:Name="sPNavUser" Orientation="Horizontal" Margin="0 20 0 20" Cursor="Hand" MouseLeftButtonUp="sPNavUser_MouseLeftButtonUp">
+                <Image Source="Images/user.png" Width="50" Margin="10 10 10 10"/>
+                <Label Foreground="White" Content="Users" FontSize="20" Margin="10 10 10 10"/>
+            </StackPanel>
+            <StackPanel x:Name="sPNavClose" Orientation="Horizontal" Margin="0 200 0 20" HorizontalAlignment="Center" Cursor="Hand" MouseLeftButtonUp="sPNavClose_MouseLeftButtonUp">
+                <Image Source="Images/power.png" Width="50"/>
+            </StackPanel>
+        </StackPanel>
+          
+        
     </Grid>
 </Window>

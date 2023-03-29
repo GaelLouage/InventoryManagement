@@ -113,6 +113,7 @@ namespace InventoryManagementForms
             await SetDashboardTabs();
             // hide the user tab for non superadmins
             SuperAdminAccesTabs();
+            HideTabItems();
             // charts section
             // hide charts
             chartProducts.Visibility = Visibility.Hidden;
@@ -183,12 +184,7 @@ namespace InventoryManagementForms
         }
 
 
-        private void btnClose_Click(object sender, RoutedEventArgs e)
-        {
-            var login = new MainWindow();
-            login.Show();
-            this.Close();
-        }
+     
         // sort documents
         private async void txtProductSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -294,24 +290,32 @@ namespace InventoryManagementForms
         #endregion
         #region Navigation
         // navigations product
-        private void lblAddProduct_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void btnAddProductGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            dGridAddProductForm.Visibility = Visibility.Visible;
-            dGridUpdateProductForm.Visibility = Visibility.Hidden;
+            string chartButton = btnChartProduct.Content as string;
+            if (chartButton == "Chart Product")
+            {
+                dGridAddProductForm.Visibility = Visibility.Visible;
+                dGridUpdateProductForm.Visibility = Visibility.Hidden;
+            }
         }
-        private void lblUpdateProduct_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void btnupdateProductGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            dGridAddProductForm.Visibility = Visibility.Hidden;
-            dGridUpdateProductForm.Visibility = Visibility.Visible;
+            string chartButton = btnChartProduct.Content as string;
+            if (chartButton == "Chart Product")
+            {
+                dGridAddProductForm.Visibility = Visibility.Hidden;
+                dGridUpdateProductForm.Visibility = Visibility.Visible;
+            }
         }
         // navigation category
-        private void lblAddCategory_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void btnAddCategoryGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             dPAddCategory.Visibility = Visibility.Visible;
             dPUpdateCategory.Visibility = Visibility.Hidden;
         }
 
-        private void lblUpdateCategory_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void btnupdateCategorytGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             dPAddCategory.Visibility = Visibility.Hidden;
             dPUpdateCategory.Visibility = Visibility.Visible;
@@ -352,29 +356,29 @@ namespace InventoryManagementForms
         }
         #endregion
         #region PDFDocs
-        // pdf documents
+        // excel documents
         private void btnPdfProductGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            dGProducts.PDFSaver("Product.xlsx");
+            dGProducts.ExcelSaver("Product.xlsx");
         }
 
         private void btnPdfCategoryGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            dGCategories.PDFSaver("Category.xlsx");
+            dGCategories.ExcelSaver("Category.xlsx");
         }
 
         private void btnPdfSupplierGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            dGSupplier.PDFSaver("Supplier.xlsx");
+            dGSupplier.ExcelSaver("Supplier.xlsx");
         }
 
         private void btnPdfInventoryGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            dGInventory.PDFSaver("Inventory.xlsx");
+            dGInventory.ExcelSaver("Inventory.xlsx");
         }
         private void btnPdfUserGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            dGUser.PDFSaver("User.xlsx");
+            dGUser.ExcelSaver("User.xlsx");
         }
         #endregion
         #region PrintButtons
@@ -405,6 +409,7 @@ namespace InventoryManagementForms
 
         #endregion
         // product forms
+
         private async void btnProductAddItem_Click(object sender, RoutedEventArgs e)
         {
             if (!CheckAddProductValidation(txtProductName.Text, txtProductDescription.Text, txtProductPrice.Text, txtProductQuantity.Text))
@@ -619,6 +624,7 @@ namespace InventoryManagementForms
             txtInventoryUpdateQuantity.Text = selectedInventoryItem.Quantity.ToString();
             txtInventoryUpdateSupplierID.Text = selectedInventoryItem.SupplierId.ToString();
         }
+        
         // user form 
         private async void btnUpdateUserAddItem_Click(object sender, RoutedEventArgs e)
         {
@@ -640,9 +646,6 @@ namespace InventoryManagementForms
             await UpdateData();
             ClearTextBoxes();
         }
-
-
-
         private async void btnUserAddItem_Click(object sender, RoutedEventArgs e)
         {
             if (!ValideUser(txtAddNameUser.Text, txtAddNameUser.Text, txtUserPassword.Password, txtUseremail.Text, txtUserAddress.Text, cmbUserRole)) return;
@@ -917,8 +920,6 @@ namespace InventoryManagementForms
         private void btnChartProduct_Click(object sender, RoutedEventArgs e)
         {
             txtProductSearch.Visibility = Visibility.Hidden;
-            lblUpdateProduct.Visibility = Visibility.Hidden;
-            lblAddProduct.Visibility = Visibility.Hidden;
             sPWarningProductsQuantity.Visibility = Visibility.Visible;
             cmbProduct.Visibility = Visibility.Hidden;
             dGProducts.Visibility = Visibility.Hidden;
@@ -941,8 +942,6 @@ namespace InventoryManagementForms
                 txtProductSearch.Visibility = Visibility.Visible;
                 cmbProduct.Visibility = Visibility.Visible;
                 sPWarningProductsQuantity.Visibility = Visibility.Hidden;
-                lblUpdateProduct.Visibility = Visibility.Visible;
-                lblAddProduct.Visibility = Visibility.Visible;
                 barcodeProductImage.Visibility = Visibility.Hidden;
                 return;
             }
@@ -1014,6 +1013,59 @@ namespace InventoryManagementForms
             {
                 tbItemUsers.Visibility = Visibility.Hidden;
                 sPUsers.Visibility = Visibility.Hidden;
+            }
+        }
+        // navigation tab
+        private void sPNavHome_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            tbNavigation.IsSelected = true;
+          
+        }
+
+        private void sPNavProducts_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            tbItemProduct.IsSelected = true;
+        }
+
+        private void sPNavCategories_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            tbItemCategories.IsSelected = true;
+        }
+        private void sPNavSuppliers_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            tItemSupplier.IsSelected = true;
+        }
+
+        private void sPNavInventory_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            tItemInventory.IsSelected = true;
+        }
+
+        private void sPNavUser_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            tbItemUsers.IsSelected = true;
+        }
+
+        private void sPNavClose_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            var login = new MainWindow();
+            login.Show();
+            this.Close();
+        }
+        // hide tabitems 
+        private void HideTabItems()
+        {
+            tbNavigation.Visibility = Visibility.Hidden;
+            tbItemProduct.Visibility = Visibility.Hidden;
+            tbItemCategories.Visibility = Visibility.Hidden;
+            tItemInventory.Visibility = Visibility.Hidden;
+            tItemSupplier.Visibility = Visibility.Hidden;
+            tbItemUsers.Visibility = Visibility.Hidden;
+            if (_user.Role is not Role.SUPERADMIN)
+            {
+                tbItemUsers.Visibility = Visibility.Hidden;
+                sPNavClose.Visibility = Visibility.Hidden;
+                return;
             }
         }
 

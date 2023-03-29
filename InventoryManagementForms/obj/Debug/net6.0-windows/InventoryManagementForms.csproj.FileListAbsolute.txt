@@ -86,3 +86,8 @@ C:\Users\louag\source\repos\InventoryManagementSystem\InventoryManagementForms\b
 C:\Users\louag\source\repos\InventoryManagementSystem\InventoryManagementForms\bin\Debug\net6.0-windows\Images\print.png
 C:\Users\louag\source\repos\InventoryManagementSystem\InventoryManagementForms\bin\Debug\net6.0-windows\Images\excel.png
 C:\Users\louag\source\repos\InventoryManagementSystem\InventoryManagementForms\bin\Debug\net6.0-windows\Images\remove.png
+C:\Users\louag\source\repos\InventoryManagementSystem\InventoryManagementForms\bin\Debug\net6.0-windows\Images\inventoryManagement.png
+C:\Users\louag\source\repos\InventoryManagementSystem\InventoryManagementForms\bin\Debug\net6.0-windows\Images\add.png
+C:\Users\louag\source\repos\InventoryManagementSystem\InventoryManagementForms\bin\Debug\net6.0-windows\Images\updated.png
+C:\Users\louag\source\repos\InventoryManagementSystem\InventoryManagementForms\bin\Debug\net6.0-windows\Images\home.png
+C:\Users\louag\source\repos\InventoryManagementSystem\InventoryManagementForms\bin\Debug\net6.0-windows\Images\power.png

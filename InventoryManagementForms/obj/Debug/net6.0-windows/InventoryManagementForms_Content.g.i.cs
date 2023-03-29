@@ -8,15 +8,20 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/add.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/distribution.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/excel.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/home.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/icon.ico")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/inventory.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/inventorymanagement.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/options.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/pdf.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/power.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/print.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/product.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/remove.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/updated.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/user.png")]
 
 

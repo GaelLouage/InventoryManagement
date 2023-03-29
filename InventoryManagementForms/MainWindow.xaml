@@ -5,28 +5,39 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InventoryManagementForms"
         mc:Ignorable="d"
-         Height="200" Width="463" Loaded="Window_Loaded">
+        ResizeMode="NoResize"
+         Height="400" Width="800" Loaded="Window_Loaded">
     <Grid Background="#FF0E314C">
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="20"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20"/>
         </Grid.ColumnDefinitions>
-        <Label Grid.Row="2" Grid.Column="0" Content="Username:" Margin="5" Foreground="White"/>
-        <TextBox Grid.Row="2" Grid.Column="1" Margin="5" Name="txtUsername" Width="310"/>
-        <Label Grid.Row="3" Grid.Column="0" Content="Password:" Margin="5" Foreground="White"/>
-        <PasswordBox Grid.Row="3" Grid.Column="1" Margin="5" Name="txtPassword"  Width="310"/>
-        <StackPanel  Grid.Row="4" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+        <Label Content="Log In" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="5 -25 5 5" Foreground="White" FontWeight="Bold" FontSize="25" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+        <Label Grid.Row="2" Grid.Column="1" Content="Username" Margin="35 5 5 5" Foreground="White" VerticalAlignment="Bottom"/>
+        <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="5" Name="txtUsername" Width="310"  BorderThickness="0"  />
+        <Label Grid.Row="4" Grid.Column="1" Content="Password" Margin="35 5 5 5" Foreground="White" VerticalAlignment="Bottom"/>
+        <PasswordBox Grid.Row="5" Grid.ColumnSpan="2" Grid.Column="1" Margin="5" Name="txtPassword"  Width="310" BorderThickness="0"/>
+        <StackPanel  Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Margin="5" Content="Log In" Name="btnLogin" Click="btnLogin_Click" Width="150" Height="30" Cursor="Hand" Background="#FF181C3E" Foreground="White" BorderThickness="0"/>
             <Button  Margin="5" Content="Exit" Name="btnExit" Click="btnExit_Click" Width="150" Height="30" Cursor="Hand" Background="Red" Foreground="White" BorderThickness="0"/>
+            
         </StackPanel>
-      
+        <Image Source="Images/inventoryManagement.png" Grid.Column="3" Grid.Row="1" Grid.RowSpan="7" Grid.ColumnSpan="2"/>
         <Label Grid.Row="4" Grid.Column="1" Margin="5" Name="lblError" Foreground="Red" Visibility="Collapsed"/>
     </Grid>
 </Window>
