@@ -11,26 +11,57 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\distribution.png" />
+    <None Remove="Images\excel.png" />
     <None Remove="Images\inventory.png" />
+    <None Remove="Images\options.png" />
+    <None Remove="Images\pdf.png" />
+    <None Remove="Images\print.png" />
     <None Remove="Images\product.png" />
+    <None Remove="Images\remove.png" />
+    <None Remove="Images\user.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Images\distribution.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\excel.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\icon.ico" />
     <Content Include="Images\inventory.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\options.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\pdf.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\print.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\product.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\remove.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\user.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="BarCode" Version="2023.3.2" />
     <PackageReference Include="ClosedXML" Version="0.100.3" />
     <PackageReference Include="EPPlus" Version="6.2.0" />
     <PackageReference Include="iTextSharp" Version="5.5.13.3" />
     <PackageReference Include="Microsoft.Office.Interop.Excel" Version="15.0.4795.1001" />
+    <PackageReference Include="Syncfusion.SfChart.WPF" Version="21.1.35" />
     <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
+    <PackageReference Include="ZXing.Net" Version="0.16.9" />
   </ItemGroup>
 
   <ItemGroup>

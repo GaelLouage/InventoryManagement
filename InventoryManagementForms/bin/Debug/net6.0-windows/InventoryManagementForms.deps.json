@@ -8,15 +8,46 @@
     ".NETCoreApp,Version=v6.0": {
       "InventoryManagementForms/1.0.0": {
         "dependencies": {
+          "BarCode": "2023.3.2",
           "ClosedXML": "0.100.3",
           "EPPlus": "6.2.0",
           "Infrastructuur": "1.0.0",
           "Microsoft.Office.Interop.Excel": "15.0.4795.1001",
+          "Syncfusion.SfChart.WPF": "21.1.35",
           "System.Drawing.Common": "7.0.0",
+          "ZXing.Net": "0.16.9",
           "iTextSharp": "5.5.13.3"
         },
         "runtime": {
           "InventoryManagementForms.dll": {}
+        }
+      },
+      "BarCode/2023.3.2": {
+        "dependencies": {
+          "IronSoftware.System.Drawing": "2023.3.1",
+          "Microsoft.Extensions.Logging.Abstractions": "2.1.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/IronBarCode.dll": {
+            "assemblyVersion": "2023.3.0.2",
+            "fileVersion": "2023.3.0.2"
+          },
+          "lib/netstandard2.0/SixLabors.Fonts.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          },
+          "lib/netstandard2.0/SixLabors.ImageSharp.Drawing.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "BitMiracle.LibTiff.NET/2.4.649": {
+        "runtime": {
+          "lib/netstandard2.0/BitMiracle.LibTiff.NET.dll": {
+            "assemblyVersion": "2.4.649.0",
+            "fileVersion": "2.4.649.0"
+          }
         }
       },
       "BouncyCastle/1.8.9": {
@@ -108,6 +139,18 @@
           "lib/netstandard2.0/ExcelNumberFormat.dll": {
             "assemblyVersion": "1.1.0.0",
             "fileVersion": "1.1.0.0"
+          }
+        }
+      },
+      "IronSoftware.System.Drawing/2023.3.1": {
+        "dependencies": {
+          "BitMiracle.LibTiff.NET": "2.4.649",
+          "SixLabors.ImageSharp": "2.1.3"
+        },
+        "runtime": {
+          "lib/netstandard2.0/IronSoftware.Drawing.Common.dll": {
+            "assemblyVersion": "2023.3.0.1",
+            "fileVersion": "2023.3.0.1"
           }
         }
       },
@@ -232,11 +275,11 @@
           }
         }
       },
-      "Microsoft.Extensions.Logging.Abstractions/2.0.0": {
+      "Microsoft.Extensions.Logging.Abstractions/2.1.0": {
         "runtime": {
           "lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.dll": {
-            "assemblyVersion": "2.0.0.0",
-            "fileVersion": "2.0.0.17205"
+            "assemblyVersion": "2.1.0.0",
+            "fileVersion": "2.1.0.18136"
           }
         }
       },
@@ -311,7 +354,7 @@
       },
       "MongoDB.Driver/2.18.0": {
         "dependencies": {
-          "Microsoft.Extensions.Logging.Abstractions": "2.0.0",
+          "Microsoft.Extensions.Logging.Abstractions": "2.1.0",
           "MongoDB.Bson": "2.18.0",
           "MongoDB.Driver.Core": "2.18.0",
           "MongoDB.Libmongocrypt": "1.6.0"
@@ -326,7 +369,7 @@
       "MongoDB.Driver.Core/2.18.0": {
         "dependencies": {
           "DnsClient": "1.6.1",
-          "Microsoft.Extensions.Logging.Abstractions": "2.0.0",
+          "Microsoft.Extensions.Logging.Abstractions": "2.1.0",
           "MongoDB.Bson": "2.18.0",
           "MongoDB.Libmongocrypt": "1.6.0",
           "SharpCompress": "0.30.1",
@@ -478,11 +521,16 @@
           }
         }
       },
-      "SixLabors.Fonts/1.0.0-beta18": {
+      "SixLabors.Fonts/1.0.0-beta18": {},
+      "SixLabors.ImageSharp/2.1.3": {
+        "dependencies": {
+          "System.Runtime.CompilerServices.Unsafe": "6.0.0",
+          "System.Text.Encoding.CodePages": "6.0.0"
+        },
         "runtime": {
-          "lib/netcoreapp3.1/SixLabors.Fonts.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
+          "lib/netcoreapp3.1/SixLabors.ImageSharp.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.1.3.0"
           }
         }
       },
@@ -491,6 +539,25 @@
           "lib/net5.0/Snappier.dll": {
             "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "Syncfusion.Licensing/21.1.35": {
+        "runtime": {
+          "lib/net6.0-windows7.0/Syncfusion.Licensing.dll": {
+            "assemblyVersion": "21.1.35.0",
+            "fileVersion": "21.1.35.0"
+          }
+        }
+      },
+      "Syncfusion.SfChart.WPF/21.1.35": {
+        "dependencies": {
+          "Syncfusion.Licensing": "21.1.35"
+        },
+        "runtime": {
+          "lib/net6.0-windows7.0/Syncfusion.SfChart.WPF.dll": {
+            "assemblyVersion": "21.1.35.0",
+            "fileVersion": "21.1.35.0"
           }
         }
       },
@@ -1152,6 +1219,14 @@
           }
         }
       },
+      "ZXing.Net/0.16.9": {
+        "runtime": {
+          "lib/net6.0/zxing.dll": {
+            "assemblyVersion": "0.16.9.0",
+            "fileVersion": "0.16.9.0"
+          }
+        }
+      },
       "Infrastructuur/1.0.0": {
         "dependencies": {
           "Microsoft.Extensions.Configuration": "7.0.0",
@@ -1172,6 +1247,20 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "BarCode/2023.3.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-CW64GAQzgu2sftuFrEhCQQQy2ELIo4s500hHUCWcgbSpAxaahsOBSEWtvsENbmGPHEgEJZysJAHEe2WHSWUQdg==",
+      "path": "barcode/2023.3.2",
+      "hashPath": "barcode.2023.3.2.nupkg.sha512"
+    },
+    "BitMiracle.LibTiff.NET/2.4.649": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-XCEdfCphKo0UAvSg1h/OzOFWtjkIGnPMAziYkNqV7NVrqb/tZJTBxJhxIEX7gpvQwg8GIRYt133SUncfkKfjLA==",
+      "path": "bitmiracle.libtiff.net/2.4.649",
+      "hashPath": "bitmiracle.libtiff.net.2.4.649.nupkg.sha512"
     },
     "BouncyCastle/1.8.9": {
       "type": "package",
@@ -1228,6 +1317,13 @@
       "sha512": "sha512-R3BVHPs9O+RkExbZYTGT0+9HLbi8ZrNij1Yziyw6znd3J7P3uoIR07uwTLGOogtz1p6+0sna66eBoXu7tBiVQA==",
       "path": "excelnumberformat/1.1.0",
       "hashPath": "excelnumberformat.1.1.0.nupkg.sha512"
+    },
+    "IronSoftware.System.Drawing/2023.3.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-hiOlhahJULAERlL1EaWQQn1rQBgTc6qAub8OyRGp46Kzzb9gXnZPg/h3g/5WTXifgWb+fmsfmPtLNaATJbTnvA==",
+      "path": "ironsoftware.system.drawing/2023.3.1",
+      "hashPath": "ironsoftware.system.drawing.2023.3.1.nupkg.sha512"
     },
     "Irony.NetCore/1.0.11": {
       "type": "package",
@@ -1306,12 +1402,12 @@
       "path": "microsoft.extensions.filesystemglobbing/7.0.0",
       "hashPath": "microsoft.extensions.filesystemglobbing.7.0.0.nupkg.sha512"
     },
-    "Microsoft.Extensions.Logging.Abstractions/2.0.0": {
+    "Microsoft.Extensions.Logging.Abstractions/2.1.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-6ZCllUYGFukkymSTx3Yr0G/ajRxoNJp7/FqSxSB4fGISST54ifBhgu4Nc0ItGi3i6DqwuNd8SUyObmiC++AO2Q==",
-      "path": "microsoft.extensions.logging.abstractions/2.0.0",
-      "hashPath": "microsoft.extensions.logging.abstractions.2.0.0.nupkg.sha512"
+      "sha512": "sha512-GfD2VtvN9z1W+m6pZZe98yh9VWTSdNY2dZSxtca9uFIY6aBI6twvskMvLO/ktClBOTQmAov/7Em+IWFlHepa0A==",
+      "path": "microsoft.extensions.logging.abstractions/2.1.0",
+      "hashPath": "microsoft.extensions.logging.abstractions.2.1.0.nupkg.sha512"
     },
     "Microsoft.Extensions.Primitives/7.0.0": {
       "type": "package",
@@ -1537,12 +1633,33 @@
       "path": "sixlabors.fonts/1.0.0-beta18",
       "hashPath": "sixlabors.fonts.1.0.0-beta18.nupkg.sha512"
     },
+    "SixLabors.ImageSharp/2.1.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-8yonNRWX3vUE9k29ta0Hbfa0AEc0hbDjSH/nZ3vOTJEXmY6hLnGsjDKoz96Z+AgOsrdkAu6PdL/Ebaf70aitzw==",
+      "path": "sixlabors.imagesharp/2.1.3",
+      "hashPath": "sixlabors.imagesharp.2.1.3.nupkg.sha512"
+    },
     "Snappier/1.0.0": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-rFtK2KEI9hIe8gtx3a0YDXdHOpedIf9wYCEYtBEmtlyiWVX3XlCNV03JrmmAi/Cdfn7dxK+k0sjjcLv4fpHnqA==",
       "path": "snappier/1.0.0",
       "hashPath": "snappier.1.0.0.nupkg.sha512"
+    },
+    "Syncfusion.Licensing/21.1.35": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-uvs5S2lDL/wesrNMMaelKDM9v3fYFYHEU6p0aF0VYUjr7z2j1kUadzHVtxyYH/F6crQ4DB1iC/Bawr4gRz+m6Q==",
+      "path": "syncfusion.licensing/21.1.35",
+      "hashPath": "syncfusion.licensing.21.1.35.nupkg.sha512"
+    },
+    "Syncfusion.SfChart.WPF/21.1.35": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-RQChnL3sSvOX4atAoOoNz3OuXOjYkSbgTI5h7vc9R+kpD714zwe71IZ33BTda+8X4ZJjh/da6G4oNcUXMkV3zA==",
+      "path": "syncfusion.sfchart.wpf/21.1.35",
+      "hashPath": "syncfusion.sfchart.wpf.21.1.35.nupkg.sha512"
     },
     "System.AppContext/4.3.0": {
       "type": "package",
@@ -2005,6 +2122,13 @@
       "sha512": "sha512-jPao/LdUNLUz8rn3H1D8W7wQbZsRZM0iayvWI4xGejJg3XJHT56gcmYdgmCGPdJF1UEBqUjucCRrFB+4HbJsbw==",
       "path": "zstdsharp.port/0.6.2",
       "hashPath": "zstdsharp.port.0.6.2.nupkg.sha512"
+    },
+    "ZXing.Net/0.16.9": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-7WaVMHklpT3Ye2ragqRIwlFRsb6kOk63BOGADV0fan3ulVfGLUYkDi5yNUsZS/7FVNkWbtHAlDLmu4WnHGfqvQ==",
+      "path": "zxing.net/0.16.9",
+      "hashPath": "zxing.net.0.16.9.nupkg.sha512"
     },
     "Infrastructuur/1.0.0": {
       "type": "project",

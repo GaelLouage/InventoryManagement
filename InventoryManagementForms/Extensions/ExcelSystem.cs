@@ -57,7 +57,7 @@ namespace InventoryManagementForms.Extensions
                         worksheet.Cells[i + 2, j + 1].Value = value;
                     }
                 }
-                package.SaveAs(new FileInfo($"{fileName}.xlsx"));
+                package.SaveAs(new FileInfo($"{fileName}"));
             }
         }
 

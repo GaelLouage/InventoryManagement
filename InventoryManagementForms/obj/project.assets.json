@@ -2,6 +2,40 @@
   "version": 3,
   "targets": {
     "net6.0-windows7.0": {
+      "BarCode/2023.3.2": {
+        "type": "package",
+        "dependencies": {
+          "IronSoftware.System.Drawing": "2023.3.1",
+          "Microsoft.Extensions.Logging.Abstractions": "2.1.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/IronBarCode.dll": {
+            "related": ".xml"
+          },
+          "lib/netstandard2.0/SixLabors.Fonts.dll": {},
+          "lib/netstandard2.0/SixLabors.ImageSharp.Drawing.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/IronBarCode.dll": {
+            "related": ".xml"
+          },
+          "lib/netstandard2.0/SixLabors.Fonts.dll": {},
+          "lib/netstandard2.0/SixLabors.ImageSharp.Drawing.dll": {}
+        }
+      },
+      "BitMiracle.LibTiff.NET/2.4.649": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/BitMiracle.LibTiff.NET.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/BitMiracle.LibTiff.NET.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "BouncyCastle/1.8.9": {
         "type": "package",
         "compile": {
@@ -120,6 +154,27 @@
           "lib/netstandard2.0/ExcelNumberFormat.dll": {
             "related": ".xml"
           }
+        }
+      },
+      "IronSoftware.System.Drawing/2023.3.1": {
+        "type": "package",
+        "dependencies": {
+          "BitMiracle.LibTiff.NET": "2.4.649",
+          "SixLabors.ImageSharp": "2.1.3"
+        },
+        "compile": {
+          "lib/netstandard2.0/IronSoftware.Drawing.Common.dll": {
+            "related": ".deps.json;.pdb;.xml"
+          },
+          "lib/netstandard2.0/SixLabors.Fonts.dll": {},
+          "lib/netstandard2.0/SixLabors.ImageSharp.Drawing.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/IronSoftware.Drawing.Common.dll": {
+            "related": ".deps.json;.pdb;.xml"
+          },
+          "lib/netstandard2.0/SixLabors.Fonts.dll": {},
+          "lib/netstandard2.0/SixLabors.ImageSharp.Drawing.dll": {}
         }
       },
       "Irony.NetCore/1.0.11": {
@@ -317,7 +372,7 @@
           "buildTransitive/net6.0/_._": {}
         }
       },
-      "Microsoft.Extensions.Logging.Abstractions/2.0.0": {
+      "Microsoft.Extensions.Logging.Abstractions/2.1.0": {
         "type": "package",
         "compile": {
           "lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.dll": {
@@ -793,6 +848,23 @@
           }
         }
       },
+      "SixLabors.ImageSharp/2.1.3": {
+        "type": "package",
+        "dependencies": {
+          "System.Runtime.CompilerServices.Unsafe": "5.0.0",
+          "System.Text.Encoding.CodePages": "5.0.0"
+        },
+        "compile": {
+          "lib/netcoreapp3.1/SixLabors.ImageSharp.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/SixLabors.ImageSharp.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Snappier/1.0.0": {
         "type": "package",
         "compile": {
@@ -802,6 +874,31 @@
         },
         "runtime": {
           "lib/net5.0/Snappier.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Syncfusion.Licensing/21.1.35": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0-windows7.0/Syncfusion.Licensing.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0-windows7.0/Syncfusion.Licensing.dll": {}
+        }
+      },
+      "Syncfusion.SfChart.WPF/21.1.35": {
+        "type": "package",
+        "dependencies": {
+          "Syncfusion.Licensing": "21.1.35"
+        },
+        "compile": {
+          "lib/net6.0-windows7.0/Syncfusion.SfChart.WPF.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0-windows7.0/Syncfusion.SfChart.WPF.dll": {
             "related": ".xml"
           }
         }
@@ -2075,6 +2172,19 @@
           "lib/net6.0/ZstdSharp.dll": {}
         }
       },
+      "ZXing.Net/0.16.9": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/zxing.dll": {
+            "related": ".XML"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/zxing.dll": {
+            "related": ".XML"
+          }
+        }
+      },
       "Infrastructuur/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
@@ -2096,6 +2206,41 @@
     }
   },
   "libraries": {
+    "BarCode/2023.3.2": {
+      "sha512": "CW64GAQzgu2sftuFrEhCQQQy2ELIo4s500hHUCWcgbSpAxaahsOBSEWtvsENbmGPHEgEJZysJAHEe2WHSWUQdg==",
+      "type": "package",
+      "path": "barcode/2023.3.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "EULA.txt",
+        "barcode.2023.3.2.nupkg.sha512",
+        "barcode.nuspec",
+        "docs/README.md",
+        "images/iron-logo-128.png",
+        "lib/netstandard2.0/IronBarCode.dll",
+        "lib/netstandard2.0/IronBarCode.xml",
+        "lib/netstandard2.0/SixLabors.Fonts.dll",
+        "lib/netstandard2.0/SixLabors.ImageSharp.Drawing.dll",
+        "readme-setup.txt",
+        "readme.txt"
+      ]
+    },
+    "BitMiracle.LibTiff.NET/2.4.649": {
+      "sha512": "XCEdfCphKo0UAvSg1h/OzOFWtjkIGnPMAziYkNqV7NVrqb/tZJTBxJhxIEX7gpvQwg8GIRYt133SUncfkKfjLA==",
+      "type": "package",
+      "path": "bitmiracle.libtiff.net/2.4.649",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "bitmiracle.libtiff.net.2.4.649.nupkg.sha512",
+        "bitmiracle.libtiff.net.nuspec",
+        "lib/net40/BitMiracle.LibTiff.NET.dll",
+        "lib/net40/BitMiracle.LibTiff.NET.xml",
+        "lib/netstandard2.0/BitMiracle.LibTiff.NET.dll",
+        "lib/netstandard2.0/BitMiracle.LibTiff.NET.xml"
+      ]
+    },
     "BouncyCastle/1.8.9": {
       "sha512": "axnBgvdD5n+FnEG6efk/tfKuMFru7R/EoISH9zjh319yb3HD24TEHSAbNN/lTRT2ulOGRxDgOsCjkuk08iwWPg==",
       "type": "package",
@@ -2252,6 +2397,27 @@
         "lib/netstandard1.0/ExcelNumberFormat.xml",
         "lib/netstandard2.0/ExcelNumberFormat.dll",
         "lib/netstandard2.0/ExcelNumberFormat.xml"
+      ]
+    },
+    "IronSoftware.System.Drawing/2023.3.1": {
+      "sha512": "hiOlhahJULAERlL1EaWQQn1rQBgTc6qAub8OyRGp46Kzzb9gXnZPg/h3g/5WTXifgWb+fmsfmPtLNaATJbTnvA==",
+      "type": "package",
+      "path": "ironsoftware.system.drawing/2023.3.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.txt",
+        "README.txt",
+        "docs/README.md",
+        "images/ironsoftware-logo.png",
+        "ironsoftware.system.drawing.2023.3.1.nupkg.sha512",
+        "ironsoftware.system.drawing.nuspec",
+        "lib/netstandard2.0/IronSoftware.Drawing.Common.deps.json",
+        "lib/netstandard2.0/IronSoftware.Drawing.Common.dll",
+        "lib/netstandard2.0/IronSoftware.Drawing.Common.pdb",
+        "lib/netstandard2.0/IronSoftware.Drawing.Common.xml",
+        "lib/netstandard2.0/SixLabors.Fonts.dll",
+        "lib/netstandard2.0/SixLabors.ImageSharp.Drawing.dll"
       ]
     },
     "Irony.NetCore/1.0.11": {
@@ -2573,16 +2739,16 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "Microsoft.Extensions.Logging.Abstractions/2.0.0": {
-      "sha512": "6ZCllUYGFukkymSTx3Yr0G/ajRxoNJp7/FqSxSB4fGISST54ifBhgu4Nc0ItGi3i6DqwuNd8SUyObmiC++AO2Q==",
+    "Microsoft.Extensions.Logging.Abstractions/2.1.0": {
+      "sha512": "GfD2VtvN9z1W+m6pZZe98yh9VWTSdNY2dZSxtca9uFIY6aBI6twvskMvLO/ktClBOTQmAov/7Em+IWFlHepa0A==",
       "type": "package",
-      "path": "microsoft.extensions.logging.abstractions/2.0.0",
+      "path": "microsoft.extensions.logging.abstractions/2.1.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.dll",
         "lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.xml",
-        "microsoft.extensions.logging.abstractions.2.0.0.nupkg.sha512",
+        "microsoft.extensions.logging.abstractions.2.1.0.nupkg.sha512",
         "microsoft.extensions.logging.abstractions.nuspec"
       ]
     },
@@ -3184,6 +3350,28 @@
         "sixlabors.fonts.nuspec"
       ]
     },
+    "SixLabors.ImageSharp/2.1.3": {
+      "sha512": "8yonNRWX3vUE9k29ta0Hbfa0AEc0hbDjSH/nZ3vOTJEXmY6hLnGsjDKoz96Z+AgOsrdkAu6PdL/Ebaf70aitzw==",
+      "type": "package",
+      "path": "sixlabors.imagesharp/2.1.3",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net472/SixLabors.ImageSharp.dll",
+        "lib/net472/SixLabors.ImageSharp.xml",
+        "lib/netcoreapp2.1/SixLabors.ImageSharp.dll",
+        "lib/netcoreapp2.1/SixLabors.ImageSharp.xml",
+        "lib/netcoreapp3.1/SixLabors.ImageSharp.dll",
+        "lib/netcoreapp3.1/SixLabors.ImageSharp.xml",
+        "lib/netstandard2.0/SixLabors.ImageSharp.dll",
+        "lib/netstandard2.0/SixLabors.ImageSharp.xml",
+        "lib/netstandard2.1/SixLabors.ImageSharp.dll",
+        "lib/netstandard2.1/SixLabors.ImageSharp.xml",
+        "sixlabors.imagesharp.128.png",
+        "sixlabors.imagesharp.2.1.3.nupkg.sha512",
+        "sixlabors.imagesharp.nuspec"
+      ]
+    },
     "Snappier/1.0.0": {
       "sha512": "rFtK2KEI9hIe8gtx3a0YDXdHOpedIf9wYCEYtBEmtlyiWVX3XlCNV03JrmmAi/Cdfn7dxK+k0sjjcLv4fpHnqA==",
       "type": "package",
@@ -3202,6 +3390,75 @@
         "lib/netstandard2.1/Snappier.xml",
         "snappier.1.0.0.nupkg.sha512",
         "snappier.nuspec"
+      ]
+    },
+    "Syncfusion.Licensing/21.1.35": {
+      "sha512": "uvs5S2lDL/wesrNMMaelKDM9v3fYFYHEU6p0aF0VYUjr7z2j1kUadzHVtxyYH/F6crQ4DB1iC/Bawr4gRz+m6Q==",
+      "type": "package",
+      "path": "syncfusion.licensing/21.1.35",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.txt",
+        "lib/MonoAndroid90/Syncfusion.Licensing.dll",
+        "lib/Xamarin.Mac/Syncfusion.Licensing.dll",
+        "lib/Xamarin.iOS10/Syncfusion.Licensing.dll",
+        "lib/net40/Syncfusion.Licensing.dll",
+        "lib/net45/Syncfusion.Licensing.dll",
+        "lib/net451/Syncfusion.Licensing.dll",
+        "lib/net46/Syncfusion.Licensing.dll",
+        "lib/net6.0-windows7.0/Syncfusion.Licensing.dll",
+        "lib/net6.0/Syncfusion.Licensing.dll",
+        "lib/net7.0-windows7.0/Syncfusion.Licensing.dll",
+        "lib/net7.0/Syncfusion.Licensing.dll",
+        "lib/netstandard2.0/Syncfusion.Licensing.dll",
+        "lib/uap10.0/Syncfusion.Licensing.dll",
+        "syncfusion.licensing.21.1.35.nupkg.sha512",
+        "syncfusion.licensing.nuspec",
+        "syncfusion_logo.png"
+      ]
+    },
+    "Syncfusion.SfChart.WPF/21.1.35": {
+      "sha512": "RQChnL3sSvOX4atAoOoNz3OuXOjYkSbgTI5h7vc9R+kpD714zwe71IZ33BTda+8X4ZJjh/da6G4oNcUXMkV3zA==",
+      "type": "package",
+      "path": "syncfusion.sfchart.wpf/21.1.35",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.txt",
+        "README.md",
+        "lib/net40/Design/Syncfusion.Design.Wpf.dll",
+        "lib/net40/Design/Syncfusion.SfChart.WPF.DesignTools.dll",
+        "lib/net40/Design/Syncfusion.SfChart.WPF.Expression.Design.dll",
+        "lib/net40/Design/Syncfusion.SfChart.WPF.VisualStudio.Design.dll",
+        "lib/net40/Syncfusion.SfChart.WPF.dll",
+        "lib/net40/Syncfusion.SfChart.WPF.xml",
+        "lib/net45/Design/Syncfusion.Design.Wpf.dll",
+        "lib/net45/Design/Syncfusion.SfChart.WPF.DesignTools.dll",
+        "lib/net45/Design/Syncfusion.SfChart.WPF.Expression.Design.dll",
+        "lib/net45/Design/Syncfusion.SfChart.WPF.VisualStudio.Design.dll",
+        "lib/net45/Syncfusion.SfChart.WPF.dll",
+        "lib/net45/Syncfusion.SfChart.WPF.xml",
+        "lib/net451/Design/Syncfusion.Design.Wpf.dll",
+        "lib/net451/Design/Syncfusion.SfChart.WPF.DesignTools.dll",
+        "lib/net451/Design/Syncfusion.SfChart.WPF.Expression.Design.dll",
+        "lib/net451/Design/Syncfusion.SfChart.WPF.VisualStudio.Design.dll",
+        "lib/net451/Syncfusion.SfChart.WPF.dll",
+        "lib/net451/Syncfusion.SfChart.WPF.xml",
+        "lib/net46/Design/Syncfusion.Design.Wpf.dll",
+        "lib/net46/Design/Syncfusion.SfChart.WPF.DesignTools.dll",
+        "lib/net46/Design/Syncfusion.SfChart.WPF.Expression.Design.dll",
+        "lib/net46/Design/Syncfusion.SfChart.WPF.VisualStudio.Design.dll",
+        "lib/net46/Syncfusion.SfChart.WPF.dll",
+        "lib/net46/Syncfusion.SfChart.WPF.xml",
+        "lib/net6.0-windows7.0/Design/Syncfusion.SfChart.WPF.DesignTools.dll",
+        "lib/net6.0-windows7.0/Syncfusion.SfChart.WPF.dll",
+        "lib/net6.0-windows7.0/Syncfusion.SfChart.WPF.xml",
+        "syncfusion.sfchart.wpf.21.1.35.nupkg.sha512",
+        "syncfusion.sfchart.wpf.nuspec",
+        "syncfusion_logo.png",
+        "tools/VisualStudioToolsManifest.xml"
       ]
     },
     "System.AppContext/4.3.0": {
@@ -6626,6 +6883,89 @@
         "zstdsharp.port.nuspec"
       ]
     },
+    "ZXing.Net/0.16.9": {
+      "sha512": "7WaVMHklpT3Ye2ragqRIwlFRsb6kOk63BOGADV0fan3ulVfGLUYkDi5yNUsZS/7FVNkWbtHAlDLmu4WnHGfqvQ==",
+      "type": "package",
+      "path": "zxing.net/0.16.9",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/native/zxing.XML",
+        "lib/native/zxing.pri",
+        "lib/native/zxing.winmd",
+        "lib/net20-cf/zxing.ce2.0.dll",
+        "lib/net20-cf/zxing.ce2.0.xml",
+        "lib/net20/zxing.XML",
+        "lib/net20/zxing.dll",
+        "lib/net35-cf/zxing.ce3.5.dll",
+        "lib/net35-cf/zxing.ce3.5.xml",
+        "lib/net35/zxing.XML",
+        "lib/net35/zxing.dll",
+        "lib/net40/zxing.XML",
+        "lib/net40/zxing.dll",
+        "lib/net40/zxing.presentation.XML",
+        "lib/net40/zxing.presentation.dll",
+        "lib/net45/zxing.XML",
+        "lib/net45/zxing.dll",
+        "lib/net45/zxing.presentation.XML",
+        "lib/net45/zxing.presentation.dll",
+        "lib/net461/zxing.XML",
+        "lib/net461/zxing.dll",
+        "lib/net461/zxing.presentation.XML",
+        "lib/net461/zxing.presentation.dll",
+        "lib/net47/zxing.XML",
+        "lib/net47/zxing.dll",
+        "lib/net47/zxing.presentation.XML",
+        "lib/net47/zxing.presentation.dll",
+        "lib/net48/zxing.XML",
+        "lib/net48/zxing.dll",
+        "lib/net48/zxing.presentation.XML",
+        "lib/net48/zxing.presentation.dll",
+        "lib/net5.0/zxing.XML",
+        "lib/net5.0/zxing.dll",
+        "lib/net6.0/zxing.XML",
+        "lib/net6.0/zxing.dll",
+        "lib/net7.0/zxing.XML",
+        "lib/net7.0/zxing.dll",
+        "lib/netcoreapp3.0/zxing.dll",
+        "lib/netcoreapp3.0/zxing.xml",
+        "lib/netcoreapp3.1/zxing.dll",
+        "lib/netcoreapp3.1/zxing.xml",
+        "lib/netstandard1.0/zxing.dll",
+        "lib/netstandard1.0/zxing.xml",
+        "lib/netstandard1.1/zxing.dll",
+        "lib/netstandard1.1/zxing.xml",
+        "lib/netstandard1.3/zxing.dll",
+        "lib/netstandard1.3/zxing.xml",
+        "lib/netstandard2.0/zxing.dll",
+        "lib/netstandard2.0/zxing.xml",
+        "lib/netstandard2.1/zxing.dll",
+        "lib/netstandard2.1/zxing.xml",
+        "lib/portable-win+net40+sl4+sl5+wp7+wp71+wp8/zxing.portable.XML",
+        "lib/portable-win+net40+sl4+sl5+wp7+wp71+wp8/zxing.portable.dll",
+        "lib/sl3-wp/zxing.wp7.0.XML",
+        "lib/sl3-wp/zxing.wp7.0.dll",
+        "lib/sl4-wp71/zxing.wp7.1.XML",
+        "lib/sl4-wp71/zxing.wp7.1.dll",
+        "lib/sl4/zxing.sl4.XML",
+        "lib/sl4/zxing.sl4.dll",
+        "lib/sl5/zxing.sl5.XML",
+        "lib/sl5/zxing.sl5.dll",
+        "lib/uap10/zxing.dll",
+        "lib/uap10/zxing.pri",
+        "lib/uap10/zxing.xml",
+        "lib/windows8-managed/zxing.winrt.XML",
+        "lib/windows8-managed/zxing.winrt.dll",
+        "lib/windows8/zxing.XML",
+        "lib/windows8/zxing.pri",
+        "lib/windows8/zxing.winmd",
+        "lib/wp8/zxing.wp8.0.XML",
+        "lib/wp8/zxing.wp8.0.dll",
+        "logo.jpg",
+        "zxing.net.0.16.9.nupkg.sha512",
+        "zxing.net.nuspec"
+      ]
+    },
     "Infrastructuur/1.0.0": {
       "type": "project",
       "path": "../Infrastructuur/Infrastructuur.csproj",
@@ -6634,11 +6974,14 @@
   },
   "projectFileDependencyGroups": {
     "net6.0-windows7.0": [
+      "BarCode >= 2023.3.2",
       "ClosedXML >= 0.100.3",
       "EPPlus >= 6.2.0",
       "Infrastructuur >= 1.0.0",
       "Microsoft.Office.Interop.Excel >= 15.0.4795.1001",
+      "Syncfusion.SfChart.WPF >= 21.1.35",
       "System.Drawing.Common >= 7.0.0",
+      "ZXing.Net >= 0.16.9",
       "iTextSharp >= 5.5.13.3"
     ]
   },
@@ -6695,6 +7038,10 @@
       "net6.0-windows7.0": {
         "targetAlias": "net6.0-windows",
         "dependencies": {
+          "BarCode": {
+            "target": "Package",
+            "version": "[2023.3.2, )"
+          },
           "ClosedXML": {
             "target": "Package",
             "version": "[0.100.3, )"
@@ -6707,9 +7054,17 @@
             "target": "Package",
             "version": "[15.0.4795.1001, )"
           },
+          "Syncfusion.SfChart.WPF": {
+            "target": "Package",
+            "version": "[21.1.35, )"
+          },
           "System.Drawing.Common": {
             "target": "Package",
             "version": "[7.0.0, )"
+          },
+          "ZXing.Net": {
+            "target": "Package",
+            "version": "[0.16.9, )"
           },
           "iTextSharp": {
             "target": "Package",

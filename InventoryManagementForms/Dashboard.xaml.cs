@@ -45,13 +45,24 @@ using DocumentFormat.OpenXml.Wordprocessing;
 using DocumentFormat.OpenXml.ExtendedProperties;
 using System.Reflection;
 using Infrastructuur.Constants;
+using System.Collections.ObjectModel;
+using Syncfusion.UI.Xaml.Charts;
+using InventoryManagementForms.Classes;
+using iTextSharp.text.pdf.qrcode;
+using ZXing;
+using ZXing.Common;
+using System.Drawing;
+using ZXing.QrCode;
+using Microsoft.Office.Interop.Excel;
+using Microsoft.Win32;
+using SharpCompress.Common;
 
 namespace InventoryManagementForms
 {
     /// <summary>
     /// Interaction logic for Dashboard.xaml
     /// </summary>
-    public partial class Dashboard : Window
+    public partial class Dashboard : System.Windows.Window
     {
         private readonly IHttpRequest<ProductEntity> _httpRequestProduct;
         private readonly IHttpRequest<CategoryEntity> _httpRequestCategory;
@@ -67,6 +78,9 @@ namespace InventoryManagementForms
         private ProductStruct productStruct = new ProductStruct();
         private UserEntity _user;
         private string[] _roles = new string[2] { Role.SUPERADMIN, Role.ADMIN };
+        // charts product
+        public ObservableCollection<ProductChart> Products { get; set; } = new ObservableCollection<ProductChart>();
+        public List<ProductEntity> ProductsList { get; set; } = new List<ProductEntity>();
         public Dashboard(IHttpRequest<ProductEntity> httpRequestProduct, IHttpRequest<CategoryEntity> httpRequestCategory, IHttpRequest<InventoryItemEntity> httpRequestInventoryItem, IHttpRequest<SupplierEntity> httpRequestSupplier, IHttpRequest<UserEntity> httpRequestUser)
         {
             _httpRequestProduct = httpRequestProduct;
@@ -91,38 +105,83 @@ namespace InventoryManagementForms
          * Invoke to switch back to the UI thread and set the ItemsSource properties of the data grids.*/
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            // TODO make all those in separate methods
             await UpdateData();
-            // populate combobox with enum types
-            cmbProduct.ItemsSource = Enum.GetValues(typeof(ProductOrder)).Cast<ProductOrder>();
-            cmbCategory.ItemsSource = Enum.GetValues(typeof(InventoryManagementForms.Enums.Category)).Cast<InventoryManagementForms.Enums.Category>();
-            cmbSupplier.ItemsSource = Enum.GetValues(typeof(Supplier)).Cast<Supplier>();
-            cmbInventory.ItemsSource = Enum.GetValues(typeof(Inventory)).Cast<Inventory>();
-            cmbUser.ItemsSource = Enum.GetValues(typeof(UserS)).Cast<UserS>();
-            cmbUserRole.Items.Add(Role.SUPERADMIN);
-            cmbUserRole.Items.Add(Role.ADMIN);
-            cmbUpdateUserRole.Items.Add(Role.SUPERADMIN);
-            cmbUpdateUserRole.Items.Add(Role.ADMIN);
-            // hide forms
-            //TODO: place in method
-            dGridUpdateProductForm.Visibility = Visibility.Hidden;
-            dPUpdateCategory.Visibility = Visibility.Hidden;
-            dPUpdateSupplier.Visibility = Visibility.Hidden;
-            dPUpdateInventory.Visibility = Visibility.Hidden;
-            dGridUpdateUserForm.Visibility = Visibility.Hidden;
+            ComboboxPopulator();
+            GridVisibility();
 
-
-            // dashboard
-            lblTotalProducts.Content = (await productsTask).Count();
-            lblTotalInventory.Content  = (await inventoryTask).Count();
-            lblTotalCategories.Content = (await categoriesTask).Count();
-            lblTotalSupplier.Content = (await supplierTask).Count();
-           
+            await SetDashboardTabs();
             // hide the user tab for non superadmins
-            if (_user.Role is not Role.SUPERADMIN)
+            SuperAdminAccesTabs();
+            // charts section
+            // hide charts
+            chartProducts.Visibility = Visibility.Hidden;
+            lbProductLessThan5.Visibility = Visibility.Hidden;
+            sPWarningProductsQuantity.Visibility = Visibility.Hidden;
+            Products.AddRange<ProductChart>((await productsTask).Select(p => new ProductChart { Name = p.Name, Quantity = p.Quantity, }).ToList());
+            ProductsList.AddRange((await productsTask).ToList());
+
+            chartProducts.DataContext = this;
+            // add data to the listbox
+            lbProductLessThan5.AddRange<ProductEntity>(ProductsList.Where(x => x.Quantity < 5).ToList(), new() { ProductProperty.NAME, ProductProperty.QUANTITY });
+           
+        }
+        private void lbProductLessThan5_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+           
+            // place in method extension
+            byte[] byteArray;
+
+            var qrCodeWriter = new ZXing.BarcodeWriterPixelData
             {
-                tbItemUsers.Visibility = Visibility.Hidden;
+                Format = ZXing.BarcodeFormat.QR_CODE,
+                Options = new QrCodeEncodingOptions
+                {
+                    Height = 400,
+                    Width = 400,
+                    Margin = 0
+                }
+            };
+            var productsLessThan5 = ProductsList.Where(x => x.Quantity < 5).ToList();
+            ProductEntity? product = null;
+            if (productsLessThan5.Count < lbProductLessThan5.SelectedIndex || productsLessThan5[lbProductLessThan5.SelectedIndex] == null)
+            {
+                return;
+            }
+            product = productsLessThan5[lbProductLessThan5.SelectedIndex];
+            if (product is null) return;
+            var pixelData = qrCodeWriter.Write($"{product.Name} \n {product.Quantity}");
+            // creating a PNG bitmap from the raw pixel data; if only black and white colors are used it makes no difference if the raw pixel data is BGRA oriented and the bitmap is initialized with RGB
+            using (var bitmap = new System.Drawing.Bitmap(pixelData.Width, pixelData.Height, System.Drawing.Imaging.PixelFormat.Format32bppRgb))
+            {
+                using (var ms = new MemoryStream())
+                {
+                    var bitmapData = bitmap.LockBits(new System.Drawing.Rectangle(0, 0, pixelData.Width, pixelData.Height), System.Drawing.Imaging.ImageLockMode.WriteOnly, System.Drawing.Imaging.PixelFormat.Format32bppRgb);
+                    try
+                    {
+                        // we assume that the row stride of the bitmap is aligned to 4 byte multiplied by the width of the image
+                        System.Runtime.InteropServices.Marshal.Copy(pixelData.Pixels, 0, bitmapData.Scan0, pixelData.Pixels.Length);
+                    }
+                    finally
+                    {
+                        bitmap.UnlockBits(bitmapData);
+                    }
+                    // save to folder
+                    //string fileGuid = Guid.NewGuid().ToString().Substring(0, 4);
+                    //bitmap.Save(Server.MapPath("~/qrr") + "/file-" + fileGuid + ".png", System.Drawing.Imaging.ImageFormat.Png);
+                    // save to stream as PNG
+                    bitmap.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                    byteArray = ms.ToArray();
+                    BitmapImage image = new BitmapImage();
+                    image.BeginInit();
+                    image.StreamSource = new MemoryStream(byteArray);
+                    image.CacheOption = BitmapCacheOption.OnLoad;
+                    image.EndInit();
+                    barcodeProductImage.Source = image;
+                }
             }
         }
+
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
@@ -294,94 +353,56 @@ namespace InventoryManagementForms
         #endregion
         #region PDFDocs
         // pdf documents
-        private void btnPdfProductGrid_Click(object sender, RoutedEventArgs e)
+        private void btnPdfProductGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            string fileName = "Product";
-            string suffix = ".xlsx";
-            dGProducts.WriteToExcelFile(fileName, new ProductEntity());
-            if (File.Exists($"{fileName}{suffix}"))
-            {
-                MessageBox.Show("File succesfully created");
-                return;
-            }
-            MessageBox.Show("Error creating excel file.");
-        }
-        private void btnPdfCategoryGrid_Click(object sender, RoutedEventArgs e)
-        {
-            string fileName = "Category";
-            string suffix = ".xlsx";
-            dGCategories.WriteToExcelFile(fileName, new CategoryEntity());
-            if (File.Exists($"{fileName}{suffix}"))
-            {
-                MessageBox.Show("File succesfully created");
-                return;
-            }
-            MessageBox.Show("Error creating excel file.");
+            dGProducts.PDFSaver("Product.xlsx");
         }
 
-        private void btnPdfSupplierGrid_Click(object sender, RoutedEventArgs e)
+        private void btnPdfCategoryGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            string fileName = "Supplier";
-            string suffix = ".xlsx";
-            dGSupplier.WriteToExcelFile(fileName, new SupplierEntity());
-            if (File.Exists($"{fileName}{suffix}"))
-            {
-                MessageBox.Show("File succesfully created");
-                return;
-            }
-            MessageBox.Show("Error creating excel file.");
+            dGCategories.PDFSaver("Category.xlsx");
         }
 
-        private void btnPdfInventoryGrid_Click(object sender, RoutedEventArgs e)
+        private void btnPdfSupplierGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            string fileName = "Inventory";
-            string suffix = ".xlsx";
-            dGInventory.WriteToExcelFile<InventoryItemEntity>(fileName, new InventoryItemEntity(), _httpRequestProduct, _httpRequestCategory, _httpRequestSupplier);
-            if (File.Exists($"{fileName}{suffix}"))
-            {
-                MessageBox.Show("File succesfully created");
-                return;
-            }
-            MessageBox.Show("Error creating excel file.");
+            dGSupplier.PDFSaver("Supplier.xlsx");
         }
-        private void btnPdfUserGrid_Click(object sender, RoutedEventArgs e)
+
+        private void btnPdfInventoryGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            string fileName = "User";
-            string suffix = ".xlsx";
-            dGUser.WriteToExcelFile<UserEntity>(fileName, new UserEntity());
-            if (File.Exists($"{fileName}{suffix}"))
-            {
-                MessageBox.Show("File succesfully created");
-                return;
-            }
-            MessageBox.Show("Error creating excel file.");
+            dGInventory.PDFSaver("Inventory.xlsx");
+        }
+        private void btnPdfUserGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            dGUser.PDFSaver("User.xlsx");
         }
         #endregion
         #region PrintButtons
         //print documents
-        private void btnPrintProductGrid_Click(object sender, RoutedEventArgs e)
+
+        private void btnPrintProductGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             Printer.PrintData(dGProducts, Data.Product);
         }
-
-        private void btnPrintCategoryGrid_Click(object sender, RoutedEventArgs e)
+        private void btnPrintCategoryGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             Printer.PrintData(dGCategories, Data.Category);
         }
 
-        private void btnPrintSupplierGrid_Click(object sender, RoutedEventArgs e)
+        private void btnPrintSupplierGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             Printer.PrintData(dGSupplier, Data.Supplier);
         }
 
-        private void btnPrintInventoryGrid_Click(object sender, RoutedEventArgs e)
+        private void btnPrintInventoryGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             Printer.PrintData(dGInventory, Data.Inventory);
         }
-        private void btnPrintUserGrid_Click(object sender, RoutedEventArgs e)
+        private void btnPrintUserGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             Printer.PrintData(dGUser, Data.User);
         }
+
         #endregion
         // product forms
         private async void btnProductAddItem_Click(object sender, RoutedEventArgs e)
@@ -654,41 +675,30 @@ namespace InventoryManagementForms
         }
         #region DeleteButtons
         // delete buttons
-        private async void btnDeleteProduct_Click(object sender, RoutedEventArgs e)
+
+        private  void btnRemoveProductGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            if (dGProducts.SelectedItem is not ProductEntity productEntity) return;
-            await dGProducts.DeleteItem<ProductEntity>(productEntity.ProductId, _httpRequestProduct, Api.DELETEPRODUCT, async task => await UpdateData());
+            dGProducts.RemoveData<ProductEntity>(nameof(ProductOrder),nameof(ProductOrder.ProductId), _httpRequestProduct, Api.DELETEPRODUCT, async task => await UpdateData());
         }
 
-        private async void btnDeleteCategory_Click(object sender, RoutedEventArgs e)
+        private void btnRemoveCategory_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            var selectedCategory = dGCategories.SelectedItem as CategoryEntity;
-            if (selectedCategory is null) return;
-
-            await dGCategories.DeleteItem<CategoryEntity>(selectedCategory.CategoryId, _httpRequestCategory, Api.DELETECATEGORY, async task => await UpdateData());
+            dGCategories.RemoveData<CategoryEntity>(nameof(InventoryManagementForms.Enums.Category), nameof(InventoryManagementForms.Enums.Category.CategoryId),  _httpRequestCategory, Api.DELETECATEGORY, async task => await UpdateData());
         }
 
-        private async void btnDeleteSupplier_Click(object sender, RoutedEventArgs e)
+        private void btnRemoveSupplier_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            var selectedSupplier = dGSupplier.SelectedItem as SupplierEntity;
-            if (selectedSupplier is null) return;
-
-            await dGSupplier.DeleteItem<SupplierEntity>(selectedSupplier.SupplierId, _httpRequestSupplier, Api.DELETESUPPLIER, async task => await UpdateData());
+            dGSupplier.RemoveData<SupplierEntity>(nameof(Supplier), nameof(Supplier.SupplierId),  _httpRequestSupplier, Api.DELETESUPPLIER, async task => await UpdateData());
         }
 
-        private async void btnDeleteInventoryItem_Click(object sender, RoutedEventArgs e)
+        private void btnRemoveInventoryItem_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            var selectedInventoryItem = dGInventory.SelectedItem as InventoryItemEntity;
-            if (selectedInventoryItem is null) return;
-
-            await dGInventory.DeleteItem<InventoryItemEntity>(selectedInventoryItem.InventoryItemId, _httpRequestInventoryItem, Api.DELETEINVENTORYITEM, async task => await UpdateData());
+            dGInventory.RemoveData<InventoryItemEntity>(nameof(Inventory), nameof(Inventory.InventoryItemId), _httpRequestInventoryItem, Api.DELETEINVENTORYITEM, async task => await UpdateData());
         }
 
-        private async void btnDeleteUser_Click(object sender, RoutedEventArgs e)
+        private void btnRemoveUser_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            var selectedUser = dGUser.SelectedItem as UserEntity;
-            if (selectedUser is null) return;
-            await dGUser.DeleteItem<UserEntity>(selectedUser.UserId, _httpRequestUser, Api.DELETEBYUSERBYID, async task => await UpdateData());
+            dGInventory.RemoveData<UserEntity>(nameof(UserS), nameof(InventoryManagementForms.Enums.UserS.UserId), _httpRequestUser, Api.DELETEBYUSERBYID, async task => await UpdateData());
         }
         #endregion
         //validations
@@ -903,9 +913,42 @@ namespace InventoryManagementForms
         }
 
         #endregion
+        // chart buttons
+        private void btnChartProduct_Click(object sender, RoutedEventArgs e)
+        {
+            txtProductSearch.Visibility = Visibility.Hidden;
+            lblUpdateProduct.Visibility = Visibility.Hidden;
+            lblAddProduct.Visibility = Visibility.Hidden;
+            sPWarningProductsQuantity.Visibility = Visibility.Visible;
+            cmbProduct.Visibility = Visibility.Hidden;
+            dGProducts.Visibility = Visibility.Hidden;
+            dGridUpdateProductForm.Visibility = Visibility.Hidden;
+            chartProducts.Visibility = Visibility.Visible;
+            dGProducts.Visibility = Visibility.Hidden;
+            dGridAddProductForm.Visibility = Visibility.Hidden;
+            dGridAddProductForm.Visibility = Visibility.Hidden;
+            dGridAddProductForm.Visibility = Visibility.Hidden;
+            lbProductLessThan5.Visibility = Visibility.Visible;
+            barcodeProductImage.Visibility = Visibility.Visible;
+            if (btnChartProduct.Content == "Data")
+            {
+                dGProducts.Visibility = Visibility.Visible;
+                chartProducts.Visibility = Visibility.Hidden;
+                dGridAddProductForm.Visibility = Visibility.Visible;
+                dGridUpdateProductForm.Visibility = Visibility.Hidden;
+                lbProductLessThan5.Visibility = Visibility.Hidden;
+                btnChartProduct.Content = "Chart Product";
+                txtProductSearch.Visibility = Visibility.Visible;
+                cmbProduct.Visibility = Visibility.Visible;
+                sPWarningProductsQuantity.Visibility = Visibility.Hidden;
+                lblUpdateProduct.Visibility = Visibility.Visible;
+                lblAddProduct.Visibility = Visibility.Visible;
+                barcodeProductImage.Visibility = Visibility.Hidden;
+                return;
+            }
+            btnChartProduct.Content = "Data";
+        }
         // tabitems
- 
-
         private void sPProduct_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             tbItemProduct.IsSelected = true;
@@ -925,5 +968,55 @@ namespace InventoryManagementForms
         {
             tItemInventory.IsSelected = true;
         }
+
+        private void sPUsers_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            tbItemUsers.IsSelected = true;
+        }
+        // populate the comboboxes
+        private void ComboboxPopulator()
+        {
+            // populate combobox with enum types
+            cmbProduct.ItemsSource = Enum.GetValues(typeof(ProductOrder)).Cast<ProductOrder>();
+            cmbCategory.ItemsSource = Enum.GetValues(typeof(InventoryManagementForms.Enums.Category)).Cast<InventoryManagementForms.Enums.Category>();
+            cmbSupplier.ItemsSource = Enum.GetValues(typeof(Supplier)).Cast<Supplier>();
+            cmbInventory.ItemsSource = Enum.GetValues(typeof(Inventory)).Cast<Inventory>();
+            cmbUser.ItemsSource = Enum.GetValues(typeof(UserS)).Cast<UserS>();
+
+            // user roles adder to user form
+            cmbUserRole.Items.Add(Role.SUPERADMIN);
+            cmbUserRole.Items.Add(Role.ADMIN);
+            cmbUpdateUserRole.Items.Add(Role.SUPERADMIN);
+            cmbUpdateUserRole.Items.Add(Role.ADMIN);
+        }
+        private void GridVisibility()
+        {
+            // grids visibility
+            dGridUpdateProductForm.Visibility = Visibility.Hidden;
+            dPUpdateCategory.Visibility = Visibility.Hidden;
+            dPUpdateSupplier.Visibility = Visibility.Hidden;
+            dPUpdateInventory.Visibility = Visibility.Hidden;
+            dGridUpdateUserForm.Visibility = Visibility.Hidden;
+        }
+        private async Task SetDashboardTabs()
+        {
+
+            // dashboard
+            lblTotalProducts.Content = (await productsTask).Count();
+            lblTotalInventory.Content = (await inventoryTask).Count();
+            lblTotalCategories.Content = (await categoriesTask).Count();
+            lblTotalSupplier.Content = (await supplierTask).Count();
+            lblTotalUsers.Content = (await userTask).Count();
+        }
+        private void SuperAdminAccesTabs()
+        {
+            if (_user.Role is not Role.SUPERADMIN)
+            {
+                tbItemUsers.Visibility = Visibility.Hidden;
+                sPUsers.Visibility = Visibility.Hidden;
+            }
+        }
+
+
     }
 }
