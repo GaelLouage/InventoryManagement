@@ -267,7 +267,7 @@
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <GroupBox  Grid.Row="0" Grid.ColumnSpan="4"  Grid.Column="0" Grid.RowSpan="5" Background="#FF0E314C" BorderBrush="#FF0E314C">
+                            <GroupBox  Grid.Row="0" Grid.ColumnSpan="4"  Grid.Column="0" Grid.RowSpan="4" Background="#FF0E314C" BorderBrush="#FF0E314C">
                                 <StackPanel>
                                     <Label Content="Name" Grid.Row="1" Grid.Column="1" Margin="20 20 20 -10" Foreground="White"/>
                                     <TextBox x:Name="txtProductName" Grid.Row="1" Grid.Column="2" VerticalAlignment="Top" Margin="20 20 20 20"/>
@@ -302,7 +302,7 @@
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <GroupBox  Grid.Row="0" Grid.ColumnSpan="4"  Grid.Column="0" Grid.RowSpan="5" Background="#FF0E314C" Foreground="White" BorderBrush="#FF0E314C">
+                            <GroupBox  Grid.Row="0" Grid.ColumnSpan="4"  Grid.Column="0" Grid.RowSpan="4" Background="#FF0E314C" Foreground="White" BorderBrush="#FF0E314C">
                                 <StackPanel>
                                     <Label Content="Name" Grid.Row="1" Grid.Column="1"  Margin="20 20 20 -10" Foreground="White"/>
                                     <TextBox x:Name="txtUpdateProductName" Grid.Row="1" Grid.Column="2" VerticalAlignment="Top" Margin="20 20 20 20"/>
@@ -318,7 +318,7 @@
 
                         </Grid>
                     </DockPanel>
-                    <ComboBox x:Name="cmbProduct" Grid.Column="7" HorizontalAlignment="Center" Margin="0,50,0,0" VerticalAlignment="Top" Width="310" Height="34" SelectionChanged="cmbProduct_SelectionChanged"/>
+                    <ComboBox x:Name="cmbProduct" Grid.Column="7" HorizontalAlignment="Center" Margin="5,50,0,0" VerticalAlignment="Top" Width="250" Height="34" SelectionChanged="cmbProduct_SelectionChanged"/>
                 </Grid>
             </TabItem>
 
@@ -387,7 +387,7 @@
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                       
+
                             <Label Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="5" Content="Button" Foreground="white"/>
                             <Label Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="5" Content="Button" Foreground="white"/>
                             <Label Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="5" Content="Button" Foreground="white"/>
@@ -451,38 +451,42 @@
                                     <Button x:Name="btnUpateCategory" Content="Update Category" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Click="btnUpdateCategory_Click" Width="130" Height="30"   Margin="20 50 20 20" Background="Green" Foreground="white" BorderThickness="0"  Cursor="Hand"/>
                                 </StackPanel>
                             </GroupBox>
-                           
+
                         </Grid>
                     </DockPanel>
-                    <ComboBox x:Name="cmbCategory" Grid.Column="7" HorizontalAlignment="Center" Margin="0,50,0,0" VerticalAlignment="Top" Width="309" Height="34" SelectionChanged="cmbCategory_SelectionChanged" />
+                    <ComboBox x:Name="cmbCategory" Grid.Column="7" HorizontalAlignment="Center" Margin="0,50,0,0" VerticalAlignment="Top" Width="250" Height="34" SelectionChanged="cmbCategory_SelectionChanged" />
                 </Grid>
             </TabItem>
             <TabItem Header="Supplier" x:Name="tItemSupplier" Width="100" Height="32" Margin="-11 0 0 0 ">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="150"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="79*"/>
+                        <ColumnDefinition Width="24*"/>
+                        <ColumnDefinition Width="210*"/>
+                        <ColumnDefinition Width="313*"/>
+                        <ColumnDefinition Width="313*"/>
+                        <ColumnDefinition Width="313*"/>
+                        <ColumnDefinition Width="313*"/>
+                        <ColumnDefinition Width="313*"/>
+                        <ColumnDefinition Width="10"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="100"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <StackPanel Orientation="Horizontal" Grid.Column="3" Grid.Row="0" Grid.ColumnSpan="3">
+                    <StackPanel Orientation="Horizontal" Grid.Column="4" Grid.Row="0" Grid.ColumnSpan="3" Margin="0,0,312,0">
+                        <Image x:Name="btnAddSupplierGrid" Source="Images/add.png" Width="50" Height="50"  VerticalAlignment="Bottom" Margin="15 5 5 5" Cursor="Hand" ToolTip="Add" MouseLeftButtonUp="btnAddSupplierGrid_MouseLeftButtonUp" />
+                        <Image x:Name="btnupdateSuppliertGrid" Source="Images/updated.png" Width="50" Height="50"  VerticalAlignment="Bottom" Margin="15 5 5 5" Cursor="Hand" ToolTip="Update" MouseLeftButtonUp="btnupdateSuppliertGrid_MouseLeftButtonUp" />
                         <Image x:Name="btnRemoveSupplier" Source="Images/remove.png" Width="50" Height="50"  VerticalAlignment="Bottom" Margin="15 5 5 5" Cursor="Hand" MouseLeftButtonUp="btnRemoveSupplier_MouseLeftButtonUp"/>
                         <Image x:Name="btnPrintSupplierGrid" Source="Images/print.png" Width="50" Height="50"  VerticalAlignment="Bottom" Margin="15 5 5 5" Cursor="Hand" MouseLeftButtonUp="btnPrintSupplierGrid_MouseLeftButtonUp" />
                         <Image x:Name="btnPdfSupplierGrid" Source="Images/excel.png" Width="50" Height="50"  VerticalAlignment="Bottom" Margin="15 5 5 5" Cursor="Hand" MouseLeftButtonUp="btnPdfSupplierGrid_MouseLeftButtonUp" />
                     </StackPanel>
-                    <TextBox x:Name="txtSupplierSearch"  Grid.Row="0" Grid.Column="6" Margin="5,50,5,0" VerticalAlignment="Top" Padding="3 5 8 3" TextChanged="txtSupplierSearch_TextChanged" FontSize="16px" Height="35"/>
+                    <TextBox x:Name="txtSupplierSearch"  Grid.Row="0" Grid.Column="8" Margin="5,50,5,0" VerticalAlignment="Top" Padding="3 5 8 3"  TextChanged="txtSupplierSearch_TextChanged" FontSize="16px" Height="35"/>
                     <!-- Add content for Supplier tab here -->
-                    <DataGrid x:Name="dGSupplier" RowHeight="30" VerticalAlignment="Top"  Margin="10,0,5,0"  Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="6" Grid.RowSpan="3" Height="800" AutoGenerateColumns="False" 
+                    <DataGrid x:Name="dGSupplier"  VerticalAlignment="Top"  Margin="10,0,5,0"  Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="5" Grid.RowSpan="3" Height="800"  AutoGenerateColumns="False" 
                                BorderBrush="#FFD4DDE6" 
                               AlternatingRowBackground="LightBlue" SelectionChanged="dGSupplier_SelectionChanged">
                         <DataGrid.ColumnHeaderStyle>
@@ -502,7 +506,7 @@
                             <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="*" />
                         </DataGrid.Columns>
                     </DataGrid>
-                    <DockPanel  Grid.Column="1" LastChildFill="False" Grid.Row="0" Grid.RowSpan="4" Background="#FF0E314C"  Margin="-15 -3 -5 -5">
+                    <DockPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="3" Margin="0 -10 10 10" LastChildFill="False">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="10"/>
@@ -519,20 +523,15 @@
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <Label x:Name="lblAddSupplier" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="5" Content="Add Supplier" Foreground="white" MouseLeftButtonUp="lblAddSupplier_MouseLeftButtonUp"/>
-                            <Label x:Name="lblUpdateSupplier" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="5" Content="Update Supplier" Foreground="white" MouseLeftButtonUp="lblUpdateSupplier_MouseLeftButtonUp"/>
-                            <Label Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="5" Content="Button" Foreground="white"/>
-                            <Label Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="5" Content="Button" Foreground="white"/>
-                            <Label Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="5" Content="Button" Foreground="white"/>
                         </Grid>
                     </DockPanel>
-                    <DockPanel x:Name="dPAddSupplier" Grid.Row="1" Grid.Column="2" Grid.RowSpan="3" LastChildFill="False" >
+                    <DockPanel x:Name="dPAddSupplier" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="3" LastChildFill="False">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="5"/>
+                                <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="150"/>
-                                <ColumnDefinition Width="155"/>
-                                <ColumnDefinition Width="5"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
@@ -544,25 +543,29 @@
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <Label Content="Add Supplier form" Grid.Row="0" Grid.ColumnSpan="2"  Grid.Column="1" HorizontalContentAlignment="Center" FontWeight="Bold"/>
-                            <Label Content="Name" Grid.Row="1" Grid.Column="1"/>
-                            <Label Content="Address" Grid.Row="2" Grid.Column="1"/>
-                            <Label Content="Phone" Grid.Row="3" Grid.Column="1"/>
-                            <Label Content="Email" Grid.Row="4" Grid.Column="1"/>
-                            <TextBox x:Name="txtSupplierName" Grid.Row="1" Grid.Column="2" VerticalAlignment="Top"/>
-                            <TextBox x:Name="txtSupplierAddress" Grid.Row="2" Grid.Column="2" VerticalAlignment="Top"/>
-                            <TextBox x:Name="txtSupplierPhone" Grid.Row="3" Grid.Column="2" VerticalAlignment="Top"/>
-                            <TextBox x:Name="txtSupplierEmail" Grid.Row="4" Grid.Column="2" VerticalAlignment="Top"/>
-                            <Button x:Name="btnAddSupplier" Content="Add Supplier" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2"  Click="btnAddSupplier_Click" Width="130" Height="30"  Margin="15 5 5 5" Background="#FF0E314C" Foreground="white" VerticalAlignment="Bottom"/>
+                            <GroupBox  Grid.Row="0" Grid.ColumnSpan="4"  Grid.Column="0" Grid.RowSpan="4" Background="#FF0E314C" Foreground="White" BorderBrush="#FF0E314C">
+                                <StackPanel>
+                                    <Label Content="Name" Grid.Row="1" Grid.Column="1"  Margin="20 20 20 -10" Foreground="White"/>
+                                    <TextBox x:Name="txtSupplierName" Grid.Row="1" Grid.Column="2" VerticalAlignment="Top" Margin="20 20 20 20"/>
+                                    <Label Content="Address" Grid.Row="2" Grid.Column="1"  Margin="20 20 20 -10" Foreground="White"/>
+                                    <TextBox x:Name="txtSupplierAddress" Grid.Row="2" Grid.Column="2" VerticalAlignment="Top" Margin="20 20 20 20"/>
+                                    <Label Content="Phone" Grid.Row="3" Grid.Column="1"  Margin="20 20 20 -10" Foreground="White"/>
+                                    <TextBox x:Name="txtSupplierPhone" Grid.Row="3" Grid.Column="2" VerticalAlignment="Top" Margin="20 20 20 20"/>
+                                    <Label Content="Email" Grid.Row="4" Grid.Column="1"  Margin="20 20 20 -10" Foreground="White"/>
+                                    <TextBox x:Name="txtSupplierEmail" Grid.Row="4" Grid.Column="2" VerticalAlignment="Top" Margin="20 20 20 20"/>
+                                    <Button x:Name="btnAddSupplier" Content="Add Supplier" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2"  Click="btnAddSupplier_Click" Width="130" Height="30"   Margin="20 50 20 20" Background="Green" Foreground="white" BorderThickness="0"  Cursor="Hand"/>
+                                </StackPanel>
+                            </GroupBox>
+
                         </Grid>
                     </DockPanel>
-                    <DockPanel x:Name="dPUpdateSupplier" Grid.Row="1" Grid.Column="2" Grid.RowSpan="3" LastChildFill="False" >
+                    <DockPanel x:Name="dPUpdateSupplier" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="3" LastChildFill="False"  >
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="5"/>
+                                <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="150"/>
-                                <ColumnDefinition Width="155"/>
-                                <ColumnDefinition Width="5"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
@@ -574,31 +577,37 @@
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <Label Content="Update Supplier form" Grid.Row="0" Grid.ColumnSpan="2"  Grid.Column="1" HorizontalContentAlignment="Center" FontWeight="Bold"/>
-                            <Label Content="Name" Grid.Row="1" Grid.Column="1"/>
-                            <Label Content="Address" Grid.Row="2" Grid.Column="1"/>
-                            <Label Content="Phone" Grid.Row="3" Grid.Column="1"/>
-                            <Label Content="Email" Grid.Row="4" Grid.Column="1"/>
-                            <TextBox x:Name="txtUpdateSupplierName" Grid.Row="1" Grid.Column="2" VerticalAlignment="Top"/>
-                            <TextBox x:Name="txtUpdateSupplierAddress" Grid.Row="2" Grid.Column="2" VerticalAlignment="Top"/>
-                            <TextBox x:Name="txtUpdateSupplierPhone" Grid.Row="3" Grid.Column="2" VerticalAlignment="Top"/>
-                            <TextBox x:Name="txtUpdateSupplierEmail" Grid.Row="4" Grid.Column="2" VerticalAlignment="Top"/>
-                            <Button x:Name="btnUpdateSupplier" Content="Update Supplier" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2"  Click="btnUpdateSupplier_Click" Width="130" Height="30"  Margin="15 5 5 5" Background="#FF0E314C" Foreground="white" VerticalAlignment="Bottom"/>
+                            <GroupBox  Grid.Row="0" Grid.ColumnSpan="4"  Grid.Column="0" Grid.RowSpan="4" Background="#FF0E314C" Foreground="White" BorderBrush="#FF0E314C">
+                                <StackPanel>
+                                    <Label Content="Name" Grid.Row="1" Grid.Column="1" Margin="20 20 20 -10" Foreground="White"/>
+                                    <TextBox x:Name="txtUpdateSupplierName" Grid.Row="1" Grid.Column="2" VerticalAlignment="Top" Margin="20 20 20 20"/>
+                                    <Label Content="Address" Grid.Row="2" Grid.Column="1" Margin="20 20 20 -10" Foreground="White"/>
+                                    <TextBox x:Name="txtUpdateSupplierAddress" Grid.Row="2" Grid.Column="2" VerticalAlignment="Top" Margin="20 20 20 20"/>
+                                    <Label Content="Phone" Grid.Row="3" Grid.Column="1" Margin="20 20 20 -10" Foreground="White"/>
+                                    <TextBox x:Name="txtUpdateSupplierPhone" Grid.Row="3" Grid.Column="2" VerticalAlignment="Top" Margin="20 20 20 20"/>
+                                    <Label Content="Email" Grid.Row="4" Grid.Column="1" Margin="20 20 20 -10" Foreground="White"/>
+                                    <TextBox x:Name="txtUpdateSupplierEmail" Grid.Row="4" Grid.Column="2" VerticalAlignment="Top" Margin="20 20 20 20"/>
+                                    <Button x:Name="btnUpdateSupplier" Content="Update Supplier" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2"  Click="btnUpdateSupplier_Click" Width="130" Height="30"   Margin="20 50 20 20" Background="Green" Foreground="white" BorderThickness="0"  Cursor="Hand"/>
+                                </StackPanel>
+                            </GroupBox>
+                          
                         </Grid>
                     </DockPanel>
-                    <ComboBox x:Name="cmbSupplier" Grid.Column="5" HorizontalAlignment="Center" Margin="0,50,0,0" VerticalAlignment="Top" Width="309" Height="34" SelectionChanged="cmbSupplier_SelectionChanged"/>
+                    <ComboBox x:Name="cmbSupplier" Grid.Column="7" HorizontalAlignment="Center" Margin="0,50,0,0" VerticalAlignment="Top" Width="250" Height="34" SelectionChanged="cmbSupplier_SelectionChanged"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Inventory" x:Name="tItemInventory" Width="100" Height="32" Margin="-11 0 0 0 ">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="10"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="79*"/>
+                        <ColumnDefinition Width="24*"/>
+                        <ColumnDefinition Width="210*"/>
+                        <ColumnDefinition Width="313*"/>
+                        <ColumnDefinition Width="313*"/>
+                        <ColumnDefinition Width="313*"/>
+                        <ColumnDefinition Width="313*"/>
+                        <ColumnDefinition Width="313*"/>
                         <ColumnDefinition Width="10"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
@@ -607,14 +616,16 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <StackPanel Orientation="Horizontal" Grid.Column="3" Grid.Row="0" Grid.ColumnSpan="3">
+                    <StackPanel Orientation="Horizontal" Grid.Column="4" Grid.Row="0" Grid.ColumnSpan="3">
+                        <Image x:Name="btnAddInventoryGrid" Source="Images/add.png" Width="50" Height="50"  VerticalAlignment="Bottom" Margin="15 5 5 5" Cursor="Hand" ToolTip="Add" MouseLeftButtonUp="btnAddInventoryGrid_MouseLeftButtonUp" />
+                        <Image x:Name="btnupdateInventoryGrid" Source="Images/updated.png" Width="50" Height="50"  VerticalAlignment="Bottom" Margin="15 5 5 5" Cursor="Hand" ToolTip="Update" MouseLeftButtonUp="btnupdateInventoryGrid_MouseLeftButtonUp"  />
                         <Image x:Name="btnRemoveInventoryItem" Source="Images/remove.png" Width="50" Height="50"  VerticalAlignment="Bottom" Margin="15 5 5 5" Cursor="Hand" MouseLeftButtonUp="btnRemoveInventoryItem_MouseLeftButtonUp"/>
                         <Image x:Name="btnPrintInventoryGrid" Source="Images/print.png" Width="50" Height="50"  VerticalAlignment="Bottom" Margin="15 5 5 5" Cursor="Hand" MouseLeftButtonUp="btnPrintInventoryGrid_MouseLeftButtonUp"  />
                         <Image x:Name="btnPdfInventoryGrid"  Source="Images/excel.png" Width="50" Height="50"  VerticalAlignment="Bottom" Margin="15 5 5 5" Cursor="Hand" MouseLeftButtonUp="btnPdfInventoryGrid_MouseLeftButtonUp"  />
                     </StackPanel>
-                    <TextBox x:Name="txtInventorySearch" Grid.Row="0" Grid.Column="6" Margin="5,50,5,0" VerticalAlignment="Top" Padding="3 5 8 3" TextChanged="txtInventorySearch_TextChanged" FontSize="16px" Height="35"/>
+                    <TextBox x:Name="txtInventorySearch" Grid.Row="0" Grid.Column="8" Margin="5,50,5,0" VerticalAlignment="Top" Padding="3 5 8 3" TextChanged="txtInventorySearch_TextChanged" FontSize="16px" Height="35"/>
                     <!-- Add content for Inventory tab here -->
-                    <DataGrid x:Name="dGInventory" RowHeight="30"  VerticalAlignment="Top"  Margin="10,0,5,0"  Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="9" Grid.RowSpan="3" Height="800" AutoGenerateColumns="False" 
+                    <DataGrid x:Name="dGInventory" RowHeight="30"  VerticalAlignment="Top"  Margin="10,0,5,0"  Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="5" Grid.RowSpan="3" Height="800"  AutoGenerateColumns="False" 
                                BorderBrush="#FFD4DDE6" 
                               AlternatingRowBackground="LightBlue" SelectionChanged="dGInventory_SelectionChanged">
                         <DataGrid.ColumnHeaderStyle>
@@ -639,7 +650,7 @@
                             <DataGridTextColumn Header="Supplier Name" Binding="{Binding Supplier.Name}" Width="*" />
                         </DataGrid.Columns>
                     </DataGrid>
-                    <DockPanel  Grid.Column="1" LastChildFill="False" Grid.Row="0" Grid.RowSpan="4" Background="#FF0E314C" Margin="-15 -3 -5 -5">
+                    <DockPanel   Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="3" Margin="0 -10 10 10" LastChildFill="False">
                         <Grid >
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="10"/>
@@ -656,20 +667,15 @@
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <Label x:Name="lblAddInventory" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="5" Content="Add Inventory Item" Foreground="white" MouseLeftButtonUp="lblAddInventory_MouseLeftButtonUp"/>
-                            <Label x:Name="lblUpdateInventory" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="5" Content="Update Inventory Item" Foreground="white" MouseLeftButtonUp="lblUpdateInventory_MouseLeftButtonUp"/>
-                            <Label Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="5" Content="Button" Foreground="white"/>
-                            <Label Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="5" Content="Button" Foreground="white"/>
-                            <Label Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="5" Content="Button" Foreground="white"/>
                         </Grid>
                     </DockPanel>
-                    <DockPanel x:Name="dPAddInvetory" Grid.Row="1" Grid.Column="2" Grid.RowSpan="3" LastChildFill="False" >
+                    <DockPanel x:Name="dPAddInvetory" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="3" Margin="0 -10 10 10" LastChildFill="False">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="5"/>
+                                <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="150"/>
-                                <ColumnDefinition Width="155"/>
-                                <ColumnDefinition Width="5"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
@@ -681,27 +687,31 @@
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <Label Content="Add Inventory item form" Grid.Row="0" Grid.ColumnSpan="2"  Grid.Column="1" HorizontalContentAlignment="Center" FontWeight="Bold"/>
-                            <Label Content="Product ID" Grid.Row="1" Grid.Column="1"/>
-                            <Label Content="Cateogry ID" Grid.Row="2" Grid.Column="1"/>
-                            <Label Content="Supplier ID" Grid.Row="3" Grid.Column="1"/>
-                            <Label Content="Quantity" Grid.Row="4" Grid.Column="1"/>
-                            <Label Content="Date Added" Grid.Row="5" Grid.Column="1"/>
-                            <TextBox x:Name="txtInventoryAddProductID" Grid.Row="1" Grid.Column="2" VerticalAlignment="Top"/>
-                            <TextBox x:Name="txtInventoryAddCateogryID" Grid.Row="2" Grid.Column="2" VerticalAlignment="Top"/>
-                            <TextBox x:Name="txtInventoryAddSupplierID" Grid.Row="3" Grid.Column="2" VerticalAlignment="Top"/>
-                            <TextBox x:Name="txtInventoryAddQuantity" Grid.Row="4" Grid.Column="2" VerticalAlignment="Top"/>
-                            <DatePicker x:Name="dtInvetoryAddDateAdded" Grid.Row="5" Grid.Column="2"/>
-                            <Button x:Name="btnAddInventoryItem" Content="Add Inventory Item" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2"  Click="btnAddInventoryItem_Click" Width="130" Height="30"  Margin="15 5 5 5" Background="#FF0E314C" Foreground="white" VerticalAlignment="Bottom"/>
+                            <GroupBox Grid.Row="0" Grid.ColumnSpan="4"  Grid.Column="0" Grid.RowSpan="6" Background="#FF0E314C" Foreground="White" BorderBrush="#FF0E314C">
+                                <StackPanel>
+                                    <Label Content="Product ID"  Margin="20 20 20 -10" Foreground="White"/>
+                                    <TextBox x:Name="txtInventoryAddProductID"  VerticalAlignment="Top"  Margin="20 20 20 20"/>
+                                    <Label Content="Cateogry ID" Grid.Row="2" Grid.Column="1" Margin="20 20 20 -10" Foreground="White"/>
+                                    <TextBox x:Name="txtInventoryAddCateogryID" Grid.Row="2" Grid.Column="2" VerticalAlignment="Top"  Margin="20 20 20 20"/>
+                                    <Label Content="Supplier ID" Grid.Row="3" Grid.Column="1" Margin="20 20 20 -10" Foreground="White"/>
+                                    <TextBox x:Name="txtInventoryAddSupplierID" Grid.Row="3" Grid.Column="2" VerticalAlignment="Top" Margin="20 20 20 20"/>
+                                    <Label Content="Quantity" Grid.Row="4" Grid.Column="1" Margin="20 20 20 -10" Foreground="White"/>
+                                    <TextBox x:Name="txtInventoryAddQuantity" Grid.Row="4" Grid.Column="2" VerticalAlignment="Top"  Margin="20 20 20 20"/>
+                                    <Label Content="Date Added" Grid.Row="5" Grid.Column="1" Margin="20 20 20 -10" Foreground="White" />
+                                    <DatePicker x:Name="dtInvetoryAddDateAdded" Grid.Row="5" Grid.Column="2" Margin="20 50 20 20" />
+                                    <Button x:Name="btnAddInventoryItem" Content="Add Inventory Item" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2"  Click="btnAddInventoryItem_Click" Width="130" Height="30"   Margin="20 50 20 20" Background="Green" Foreground="white" BorderThickness="0"  Cursor="Hand"/>
+                                </StackPanel>
+                            </GroupBox>
+                         
                         </Grid>
                     </DockPanel>
-                    <DockPanel x:Name="dPUpdateInventory" Grid.Row="1" Grid.Column="2" Grid.RowSpan="3" LastChildFill="False" >
+                    <DockPanel x:Name="dPUpdateInventory" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="3" Margin="0 -10 10 10" LastChildFill="False">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="5"/>
+                                <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="150"/>
-                                <ColumnDefinition Width="155"/>
-                                <ColumnDefinition Width="5"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
@@ -713,19 +723,25 @@
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <Label Content="Update Inventory item form" Grid.Row="0" Grid.ColumnSpan="2"  Grid.Column="1" HorizontalContentAlignment="Center" FontWeight="Bold"/>
-                            <Label Content="Product ID" Grid.Row="1" Grid.Column="1"/>
-                            <Label Content="Cateogry ID" Grid.Row="2" Grid.Column="1"/>
-                            <Label Content="Supplier ID" Grid.Row="3" Grid.Column="1"/>
-                            <Label Content="Quantity" Grid.Row="4" Grid.Column="1"/>
-                            <TextBox x:Name="txtInventoryUpdateProductID" Grid.Row="1" Grid.Column="2" VerticalAlignment="Top"/>
-                            <TextBox x:Name="txtInventoryUpdateCateogryID" Grid.Row="2" Grid.Column="2" VerticalAlignment="Top"/>
-                            <TextBox x:Name="txtInventoryUpdateSupplierID" Grid.Row="3" Grid.Column="2" VerticalAlignment="Top"/>
-                            <TextBox x:Name="txtInventoryUpdateQuantity" Grid.Row="4" Grid.Column="2" VerticalAlignment="Top"/>
-                            <Button x:Name="btnUpdateInventoryItem" Content="Update Inventory Item" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2"  Click="btnUpdateInventoryItem_Click" Width="130" Height="30"  Margin="15 5 5 5" Background="#FF0E314C" Foreground="white" VerticalAlignment="Bottom"/>
+                            <GroupBox Grid.Row="0" Grid.ColumnSpan="4"  Grid.Column="0" Grid.RowSpan="6" Background="#FF0E314C" Foreground="White" BorderBrush="#FF0E314C">
+                                <StackPanel>
+                                    <Label Content="Product ID" Grid.Row="1" Grid.Column="1"  Margin="20 20 20 -10" Foreground="White"/>
+                                    <TextBox x:Name="txtInventoryUpdateProductID" Grid.Row="1" Grid.Column="2" VerticalAlignment="Top"  Margin="20 20 20 20"/>
+                                    <Label Content="Cateogry ID" Grid.Row="2" Grid.Column="1"  Margin="20 20 20 -10" Foreground="White"/>
+                                    <TextBox x:Name="txtInventoryUpdateCateogryID" Grid.Row="2" Grid.Column="2" VerticalAlignment="Top"  Margin="20 20 20 20"/>
+                                    <Label Content="Supplier ID" Grid.Row="3" Grid.Column="1"  Margin="20 20 20 -10" Foreground="White"/>
+                                    <TextBox x:Name="txtInventoryUpdateSupplierID" Grid.Row="3" Grid.Column="2" VerticalAlignment="Top"  Margin="20 20 20 20"/>
+                                    <Label Content="Quantity" Grid.Row="4" Grid.Column="1"  Margin="20 20 20 -10" Foreground="White"/>
+                                    <TextBox x:Name="txtInventoryUpdateQuantity" Grid.Row="4" Grid.Column="2" VerticalAlignment="Top"  Margin="20 20 20 20"/>
+                                    <Label Content="Date Added" Grid.Row="5" Grid.Column="1" Margin="20 20 20 -10" Foreground="White" />
+                                    <DatePicker x:Name="dtUpdateInvetoryAddDateAdded" Grid.Row="5" Grid.Column="2" Margin="20 50 20 20" />
+                                    <Button x:Name="btnUpdateInventoryItem" Content="Update Inventory Item" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2"  Click="btnUpdateInventoryItem_Click" Width="130" Height="30"   Margin="20 50 20 20" Background="Green" Foreground="white" BorderThickness="0"  Cursor="Hand"/>
+                                </StackPanel>
+                            </GroupBox>
+                           
                         </Grid>
                     </DockPanel>
-                    <ComboBox x:Name="cmbInventory" Grid.Column="5" HorizontalAlignment="Center" Margin="0,50,0,0" VerticalAlignment="Top" Width="309" Height="34" SelectionChanged="cmbInventory_SelectionChanged"/>
+                    <ComboBox x:Name="cmbInventory" Grid.Column="7" HorizontalAlignment="Center" Margin="0,50,0,0" VerticalAlignment="Top" Width="250" Height="34" SelectionChanged="cmbInventory_SelectionChanged"/>
                 </Grid>
             </TabItem>
             <TabItem Header="User" x:Name="tbItemUsers" Width="100" Height="32" Margin="-11 0 0 0 ">
@@ -748,15 +764,17 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <StackPanel Orientation="Horizontal" Grid.Column="5"  Grid.Row="0" Grid.ColumnSpan="3" >
+                    <StackPanel Orientation="Horizontal" Grid.Column="4"  Grid.Row="0" Grid.ColumnSpan="3" >
+                        <Image x:Name="btnAddUserGrid" Source="Images/add.png" Width="50" Height="50"  VerticalAlignment="Bottom" Margin="15 5 5 5" Cursor="Hand" ToolTip="Add" MouseLeftButtonUp="btnAddUserGrid_MouseLeftButtonUp"  />
+                        <Image x:Name="btnupdateUserGrid" Source="Images/updated.png" Width="50" Height="50"  VerticalAlignment="Bottom" Margin="15 5 5 5" Cursor="Hand" ToolTip="Update" MouseLeftButtonUp="btnupdateUserGrid_MouseLeftButtonUp"   />
                         <Image x:Name="btnRemoveUser" Source="Images/remove.png" Width="50" Height="50"  VerticalAlignment="Bottom" Margin="15 5 5 5" Cursor="Hand" MouseLeftButtonUp="btnRemoveUser_MouseLeftButtonUp"/>
                         <Image x:Name="btnPrintUserGrid" Source="Images/print.png" Width="50" Height="50"  VerticalAlignment="Bottom" Margin="15 5 5 5" Cursor="Hand" MouseLeftButtonUp="btnPrintUserGrid_MouseLeftButtonUp"  />
                         <Image  x:Name="btnPdfUserGrid" Source="Images/excel.png" Width="50" Height="50"  VerticalAlignment="Bottom" Margin="15 5 5 5" Cursor="Hand" MouseLeftButtonUp="btnPdfUserGrid_MouseLeftButtonUp"  />
                     </StackPanel>
 
                     <TextBox x:Name="txtUserSearch" Grid.Row="0" Grid.Column="8" Margin="5,50,5,0" Padding="3 5 8 3"  FontSize="16px" Height="35" VerticalAlignment="Top"  TextChanged="txtUserSearch_TextChanged"/>
-                    <!-- Add content for Products tab here -->
-                    <DataGrid x:Name="dGUser" RowHeight="30"  VerticalAlignment="Top" Margin="10,0,5,0"  Grid.Row="1" Grid.Column="5" Grid.ColumnSpan="5" Grid.RowSpan="3" Height="800" AutoGenerateColumns="False" 
+                    <!-- Add content for users tab here -->
+                    <DataGrid x:Name="dGUser"   RowHeight="30"  VerticalAlignment="Top"  Margin="10,0,5,0"  Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="5" Grid.RowSpan="3" Height="800"  AutoGenerateColumns="False" 
                               BorderBrush="#FFD4DDE6" 
                               AlternatingRowBackground="#FFD4DDE6" FontSize="16" SelectionChanged="dGUser_SelectionChanged">
                         <DataGrid.ColumnHeaderStyle>
@@ -780,38 +798,13 @@
                             <DataGridTextColumn Header="Role" Binding="{Binding Role}" Width="*" />
                         </DataGrid.Columns>
                     </DataGrid>
-                    <DockPanel LastChildFill="False" Grid.Row="0" Grid.RowSpan="4" Background="#FF0E314C" Margin="-5,-3,307,-5" Grid.ColumnSpan="5">
+                    <DockPanel LastChildFill="False" Grid.Row="0" Grid.RowSpan="4"  Margin="-5,-3,307,-5" Grid.ColumnSpan="5">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="10"/>
-                                <ColumnDefinition Width="26.5"/>
-                                <ColumnDefinition Width="265.5"/>
-                                <ColumnDefinition Width="10"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-                            <Label x:Name="lblAddUser" Grid.Column="0" Grid.ColumnSpan="4" Content="Add User" Foreground="white"  Margin="0,110,0,110" Grid.RowSpan="3" MouseLeftButtonUp="lblAddUser_MouseLeftButtonUp" />
-                            <Label x:Name="lblUpdateUser" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="4" Content="Update Porudct" Foreground="white" Margin="0,0,0,110" Grid.RowSpan="2" MouseLeftButtonUp="lblUpdateUser_MouseLeftButtonUp" />
-                            <Label Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="4" Content="Button" Foreground="white"/>
-                            <Label Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="4" Content="Button" Foreground="white" Margin="0,110,0,0" Grid.RowSpan="2"/>
-                            <Label Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="4" Content="Button" Foreground="white" Margin="0,110,0,110" Grid.RowSpan="3"/>
-                        </Grid>
-                    </DockPanel>
-                    <DockPanel x:Name="dGridUserForm" Grid.Row="1" Grid.Column="4" Grid.RowSpan="3" LastChildFill="False" >
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="5"/>
+                                <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="150"/>
-                                <ColumnDefinition Width="155"/>
-                                <ColumnDefinition Width="5"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
@@ -823,29 +816,15 @@
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <Label Content="Add User form" Grid.Row="0" Grid.ColumnSpan="2"  Grid.Column="1" HorizontalContentAlignment="Center" FontWeight="Bold"/>
-                            <Label Content="UserName" Grid.Row="1" Grid.Column="1"/>
-                            <Label Content="Name" Grid.Row="2" Grid.Column="1"/>
-                            <Label Content="Password" Grid.Row="3" Grid.Column="1"/>
-                            <Label Content="Email" Grid.Row="4" Grid.Column="1"/>
-                            <Label Content="Address" Grid.Row="5" Grid.Column="1"/>
-                            <Label Content="Role" Grid.Row="6" Grid.Column="1" VerticalAlignment="Bottom"/>
-                            <TextBox x:Name="txtAddUserNameUser" Grid.Row="1" Grid.Column="2" VerticalAlignment="Top"/>
-                            <TextBox x:Name="txtAddNameUser" Grid.Row="2" Grid.Column="2" VerticalAlignment="Top"/>
-                            <PasswordBox x:Name="txtUserPassword" Grid.Row="3" Grid.Column="2" VerticalAlignment="Top"/>
-                            <TextBox x:Name="txtUseremail" Grid.Row="4" Grid.Column="2" VerticalAlignment="Top"/>
-                            <TextBox x:Name="txtUserAddress" Grid.Row="5" Grid.Column="2" VerticalAlignment="Top"/>
-                            <ComboBox x:Name="cmbUserRole" Grid.Row="6" Grid.Column="2" Margin="0,74,0,1"/>
-                            <Button x:Name="btnUserAddItem" Content="Add User" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2"  Click="btnUserAddItem_Click" Width="130" Height="30"  Margin="15 5 5 5" Background="#FF0E314C" Foreground="white" VerticalAlignment="Bottom"/>
                         </Grid>
                     </DockPanel>
-                    <DockPanel x:Name="dGridUpdateUserForm" Grid.Row="1" Grid.Column="4" Grid.RowSpan="3" LastChildFill="False" >
+                    <DockPanel x:Name="dGridUserForm" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="5" Margin="0 -10 10 10" LastChildFill="False">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="5"/>
+                                <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="150"/>
-                                <ColumnDefinition Width="155"/>
-                                <ColumnDefinition Width="5"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
@@ -857,23 +836,64 @@
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <Label Content="Update User form" Grid.Row="0" Grid.ColumnSpan="2"  Grid.Column="1" HorizontalContentAlignment="Center" FontWeight="Bold"/>
-                            <Label Content="UserName" Grid.Row="1" Grid.Column="1"/>
-                            <Label Content="Name" Grid.Row="2" Grid.Column="1"/>
-                            <Label Content="Password" Grid.Row="3" Grid.Column="1"/>
-                            <Label Content="Email" Grid.Row="4" Grid.Column="1"/>
-                            <Label Content="Address" Grid.Row="5" Grid.Column="1"/>
-                            <Label Content="Role" Grid.Row="6" Grid.Column="1" VerticalAlignment="Bottom"/>
-                            <TextBox x:Name="txtUpdateAddUserNameUser" Grid.Row="1" Grid.Column="2" VerticalAlignment="Top"/>
-                            <TextBox x:Name="txtUpdateAddNameUser" Grid.Row="2" Grid.Column="2" VerticalAlignment="Top"/>
-                            <PasswordBox x:Name="txtUpdateUserPassword" Grid.Row="3" Grid.Column="2" VerticalAlignment="Top"/>
-                            <TextBox x:Name="txtUpdateUseremail" Grid.Row="4" Grid.Column="2" VerticalAlignment="Top"/>
-                            <TextBox x:Name="txtUpdateUserAddress" Grid.Row="5" Grid.Column="2" VerticalAlignment="Top"/>
-                            <ComboBox x:Name="cmbUpdateUserRole" Grid.Row="6" Grid.Column="2" Margin="0,74,0,1"/>
-                            <Button x:Name="btnUpdateUserAddItem" Content="Update User" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2"  Click="btnUpdateUserAddItem_Click" Width="130" Height="30"  Margin="15 5 5 5" Background="#FF0E314C" Foreground="white" VerticalAlignment="Bottom"/>
+                            <GroupBox   Grid.Row="0" Grid.ColumnSpan="4"  Grid.Column="0" Grid.RowSpan="6" Background="#FF0E314C" Foreground="White" BorderBrush="#FF0E314C"   >
+                                <StackPanel>
+                                       <Label Content="UserName" Grid.Row="1" Grid.Column="1" Margin="20 20 20 -10" Foreground="white"/>
+                            <TextBox x:Name="txtAddUserNameUser" Grid.Row="1" Grid.Column="2" VerticalAlignment="Top"  Margin="20 20 20 20"/>
+                            <Label Content="Name" Grid.Row="2" Grid.Column="1" Margin="20 20 20 -10" Foreground="white"/>
+                            <TextBox x:Name="txtAddNameUser" Grid.Row="2" Grid.Column="2" VerticalAlignment="Top"  Margin="20 20 20 20"/>
+                            <Label Content="Password" Grid.Row="3" Grid.Column="1" Margin="20 20 20 -10" Foreground="white"/>
+                            <PasswordBox x:Name="txtUserPassword" Grid.Row="3" Grid.Column="2" VerticalAlignment="Top"  Margin="20 20 20 20"/>
+                            <Label Content="Email" Grid.Row="4" Grid.Column="1" Margin="20 20 20 -10" Foreground="white"/>
+                            <TextBox x:Name="txtUseremail" Grid.Row="4" Grid.Column="2" VerticalAlignment="Top"  Margin="20 20 20 20"/>
+                            <Label Content="Address" Grid.Row="5" Grid.Column="1" Margin="20 20 20 -10" Foreground="white"/>
+                            <TextBox x:Name="txtUserAddress" Grid.Row="5" Grid.Column="2" VerticalAlignment="Top"  Margin="20 20 20 20"/>
+                            <Label Content="Role" Grid.Row="6" Grid.Column="1" VerticalAlignment="Bottom" Margin="20 20 20 -10" Foreground="white"/>
+                            <ComboBox x:Name="cmbUserRole" Grid.Row="6" Grid.Column="2"   Margin="20 20 20 20"/>
+                            <Button x:Name="btnUserAddItem" Content="Add User" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2"  Click="btnUserAddItem_Click"  Width="130" Height="30"   Margin="20 50 20 20" Background="Green" Foreground="white" BorderThickness="0"  Cursor="Hand"/>
+                                </StackPanel>
+                            </GroupBox>
+                         
                         </Grid>
                     </DockPanel>
-                    <ComboBox x:Name="cmbUser" Grid.Column="7" HorizontalAlignment="Center" Margin="0,50,0,0" VerticalAlignment="Top" Width="310" Height="34" SelectionChanged="cmbUser_SelectionChanged"/>
+                    <DockPanel x:Name="dGridUpdateUserForm" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="3" Margin="0 -10 10 10" LastChildFill="False">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <GroupBox    Grid.Row="0" Grid.ColumnSpan="4"  Grid.Column="0" Grid.RowSpan="6" Background="#FF0E314C" Foreground="White" BorderBrush="#FF0E314C"   >
+                                <StackPanel>
+                                    <Label Content="UserName" Grid.Row="1" Grid.Column="1" Margin="20 20 20 -10" Foreground="white"/>
+                                    <TextBox x:Name="txtUpdateAddUserNameUser" Grid.Row="1" Grid.Column="2" VerticalAlignment="Top"  Margin="20 20 20 20"/>
+                                    <Label Content="Name" Grid.Row="2" Grid.Column="1" Margin="20 20 20 -10" Foreground="white"/>
+                                    <TextBox x:Name="txtUpdateAddNameUser" Grid.Row="2" Grid.Column="2" VerticalAlignment="Top"  Margin="20 20 20 20"/>
+                                    <Label Content="Password" Grid.Row="3" Grid.Column="1" Margin="20 20 20 -10" Foreground="white"/>
+                                    <PasswordBox x:Name="txtUpdateUserPassword" Grid.Row="3" Grid.Column="2" VerticalAlignment="Top"  Margin="20 20 20 20"/>
+                                    <Label Content="Email" Grid.Row="4" Grid.Column="1" Margin="20 20 20 -10" Foreground="white"/>
+                                    <TextBox x:Name="txtUpdateUseremail" Grid.Row="4" Grid.Column="2" VerticalAlignment="Top"  Margin="20 20 20 20"/>
+                                    <Label Content="Address" Grid.Row="5" Grid.Column="1" Margin="20 20 20 -10" Foreground="white"/>
+                                    <TextBox x:Name="txtUpdateUserAddress" Grid.Row="5" Grid.Column="2" VerticalAlignment="Top"  Margin="20 20 20 20"/>
+                                    <Label Content="Role" Grid.Row="6" Grid.Column="1" VerticalAlignment="Bottom" Margin="20 20 20 -10" Foreground="white"/>
+                                    <ComboBox x:Name="cmbUpdateUserRole" Grid.Row="6" Grid.Column="2"   Margin="20 20 20 20"/>
+                                    <Button x:Name="btnUpdateUserAddItem" Content="Update User" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2"  Click="btnUpdateUserAddItem_Click" Width="130" Height="30"   Margin="20 50 20 20" Background="Green" Foreground="white" BorderThickness="0"  Cursor="Hand"/>
+                                </StackPanel>
+                            </GroupBox>
+                        </Grid>
+                    </DockPanel>
+                    <ComboBox x:Name="cmbUser" Grid.Column="7" HorizontalAlignment="Center" Margin="5,50,0,0" VerticalAlignment="Top" Width="250" Height="34" SelectionChanged="cmbUser_SelectionChanged"/>
                 </Grid>
             </TabItem>
         </TabControl>
@@ -907,7 +927,7 @@
                 <Image Source="Images/power.png" Width="50"/>
             </StackPanel>
         </StackPanel>
-          
-        
+
+
     </Grid>
 </Window>

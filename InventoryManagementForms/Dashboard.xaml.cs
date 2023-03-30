@@ -321,35 +321,38 @@ namespace InventoryManagementForms
             dPUpdateCategory.Visibility = Visibility.Visible;
         }
         // navigation supplier
-        private void lblAddSupplier_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void btnAddSupplierGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             dPAddSupplier.Visibility = Visibility.Visible;
             dPUpdateSupplier.Visibility = Visibility.Hidden;
         }
 
-        private void lblUpdateSupplier_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void btnupdateSuppliertGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             dPAddSupplier.Visibility = Visibility.Hidden;
             dPUpdateSupplier.Visibility = Visibility.Visible;
         }
-        private void lblAddInventory_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        // navigation inventory
+ 
+        private void btnAddInventoryGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             dPAddInvetory.Visibility = Visibility.Visible;
             dPUpdateInventory.Visibility = Visibility.Hidden;
         }
 
-        private void lblUpdateInventory_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void btnupdateInventoryGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             dPAddInvetory.Visibility = Visibility.Hidden;
             dPUpdateInventory.Visibility = Visibility.Visible;
         }
-        private void lblAddUser_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        // navigation add user
+        private void btnAddUserGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             dGridUserForm.Visibility = Visibility.Visible;
             dGridUpdateUserForm.Visibility = Visibility.Hidden;
         }
 
-        private void lblUpdateUser_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void btnupdateUserGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             dGridUserForm.Visibility = Visibility.Hidden;
             dGridUpdateUserForm.Visibility = Visibility.Visible;
@@ -664,7 +667,7 @@ namespace InventoryManagementForms
             await UpdateData();
             ClearTextBoxes();
         }
-    
+
         private void dGUser_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var selectedUser = (UserEntity)dGUser.SelectedItem;
@@ -1068,7 +1071,6 @@ namespace InventoryManagementForms
                 return;
             }
         }
-
 
     }
 }
