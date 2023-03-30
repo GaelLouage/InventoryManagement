@@ -1,5 +1,6 @@
 ﻿using DocumentFormat.OpenXml.Drawing.Charts;
 using Infrastructuur.Entities;
+using InventoryManagementForms.Classes;
 using InventoryManagementForms.Enums;
 using System;
 using System.Collections.Generic;
@@ -54,5 +55,11 @@ namespace InventoryManagementForms.Helpers
                                   { UserS.UserName, x => x.UserName },
                                   {UserS.Email, x => x.Email}
          };
+        public static readonly Dictionary<ChartOrder, Func<ProductChart, object>> SortingChartOptions = new()
+        {
+                                  { ChartOrder.NAME, x => x.Name },
+                                  { ChartOrder.QUANTITYMIN, x => x.Quantity },
+                                  { ChartOrder.QUANTITYPLUS, x => x.Quantity }
+        };
     }
 }

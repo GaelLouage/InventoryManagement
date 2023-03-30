@@ -25,6 +25,7 @@ namespace InventoryManagementSystem.Controllers
             _productRepository = productRepository;
             _categoryRepository = categoryRepository;
             _supplierRepository = supplierRepository;
+            _inventoryCache.Remove(_resetCacheToken);
         }
         [HttpGet("GetAllInventoryItems")]
         public async Task<IActionResult> GetAllInventoryItems()
@@ -55,6 +56,7 @@ namespace InventoryManagementSystem.Controllers
         public async Task<IActionResult> CreateInventoryItem([FromBody] InventoryItemDto inventoryEntity)
         {
             var inventoryItemToAdd = await InventoryItemMapper.Map(inventoryEntity, await inventoryEntity.MapInventoryRecord(_inventoryRepository), _productRepository, _supplierRepository, _categoryRepository);
+            inventoryItemToAdd.Quantity = (await _productRepository.GetByIdAsync(x => x.ProductId == inventoryEntity.ProductId)).Quantity;
             // removes the mem cache to reste it with new values
             inventoryItemToAdd.DateAdded = DateTime.Now;
              await _inventoryRepository.AddAsync(inventoryItemToAdd);
@@ -69,6 +71,7 @@ namespace InventoryManagementSystem.Controllers
             inventoryItemToAdd.InventoryItemId = id;
             inventoryItemToAdd.Id = inv.Id;
             inventoryItemToAdd.DateAdded = inv.DateAdded;
+            inventoryItemToAdd.Quantity = (await _productRepository.GetByIdAsync(x => x.ProductId == inventoryEntity.ProductId)).Quantity;
             await _inventoryRepository.UpdateAsync(x => x.InventoryItemId == id, inventoryItemToAdd);
             _inventoryCache.Remove(_resetCacheToken);
 

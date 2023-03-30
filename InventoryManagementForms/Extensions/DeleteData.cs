@@ -37,7 +37,7 @@ namespace InventoryManagementForms.Extensions
                 MessageBox.Show($"Successfully deleted {type}.", "Success", MessageBoxButton.OK);
                 return;
             }
-            MessageBox.Show($"Failed deleted {type}.", "Erro", MessageBoxButton.OK);
+            return;
         }
     }
 }

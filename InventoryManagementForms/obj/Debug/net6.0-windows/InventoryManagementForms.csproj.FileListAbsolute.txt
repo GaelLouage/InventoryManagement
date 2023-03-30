@@ -91,3 +91,7 @@ C:\Users\louag\source\repos\InventoryManagementSystem\InventoryManagementForms\b
 C:\Users\louag\source\repos\InventoryManagementSystem\InventoryManagementForms\bin\Debug\net6.0-windows\Images\updated.png
 C:\Users\louag\source\repos\InventoryManagementSystem\InventoryManagementForms\bin\Debug\net6.0-windows\Images\home.png
 C:\Users\louag\source\repos\InventoryManagementSystem\InventoryManagementForms\bin\Debug\net6.0-windows\Images\power.png
+C:\Users\louag\source\repos\InventoryManagementSystem\InventoryManagementForms\bin\Debug\net6.0-windows\Images\chart.png
+C:\Users\louag\source\repos\InventoryManagementSystem\InventoryManagementForms\bin\Debug\net6.0-windows\Images\data.png
+C:\Users\louag\source\repos\InventoryManagementSystem\InventoryManagementForms\bin\Debug\net6.0-windows\Images\customer.png
+C:\Users\louag\source\repos\InventoryManagementSystem\InventoryManagementForms\bin\Debug\net6.0-windows\Images\order.png

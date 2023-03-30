@@ -22,6 +22,7 @@ namespace InventoryManagementSystem.Controllers
             _inventoryRepository = inventoryRepository;
             _productRepository = productRepository;
             _memoryCache = memoryCache;
+            _memoryCache.Remove(_resetCacheToken);
         }
         [HttpGet("GetAllProducts")]
         public async Task<IActionResult> GetAllProducts()
@@ -50,16 +51,20 @@ namespace InventoryManagementSystem.Controllers
         [HttpPut("UpdateProduct/{id}")]
         public async Task<IActionResult> UpdateProduct([FromRoute] int id, [FromBody] ProductDto product)
         {
+            var inv = (await _inventoryRepository.GetByIdAsync(x => x.ProductId == id));
             var productToUpdate = await _productRepository.GetByIdAsync(x => x.ProductId == id);
             if(productToUpdate is null) return NotFound();
             productToUpdate = ProductMapper.Map(product, productToUpdate.Id, productToUpdate.ProductId);
+            inv.Quantity = productToUpdate.Quantity;
             await _productRepository.UpdateAsync(x => x.ProductId == id , productToUpdate);
+            await _inventoryRepository.UpdateAsync(x => x.InventoryItemId == inv.InventoryItemId, inv);
             _memoryCache.Remove(_resetCacheToken);
             return Ok(productToUpdate);
         }
         [HttpPost("CreateProduct")]
         public async Task<IActionResult> CreateProduct([FromBody] ProductDto product)
         {
+        
             var productEntity = new ProductEntity();
             productEntity.ProductId = (await _productRepository.GetAllAsync()).Max(x => x.ProductId) + 1;
             productEntity = ProductMapper.Map(product, productEntity.ProductId);

@@ -9,6 +9,9 @@
 //------------------------------------------------------------------------------
 
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/add.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/chart.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/customer.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/data.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/distribution.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/excel.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/home.png")]
@@ -16,6 +19,7 @@
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/inventory.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/inventorymanagement.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/options.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/order.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/pdf.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/power.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/print.png")]

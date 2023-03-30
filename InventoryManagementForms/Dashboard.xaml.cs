@@ -56,6 +56,10 @@ using ZXing.QrCode;
 using Microsoft.Office.Interop.Excel;
 using Microsoft.Win32;
 using SharpCompress.Common;
+using DocumentFormat.OpenXml.Spreadsheet;
+using System.DirectoryServices;
+using DocumentFormat.OpenXml.Bibliography;
+using System.Globalization;
 
 namespace InventoryManagementForms
 {
@@ -119,6 +123,8 @@ namespace InventoryManagementForms
             chartProducts.Visibility = Visibility.Hidden;
             lbProductLessThan5.Visibility = Visibility.Hidden;
             sPWarningProductsQuantity.Visibility = Visibility.Hidden;
+            lbProductLessThan5.Visibility = Visibility.Hidden;
+            chartColumProducts.ItemsSource = Products;
             Products.AddRange<ProductChart>((await productsTask).Select(p => new ProductChart { Name = p.Name, Quantity = p.Quantity, }).ToList());
             ProductsList.AddRange((await productsTask).ToList());
 
@@ -273,7 +279,6 @@ namespace InventoryManagementForms
             {
                 return;
             }
-
             var items = await inventoryTask;
             var sortOption = (Inventory)cmbInventory.SelectedItem;
             var sortExpression = OrderDictionary.SortingOptionsInventory[sortOption];
@@ -292,8 +297,8 @@ namespace InventoryManagementForms
         // navigations product
         private void btnAddProductGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            string chartButton = btnChartProduct.Content as string;
-            if (chartButton == "Chart Product")
+            string chartButton = btnChartProduct.Source.ToString().Split("/").Last();
+            if (chartButton == "chart.png")
             {
                 dGridAddProductForm.Visibility = Visibility.Visible;
                 dGridUpdateProductForm.Visibility = Visibility.Hidden;
@@ -301,8 +306,8 @@ namespace InventoryManagementForms
         }
         private void btnupdateProductGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            string chartButton = btnChartProduct.Content as string;
-            if (chartButton == "Chart Product")
+            string chartButton = btnChartProduct.Source.ToString().Split("/").Last();
+            if (chartButton == "chart.png")
             {
                 dGridAddProductForm.Visibility = Visibility.Hidden;
                 dGridUpdateProductForm.Visibility = Visibility.Visible;
@@ -415,10 +420,11 @@ namespace InventoryManagementForms
 
         private async void btnProductAddItem_Click(object sender, RoutedEventArgs e)
         {
-            if (!CheckAddProductValidation(txtProductName.Text, txtProductDescription.Text, txtProductPrice.Text, txtProductQuantity.Text))
+            if (!CheckAddProductValidation(txtProductName.Text, txtProductPrice.Text, txtProductDescription.Text, txtProductQuantity.Text))
             {
                 return;
             }
+            txtUpdateProductPrice.Text = txtUpdateProductPrice.Text.Replace(",",".");
             var productDto = new ProductDto();
             productDto.Name = txtProductName.Text;
             productDto.Description = txtProductDescription.Text;
@@ -437,11 +443,11 @@ namespace InventoryManagementForms
             if (dGProducts.SelectedValue is null) return;
             //TODO: map this
             var selectedProduct = dGProducts.SelectedValue as ProductEntity;
-
+           
             var productDto = new ProductDto();
             productDto.Name = txtUpdateProductName.Text;
             productDto.Description = txtUpdateProductDescription.Text;
-            productDto.Price = decimal.Parse(txtUpdateProductPrice.Text);
+            productDto.Price = productStruct.price;
             productDto.Quantity = int.Parse(txtUpdateProductQuantity.Text);
             var b = dGProducts.SelectedIndex;
             await _httpRequestProduct.UpdateRequest(ProductMapper.Map(productDto, (await productsTask).Max(x => x.ProductId) + 1), Api.UPDATEPRODUCT, selectedProduct.ProductId);
@@ -467,7 +473,8 @@ namespace InventoryManagementForms
                 return false;
             }
             ProductPrice = ProductPrice.Replace(",", ".");
-            if (!decimal.TryParse(ProductPrice, out productStruct.price))
+            /* NumberStyles.Number flag and the CultureInfo.InvariantCulture object to ensure that the decimal separator is always a period character.*/
+            if (!decimal.TryParse(ProductPrice, NumberStyles.Number, CultureInfo.InvariantCulture, out productStruct.price))
             {
 
                 MessageBox.Show("Product price has to a number!");
@@ -631,10 +638,10 @@ namespace InventoryManagementForms
         // user form 
         private async void btnUpdateUserAddItem_Click(object sender, RoutedEventArgs e)
         {
-            if (!ValideUser(txtUpdateAddNameUser.Text, txtUpdateAddNameUser.Text, txtUpdateUserPassword.Password, txtUpdateUseremail.Text, txtUpdateUserAddress.Text, cmbUpdateUserRole)) return;
+            if (!ValideUser(txtUpdateAddUserNameUser.Text, txtUpdateAddNameUser.Text, txtUpdateUserPassword.Password, txtUpdateUseremail.Text, txtUpdateUserAddress.Text, cmbUpdateUserRole)) return;
             var selectedUser = (UserEntity)dGUser.SelectedItem;
             if (selectedUser is null) return;
-            selectedUser.UserName = txtUpdateAddNameUser.Text;
+            selectedUser.UserName = txtUpdateAddUserNameUser.Text;
             selectedUser.Name = txtUpdateAddNameUser.Text;
             selectedUser.Role = _roles[cmbUpdateUserRole.SelectedIndex];
             selectedUser.Password = txtUpdateUserPassword.Password;
@@ -651,7 +658,7 @@ namespace InventoryManagementForms
         }
         private async void btnUserAddItem_Click(object sender, RoutedEventArgs e)
         {
-            if (!ValideUser(txtAddNameUser.Text, txtAddNameUser.Text, txtUserPassword.Password, txtUseremail.Text, txtUserAddress.Text, cmbUserRole)) return;
+            if (!ValideUser(txtAddUserNameUser.Text, txtAddNameUser.Text, txtUserPassword.Password, txtUseremail.Text, txtUserAddress.Text, cmbUserRole)) return;
             var userToAdd = new UserEntity();
             userToAdd.UserName = txtAddUserNameUser.Text;
             userToAdd.Name = txtAddNameUser.Text;
@@ -920,8 +927,12 @@ namespace InventoryManagementForms
 
         #endregion
         // chart buttons
-        private void btnChartProduct_Click(object sender, RoutedEventArgs e)
+        private void btnChartProduct_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
+            var chartLocation = System.IO.Path.Combine(Environment.CurrentDirectory, "Images", "chart.png");
+            var dataLocation = System.IO.Path.Combine(Environment.CurrentDirectory, "Images", "data.png");
+            var imageName = dataLocation.Split("\\").Last();
+            var sourceName = btnChartProduct.Source.ToString().Split("/").Last();
             txtProductSearch.Visibility = Visibility.Hidden;
             sPWarningProductsQuantity.Visibility = Visibility.Visible;
             cmbProduct.Visibility = Visibility.Hidden;
@@ -934,22 +945,40 @@ namespace InventoryManagementForms
             dGridAddProductForm.Visibility = Visibility.Hidden;
             lbProductLessThan5.Visibility = Visibility.Visible;
             barcodeProductImage.Visibility = Visibility.Visible;
-            if (btnChartProduct.Content == "Data")
+            cmbSortProductChart.Visibility = Visibility.Visible;
+            if (sourceName == imageName)
             {
                 dGProducts.Visibility = Visibility.Visible;
                 chartProducts.Visibility = Visibility.Hidden;
                 dGridAddProductForm.Visibility = Visibility.Visible;
                 dGridUpdateProductForm.Visibility = Visibility.Hidden;
+                cmbSortProductChart.Visibility = Visibility.Hidden;
                 lbProductLessThan5.Visibility = Visibility.Hidden;
-                btnChartProduct.Content = "Chart Product";
+                btnChartProduct.Source = new BitmapImage(new Uri(chartLocation));
                 txtProductSearch.Visibility = Visibility.Visible;
                 cmbProduct.Visibility = Visibility.Visible;
                 sPWarningProductsQuantity.Visibility = Visibility.Hidden;
                 barcodeProductImage.Visibility = Visibility.Hidden;
                 return;
             }
-            btnChartProduct.Content = "Data";
+            btnChartProduct.Source = new BitmapImage(new Uri(dataLocation));
         }
+        // chart order
+        private async void cmbSortProductChart_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+      
+            var sort = (ChartOrder)cmbSortProductChart.SelectedItem;
+            if (sort == null) return;
+            var sorted = OrderDictionary.SortingChartOptions[sort];
+            chartColumProducts.ItemsSource = null;
+            if(sort == ChartOrder.QUANTITYPLUS)
+            {
+                chartColumProducts.ItemsSource = Products.OrderByDescending<ProductChart>(Products.ToList(), sorted);
+                return;
+            }
+            chartColumProducts.ItemsSource = Products.OrderBy<ProductChart>(Products.ToList(), sorted );
+        }
+
         // tabitems
         private void sPProduct_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
@@ -971,9 +1000,19 @@ namespace InventoryManagementForms
             tItemInventory.IsSelected = true;
         }
 
+
         private void sPUsers_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             tbItemUsers.IsSelected = true;
+        }
+        private void sPCustomers_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            tbItemCustomer.IsSelected = true;
+        }
+
+        private void sPOrders_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            tbItemOrder.IsSelected = true;
         }
         // populate the comboboxes
         private void ComboboxPopulator()
@@ -984,7 +1023,7 @@ namespace InventoryManagementForms
             cmbSupplier.ItemsSource = Enum.GetValues(typeof(Supplier)).Cast<Supplier>();
             cmbInventory.ItemsSource = Enum.GetValues(typeof(Inventory)).Cast<Inventory>();
             cmbUser.ItemsSource = Enum.GetValues(typeof(UserS)).Cast<UserS>();
-
+            cmbSortProductChart.ItemsSource = Enum.GetValues(typeof(ChartOrder)).Cast<ChartOrder>();
             // user roles adder to user form
             cmbUserRole.Items.Add(Role.SUPERADMIN);
             cmbUserRole.Items.Add(Role.ADMIN);
@@ -999,6 +1038,9 @@ namespace InventoryManagementForms
             dPUpdateSupplier.Visibility = Visibility.Hidden;
             dPUpdateInventory.Visibility = Visibility.Hidden;
             dGridUpdateUserForm.Visibility = Visibility.Hidden;
+
+            // combobox chart product
+            cmbSortProductChart.Visibility = Visibility.Hidden;
         }
         private async Task SetDashboardTabs()
         {
@@ -1048,6 +1090,15 @@ namespace InventoryManagementForms
         {
             tbItemUsers.IsSelected = true;
         }
+        private void sPNavCustomer_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            tbItemCustomer.IsSelected = true;   
+        }
+
+        private void sPNavOrders_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            tbItemOrder.IsSelected = true;
+        }
 
         private void sPNavClose_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
@@ -1055,6 +1106,7 @@ namespace InventoryManagementForms
             login.Show();
             this.Close();
         }
+ 
         // hide tabitems 
         private void HideTabItems()
         {
@@ -1064,6 +1116,8 @@ namespace InventoryManagementForms
             tItemInventory.Visibility = Visibility.Hidden;
             tItemSupplier.Visibility = Visibility.Hidden;
             tbItemUsers.Visibility = Visibility.Hidden;
+            tbItemOrder.Visibility = Visibility.Hidden;
+            tbItemCustomer.Visibility = Visibility.Hidden;
             if (_user.Role is not Role.SUPERADMIN)
             {
                 tbItemUsers.Visibility = Visibility.Hidden;
@@ -1072,5 +1126,6 @@ namespace InventoryManagementForms
             }
         }
 
+       
     }
 }

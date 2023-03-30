@@ -12,12 +12,16 @@
 
   <ItemGroup>
     <None Remove="Images\add.png" />
+    <None Remove="Images\chart.png" />
+    <None Remove="Images\customer.png" />
+    <None Remove="Images\data.png" />
     <None Remove="Images\distribution.png" />
     <None Remove="Images\excel.png" />
     <None Remove="Images\home.png" />
     <None Remove="Images\inventory.png" />
     <None Remove="Images\inventoryManagement.png" />
     <None Remove="Images\options.png" />
+    <None Remove="Images\order.png" />
     <None Remove="Images\pdf.png" />
     <None Remove="Images\power.png" />
     <None Remove="Images\print.png" />
@@ -29,6 +33,15 @@
 
   <ItemGroup>
     <Content Include="Images\add.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\chart.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\customer.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\data.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\distribution.png">
@@ -48,6 +61,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\options.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\order.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\pdf.png">

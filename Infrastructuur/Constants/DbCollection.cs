@@ -13,6 +13,9 @@ namespace Infrastructuur.Constants
         public const string PRODUCT = "Product";
         public const string SUPPLIER = "Supplier";
         public const string USER = "User";
+        public const string CUSTOMER = "Customer";
+        public const string ORDER = "Order";
+
     }
 
 }

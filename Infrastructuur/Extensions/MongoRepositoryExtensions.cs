@@ -31,6 +31,8 @@ namespace Infrastructuur.Extensions
                    .MongoRepositorySetter<InventoryItemEntity>(databaseName, DbCollection.INVENTORY, connectionString, myMongoDBConnection)
                    .MongoRepositorySetter<ProductEntity>(databaseName, DbCollection.PRODUCT, connectionString, myMongoDBConnection)
                    .MongoRepositorySetter<SupplierEntity>(databaseName, DbCollection.SUPPLIER, connectionString, myMongoDBConnection)
+                   .MongoRepositorySetter<CustomerEntity>(databaseName, DbCollection.CUSTOMER, connectionString, myMongoDBConnection)
+                   .MongoRepositorySetter<OrderEntity>(databaseName, DbCollection.ORDER, connectionString, myMongoDBConnection)
                     .MongoRepositorySetter<UserEntity>(databaseName, DbCollection.USER, connectionString, myMongoDBConnection); 
         }
         public static string AddMongoConnectionString(this IConfiguration configuration, string connectionString, string myMongoDBConnection)
