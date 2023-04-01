@@ -36,5 +36,11 @@ namespace InventoryManagementForms.Enums
         public const string CATEGORY = "Category/GetAllCategories";
         public const string UPDATECATEGORY = "Category/UpdateCategoryById/";
         public const string DELETECATEGORY = "Category/DeleteCategoryById/";
+        // orders
+        public const string ORDERS = "Order/GetAllOrders";
+        public const string ADDORDER = "Order/CreateOrder";
+        public const string ORDREBYID= "Order/GetOrderById/";
+        public const string UPDATEORDER = "Order/UpdateOrderById/";
+        public const string DELETEORDER = "Order/DeleteOrderById/";
     }
 }

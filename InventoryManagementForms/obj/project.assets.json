@@ -2194,7 +2194,8 @@
           "Microsoft.Extensions.Configuration.Json": "7.0.0",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "7.0.0",
           "MongoDB.Driver": "2.18.0",
-          "Newtonsoft.Json": "13.0.3"
+          "Newtonsoft.Json": "13.0.3",
+          "System.Drawing.Common": "7.0.0"
         },
         "compile": {
           "bin/placeholder/Infrastructuur.dll": {}

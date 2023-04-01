@@ -17,6 +17,7 @@ namespace Infrastructuur.Entities
         public DateTime OrderDate { get; set; }
         public string Status { get; set; }
         public decimal TotalAmount { get; set; }
-        public List<OrderItemEntity> Items { get; set; }
+        public List<OrderItemEntity>? Items { get; set; }
+        public int TotalOrders  =>  Items.Count;
     }
 }

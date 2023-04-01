@@ -61,5 +61,13 @@ namespace InventoryManagementForms.Helpers
                                   { ChartOrder.QUANTITYMIN, x => x.Quantity },
                                   { ChartOrder.QUANTITYPLUS, x => x.Quantity }
         };
+        public static readonly Dictionary<OrderSort, Func<OrderEntity, object>> SortingOrderOptions = new()
+        {
+                                  { OrderSort.OrderId, x => x.OrderId },
+                                  { OrderSort.CustomerId, x => x.CustomerId },
+                                  { OrderSort.OrderDate, x => x.OrderDate },
+                                  { OrderSort.Status, x => x.Status },
+                                  { OrderSort.totalAmount, x => x.TotalAmount }
+        };
     }
 }

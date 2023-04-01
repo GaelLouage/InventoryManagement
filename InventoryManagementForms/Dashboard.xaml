@@ -58,7 +58,7 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <StackPanel x:Name="sPProduct" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="3" Background="#FF82DBEC" Cursor="Hand" MouseLeftButtonUp="sPProduct_MouseLeftButtonUp" Margin="121,46,0,168" Grid.RowSpan="2">
+                    <StackPanel x:Name="sPProduct" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="3" Background="#FF82DBEC" Cursor="Hand" MouseLeftButtonUp="sPProduct_MouseLeftButtonUp" Margin="121,46,0,168" Grid.RowSpan="2">
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal">
                                 <Label x:Name="lblTotalProducts" Content="0" Foreground="White" FontSize="50px"/>
@@ -73,7 +73,7 @@
 
                     </StackPanel>
 
-                    <StackPanel x:Name="sPCategory" Grid.Row="2" Grid.Column="5" Grid.ColumnSpan="3"  Background="#FF74B17D" Cursor="Hand" MouseLeftButtonUp="sPCategory_MouseLeftButtonUp" Margin="24,46,10,168" Grid.RowSpan="2">
+                    <StackPanel x:Name="sPCategory" Grid.Row="1" Grid.Column="5" Grid.ColumnSpan="3"  Background="#FF74B17D" Cursor="Hand" MouseLeftButtonUp="sPCategory_MouseLeftButtonUp" Margin="24,46,10,168" Grid.RowSpan="2">
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal">
                                 <Label x:Name="lblTotalCategories" Content="0" Foreground="White" FontSize="50px"/>
@@ -87,7 +87,7 @@
                         </StackPanel>
                     </StackPanel>
 
-                    <StackPanel x:Name="sPTotalSupplier" Grid.Row="2" Grid.Column="8" Grid.ColumnSpan="4"  Background="#FFEC9706" Cursor="Hand" MouseLeftButtonUp="sPTotalSupplier_MouseLeftButtonUp" Margin="24,46,25,168" Grid.RowSpan="2">
+                    <StackPanel x:Name="sPTotalSupplier" Grid.Row="1" Grid.Column="8" Grid.ColumnSpan="4"  Background="#FFEC9706" Cursor="Hand" MouseLeftButtonUp="sPTotalSupplier_MouseLeftButtonUp" Margin="24,46,25,168" Grid.RowSpan="2">
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal">
                                 <Label x:Name="lblTotalSupplier" Content="0" Foreground="White" FontSize="50px"/>
@@ -101,7 +101,7 @@
                         </StackPanel>
                     </StackPanel>
 
-                    <StackPanel x:Name="sPInventoryItems" Grid.Row="2" Grid.Column="12" Grid.ColumnSpan="2"  Background="#FFF55835" Cursor="Hand" MouseLeftButtonUp="sPInventoryItems_MouseLeftButtonUp" Margin="0,46,20,168" Grid.RowSpan="2">
+                    <StackPanel x:Name="sPInventoryItems" Grid.Row="1" Grid.Column="12" Grid.ColumnSpan="2"  Background="#FFF55835" Cursor="Hand" MouseLeftButtonUp="sPInventoryItems_MouseLeftButtonUp" Margin="0,46,20,168" Grid.RowSpan="2">
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal">
                                 <Label x:Name="lblTotalInventory" Content="0" Foreground="White" FontSize="50px"/>
@@ -116,7 +116,7 @@
                     </StackPanel>
 
 
-                    <StackPanel x:Name="sPUsers" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="3"  Background="#FFE85EFF" Cursor="Hand" MouseLeftButtonUp="sPUsers_MouseLeftButtonUp" Margin="121,96,0,117" Grid.RowSpan="2">
+                    <StackPanel x:Name="sPUsers" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="3"  Background="#FFE85EFF" Cursor="Hand" MouseLeftButtonUp="sPUsers_MouseLeftButtonUp" Margin="121,96,0,117" Grid.RowSpan="2">
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal">
                                 <Label x:Name="lblTotalUsers" Content="0" Foreground="White" FontSize="50px"/>
@@ -131,7 +131,7 @@
                     </StackPanel>
 
 
-                    <StackPanel x:Name="sPCustomers" Grid.Row="3" Grid.Column="5" Grid.ColumnSpan="3"  Background="#FFE4DD33" Cursor="Hand" Margin="25,96,10,117" Grid.RowSpan="2" MouseLeftButtonUp="sPCustomers_MouseLeftButtonUp">
+                    <StackPanel x:Name="sPCustomers" Grid.Row="2" Grid.Column="5" Grid.ColumnSpan="3"  Background="#FFE4DD33" Cursor="Hand" Margin="25,96,10,117" Grid.RowSpan="2" MouseLeftButtonUp="sPCustomers_MouseLeftButtonUp">
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal">
                                 <Label x:Name="lblTotalCustomers" Content="0" Foreground="White" FontSize="50px"/>
@@ -145,7 +145,7 @@
                         </StackPanel>
                     </StackPanel>
 
-                    <StackPanel x:Name="sPOrders" Grid.Row="3" Grid.Column="9" Grid.ColumnSpan="3"  Background="#FF5133E4" Cursor="Hand" Margin="3,96,22,117" Grid.RowSpan="2" MouseLeftButtonUp="sPOrders_MouseLeftButtonUp">
+                    <StackPanel x:Name="sPOrders" Grid.Row="2" Grid.Column="9" Grid.ColumnSpan="3"  Background="#FF5133E4" Cursor="Hand" Margin="3,96,22,117" Grid.RowSpan="2" MouseLeftButtonUp="sPOrders_MouseLeftButtonUp">
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal">
                                 <Label x:Name="lblTotalOrders" Content="0" Foreground="White" FontSize="50px"/>
@@ -158,6 +158,62 @@
 
                         </StackPanel>
                     </StackPanel>
+                    <GroupBox Header="Revenue"  Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="6" Padding="10 10 10 10" Margin="122,140,0,164" Grid.RowSpan="3">
+                        <syncfusion:SfChart  >
+                            <syncfusion:SfChart.PrimaryAxis>
+                                <syncfusion:CategoryAxis/>
+                            </syncfusion:SfChart.PrimaryAxis>
+                            <syncfusion:SfChart.SecondaryAxis>
+                                <syncfusion:NumericalAxis/>
+                            </syncfusion:SfChart.SecondaryAxis>
+                            <syncfusion:SfChart.Series>
+                                <syncfusion:LineSeries x:Name="chartRevenue"  XBindingPath="XValue" YBindingPath="YValue"/>
+                            </syncfusion:SfChart.Series>
+                        </syncfusion:SfChart>
+                    </GroupBox>
+
+
+           
+
+                    <!-- Labels -->
+                    <ListBox Grid.Row="0" ItemsSource="{Binding Path=Data}" Margin="10">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Ellipse Width="12" Height="12" Margin="0 0 5 0"
+                             Fill="{Binding Path=Color, Converter={StaticResource BrushConverter}}"/>
+                                    <TextBlock Text="{Binding Path=XValue}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <GroupBox x:Name="pieChartStatus" Header="Status"  Grid.Column="8" Grid.Row="3" Grid.ColumnSpan="6" Padding="10 10 10 10" Margin="122,140,0,164" Grid.RowSpan="3">
+                        <StackPanel Orientation="Horizontal">
+    
+                           
+                            <ItemsControl  ItemsSource="{Binding ElementName=OrderStatusChart, Path=ItemsSource}" Margin="5 5 5 5">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                                <Border x:Name="OrderColor" Width="12" Height="12" Margin="0 0 5 0" Background="{Binding Interior}"/>
+                                            <TextBlock Text="{Binding Status}" VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+
+                            <syncfusion:SfChart>
+                                <syncfusion:PieSeries x:Name="OrderStatusChart"
+                                XBindingPath="Status"
+                                YBindingPath="AmountCurrentStatus">
+                                    <syncfusion:PieSeries.AdornmentsInfo>
+                                    <syncfusion:ChartAdornmentInfo ShowLabel="True"/>
+                                </syncfusion:PieSeries.AdornmentsInfo>
+                            </syncfusion:PieSeries>
+                        </syncfusion:SfChart>
+                        </StackPanel>
+                    </GroupBox>
                 </Grid>
             </TabItem>
 
@@ -927,12 +983,156 @@
             </TabItem>
             <!--customers tab-->
             <TabItem Header="Customer" x:Name="tbItemCustomer" Width="100" Height="32" Margin="-11 0 0 0 ">
-             
+
+            </TabItem>
+            <TabItem Header="Order" x:Name="tItemOrders" Width="100" Height="32" Margin="-11 0 0 0 ">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="79*"/>
+                        <ColumnDefinition Width="24*"/>
+                        <ColumnDefinition Width="210*"/>
+                        <ColumnDefinition Width="313*"/>
+                        <ColumnDefinition Width="313*"/>
+                        <ColumnDefinition Width="313*"/>
+                        <ColumnDefinition Width="313*"/>
+                        <ColumnDefinition Width="313*"/>
+                        <ColumnDefinition Width="10"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal" Grid.Column="4" Grid.Row="0" Grid.ColumnSpan="3" Margin="0,0,312,0">
+                        <Image x:Name="btnAddOrderGrid" Source="Images/add.png" Width="50" Height="50"  VerticalAlignment="Bottom" Margin="15 5 5 5" Cursor="Hand" ToolTip="Add" MouseLeftButtonUp="btnAddOrderGrid_MouseLeftButtonUp" />
+                        <Image x:Name="btnupdateOrdertGrid" Source="Images/updated.png" Width="50" Height="50"  VerticalAlignment="Bottom" Margin="15 5 5 5" Cursor="Hand" ToolTip="Update" MouseLeftButtonUp="btnupdateOrdertGrid_MouseLeftButtonUp" />
+                        <Image x:Name="btnRemoveOrder" Source="Images/remove.png" Width="50" Height="50"  VerticalAlignment="Bottom" Margin="15 5 5 5" Cursor="Hand" MouseLeftButtonUp="btnRemoveOrder_MouseLeftButtonUp"  />
+                        <Image x:Name="btnPrintOrderGrid" Source="Images/print.png" Width="50" Height="50"  VerticalAlignment="Bottom" Margin="15 5 5 5" Cursor="Hand" MouseLeftButtonUp="btnPrintOrderGrid_MouseLeftButtonUp"/>
+                        <Image x:Name="btnPdfOrderGrid" Source="Images/excel.png" Width="50" Height="50"  VerticalAlignment="Bottom" Margin="15 5 5 5" Cursor="Hand" MouseLeftButtonUp="btnPdfOrderGrid_MouseLeftButtonUp" />
+                    </StackPanel>
+
+                    <TextBox x:Name="txtOrderSearch" Grid.Row="0" Grid.Column="8" Margin="5,50,5,0" VerticalAlignment="Top" Padding="3 5 8 3"  FontSize="16px" Height="35" TextChanged="txtOrderSearch_TextChanged"/>
+                    <!-- Add content for order tab here -->
+                    <DataGrid  IsReadOnly="True" x:Name="dGOrder" RowHeight="30"  VerticalAlignment="Top"  Margin="10,0,5,0"  Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="5" Grid.RowSpan="3" Height="800"  AutoGenerateColumns="False" 
+                               BorderBrush="#FFD4DDE6" 
+                              AlternatingRowBackground="LightBlue" SelectionChanged="dGOrder_SelectionChanged">
+                        <DataGrid.ColumnHeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="Background"  Value="#FF0E314C" />
+                                <Setter Property="Foreground" Value="white" />
+                                <Setter Property="FontSize" Value="12px" />
+                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                <Setter Property="Padding" Value="7 7 7 7" />
+                            </Style>
+                        </DataGrid.ColumnHeaderStyle>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="OrderId" Binding="{Binding OrderId }" Width="*" />
+                            <DataGridTextColumn Header="CustomerId" Binding="{Binding CustomerId }" Width="*" />
+                            <DataGridTextColumn Header="OrderDate" Binding="{Binding OrderDate }" Width="*" />
+                            <DataGridTextColumn Header="Status" Binding="{Binding Status  }" Width="*" />
+                            <DataGridTextColumn Header="TotalAmount" Binding="{Binding TotalAmount   }" Width="*" />
+                            <DataGridTextColumn Header="TotalOrders" Binding="{Binding TotalOrders  }" Width="*" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <DockPanel  Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="3" Margin="0 -10 10 10" LastChildFill="False">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="292"/>
+                                <ColumnDefinition Width="10"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="5" Content="Button" Foreground="white"/>
+                            <Label Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="5" Content="Button" Foreground="white"/>
+                            <Label Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="5" Content="Button" Foreground="white"/>
+                        </Grid>
+
+                    </DockPanel>
+                    <Grid/>
+                    <DockPanel x:Name="dPAddOrder" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="3" Margin="0 -10 10 10" LastChildFill="False" >
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <GroupBox  Grid.Row="0" Grid.ColumnSpan="4"  Grid.Column="0" Grid.RowSpan="5" Background="#FF0E314C" Foreground="White" BorderBrush="#FF0E314C" >
+                                <StackPanel>
+                                    <Label Content="CustomerIdId"  Margin="20 20 20 -10" Foreground="White"/>
+                                    <TextBox x:Name="txtAddCustomerId"  VerticalAlignment="Top" Margin="20 20 20 20" />
+                                    <Label Content="OrderDate"  Margin="20 20 20 -10" Foreground="White"/>
+                                    <DatePicker x:Name="dPickerOrderAdder"  Margin="20 20 20 20"/>
+                                    <Label Content="Total Amount"  Margin="20 20 20 -10" Foreground="White"/>
+                                    <TextBox x:Name="txtAddTotalAmountId"  VerticalAlignment="Top" Margin="20 20 20 20" />
+                                    <Label Content="Status"  Margin="20 20 20 -10" Foreground="White"/>
+                                    <TextBox x:Name="txtAddOrderStatus"  VerticalAlignment="Top" Margin="20 20 20 20" />
+                                    <Button x:Name="btnCOrderAddItem" Content="Add Category"  Width="130" Height="30"   Margin="20 50 20 20" Background="Green" Foreground="white" BorderThickness="0"  Cursor="Hand"/>
+                                </StackPanel>
+                            </GroupBox>
+                        </Grid>
+                    </DockPanel>
+                    <DockPanel x:Name="dPUpdateOrder" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="5" Margin="0 -10 10 10" LastChildFill="False" >
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <GroupBox  Grid.Row="0" Grid.ColumnSpan="4"  Grid.Column="0" Grid.RowSpan="5" Background="#FF0E314C" Foreground="White" BorderBrush="#FF0E314C" >
+                                <StackPanel>
+                                    <Label Content="CustomerIdId"  Margin="20 20 20 -10" Foreground="White"/>
+                                    <TextBox x:Name="txtUpdateCustomerId"  VerticalAlignment="Top" Margin="20 20 20 20" />
+                                    <Label Content="OrderDate"  Margin="20 20 20 -10" Foreground="White"/>
+                                    <DatePicker x:Name="dPickerOrderUpdater"  Margin="20 20 20 20"/>
+                                    <Label Content="Total Amount"  Margin="20 20 20 -10" Foreground="White"/>
+                                    <TextBox x:Name="txtUpdateTotalAmountId"  VerticalAlignment="Top" Margin="20 20 20 20" />
+                                    <Label Content="Status"  Margin="20 20 20 -10" Foreground="White"/>
+                                    <TextBox x:Name="txtUpdateOrderStatus"  VerticalAlignment="Top" Margin="20 20 20 20" />
+                                    <Button x:Name="btnOrderUpdateItem" Content="Update Category"  Width="130" Height="30"   Margin="20 50 20 20" Background="Green" Foreground="white" BorderThickness="0"  Cursor="Hand" Click="btnOrderUpdateItem_Click"/>
+                                </StackPanel>
+                            </GroupBox>
+
+                        </Grid>
+                    </DockPanel>
+                    <ComboBox x:Name="cmbOrderSort" Grid.Column="7" HorizontalAlignment="Center" Margin="0,50,0,0" VerticalAlignment="Top" Width="250" Height="34" SelectionChanged="cmbOrderSort_SelectionChanged"   />
+                </Grid>
             </TabItem>
             <!--Order tab-->
-            <TabItem Header="Customer" x:Name="tbItemOrder" Width="100" Height="32" Margin="-11 0 0 0 ">
-            
-            </TabItem>
+
         </TabControl>
 
         <StackPanel  Grid.Column="0" Grid.Row="0" Margin="0 50 0 0">
@@ -971,7 +1171,7 @@
             <StackPanel x:Name="sPNavClose" Orientation="Horizontal" Margin="0 5 0 20" HorizontalAlignment="Center" Cursor="Hand" MouseLeftButtonUp="sPNavClose_MouseLeftButtonUp">
                 <Image Source="Images/power.png" Width="50"/>
             </StackPanel>
-         
+
         </StackPanel>
 
 

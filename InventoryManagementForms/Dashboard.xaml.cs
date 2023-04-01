@@ -54,12 +54,12 @@ using ZXing.Common;
 using System.Drawing;
 using ZXing.QrCode;
 using Microsoft.Office.Interop.Excel;
-using Microsoft.Win32;
 using SharpCompress.Common;
 using DocumentFormat.OpenXml.Spreadsheet;
 using System.DirectoryServices;
 using DocumentFormat.OpenXml.Bibliography;
 using System.Globalization;
+
 
 namespace InventoryManagementForms
 {
@@ -73,11 +73,13 @@ namespace InventoryManagementForms
         private readonly IHttpRequest<InventoryItemEntity> _httpRequestInventoryItem;
         private readonly IHttpRequest<SupplierEntity> _httpRequestSupplier;
         private readonly IHttpRequest<UserEntity> _httpRequestUser;
+        private readonly IHttpRequest<OrderEntity> _httpRequestOrder;
         private Task<List<ProductEntity>> productsTask;
         private Task<List<CategoryEntity>> categoriesTask;
         private Task<List<SupplierEntity>> supplierTask;
         private Task<List<InventoryItemEntity>> inventoryTask;
         private Task<List<UserEntity>> userTask;
+        private Task<List<OrderEntity>> orderTask;
         private ValidInventoryId inventoryId = new ValidInventoryId();
         private ProductStruct productStruct = new ProductStruct();
         private UserEntity _user;
@@ -85,19 +87,23 @@ namespace InventoryManagementForms
         // charts product
         public ObservableCollection<ProductChart> Products { get; set; } = new ObservableCollection<ProductChart>();
         public List<ProductEntity> ProductsList { get; set; } = new List<ProductEntity>();
-        public Dashboard(IHttpRequest<ProductEntity> httpRequestProduct, IHttpRequest<CategoryEntity> httpRequestCategory, IHttpRequest<InventoryItemEntity> httpRequestInventoryItem, IHttpRequest<SupplierEntity> httpRequestSupplier, IHttpRequest<UserEntity> httpRequestUser)
+        // order status chart 
+        public ObservableCollection<OrderStatusChartEntity> OrderStatusChartEntities = new ObservableCollection<OrderStatusChartEntity>();
+        public Dashboard(IHttpRequest<ProductEntity> httpRequestProduct, IHttpRequest<CategoryEntity> httpRequestCategory, IHttpRequest<InventoryItemEntity> httpRequestInventoryItem, IHttpRequest<SupplierEntity> httpRequestSupplier, IHttpRequest<UserEntity> httpRequestUser, IHttpRequest<OrderEntity> httpRequestOrder)
         {
             _httpRequestProduct = httpRequestProduct;
             _httpRequestCategory = httpRequestCategory;
             _httpRequestInventoryItem = httpRequestInventoryItem;
             _httpRequestSupplier = httpRequestSupplier;
             _httpRequestUser = httpRequestUser;
+            _httpRequestOrder = httpRequestOrder;
         }
         public Dashboard(UserEntity user) : this(new HttpRequest<ProductEntity>(Api.BASEURL),
                                  new HttpRequest<CategoryEntity>(Api.BASEURL),
                              new HttpRequest<InventoryItemEntity>(Api.BASEURL),
                                  new HttpRequest<SupplierEntity>(Api.BASEURL),
-                                 new HttpRequest<UserEntity>(Api.BASEURL))
+                                 new HttpRequest<UserEntity>(Api.BASEURL),
+                                 new HttpRequest<OrderEntity>(Api.BASEURL))
         {
             InitializeComponent();
             _user = user;
@@ -125,17 +131,44 @@ namespace InventoryManagementForms
             sPWarningProductsQuantity.Visibility = Visibility.Hidden;
             lbProductLessThan5.Visibility = Visibility.Hidden;
             chartColumProducts.ItemsSource = Products;
+
             Products.AddRange<ProductChart>((await productsTask).Select(p => new ProductChart { Name = p.Name, Quantity = p.Quantity, }).ToList());
             ProductsList.AddRange((await productsTask).ToList());
 
             chartProducts.DataContext = this;
             // add data to the listbox
             lbProductLessThan5.AddRange<ProductEntity>(ProductsList.Where(x => x.Quantity < 5).ToList(), new() { ProductProperty.NAME, ProductProperty.QUANTITY });
-           
+            //chart revenue
+            // get all orders groupby date month and add all revenues on date date together 
+            var orders = await orderTask;
+            var od  = new List<RevenueChartEntity>()
+             {
+            new RevenueChartEntity() { XValue = "Jan", YValue = orders.Where(x => x.OrderDate.Month == 1).Sum(x => x.TotalAmount)},
+            new RevenueChartEntity() { XValue = "Feb", YValue = orders.Where(x => x.OrderDate.Month == 2).Sum(x => x.TotalAmount) },
+            new RevenueChartEntity() { XValue = "Mar", YValue = orders.Where(x => x.OrderDate.Month == 3).Sum(x => x.TotalAmount) },
+            new RevenueChartEntity() { XValue = "Apr", YValue = orders.Where(x => x.OrderDate.Month == 4).Sum(x => x.TotalAmount) },
+            new RevenueChartEntity() { XValue = "May", YValue = orders.Where(x => x.OrderDate.Month == 5).Sum(x => x.TotalAmount) },
+            new RevenueChartEntity() { XValue = "Jun", YValue = orders.Where(x => x.OrderDate.Month == 6).Sum(x => x.TotalAmount) },
+              new RevenueChartEntity() { XValue = "Jul", YValue = orders.Where(x => x.OrderDate.Month == 7).Sum(x => x.TotalAmount) },
+            new RevenueChartEntity() { XValue = "Aug", YValue = orders.Where(x => x.OrderDate.Month == 8).Sum(x => x.TotalAmount) },
+            new RevenueChartEntity() { XValue = "Sept", YValue = orders.Where(x => x.OrderDate.Month == 9).Sum(x => x.TotalAmount) },
+              new RevenueChartEntity() { XValue = "Okt", YValue = orders.Where(x => x.OrderDate.Month == 10).Sum(x => x.TotalAmount) },
+            new RevenueChartEntity() { XValue = "Nov", YValue = orders.Where(x => x.OrderDate.Month == 11).Sum(x => x.TotalAmount) },
+            new RevenueChartEntity() { XValue = "Dec", YValue = orders.Where(x => x.OrderDate.Month == 12).Sum(x => x.TotalAmount) }
+              };
+            chartRevenue.ItemsSource = od;
+            var statusC = orders.GroupBy(x => x.Status).ToList();
+            OrderStatusChartEntities = new ObservableCollection<OrderStatusChartEntity>();
+            foreach ( var status in statusC)
+            {
+                OrderStatusChartEntities.Add(new OrderStatusChartEntity { Status= status.Key, AmountCurrentStatus = status.Count() });
+            }
+   
+            OrderStatusChart.ItemsSource = OrderStatusChartEntities;
         }
         private void lbProductLessThan5_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-           
+
             // place in method extension
             byte[] byteArray;
 
@@ -190,7 +223,7 @@ namespace InventoryManagementForms
         }
 
 
-     
+
         // sort documents
         private async void txtProductSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -231,6 +264,10 @@ namespace InventoryManagementForms
                .Where(x => x.UserName.StartsWith(txtUserSearch.Text, StringComparison.OrdinalIgnoreCase) ||
                                          x.Name.StartsWith(txtUserSearch.Text, StringComparison.OrdinalIgnoreCase) ||
                                           x.Email.StartsWith(txtUserSearch.Text, StringComparison.OrdinalIgnoreCase));
+        }
+        private async void txtOrderSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            dGOrder.ItemsSource = (await orderTask).Where(x => x.Status.StartsWith(txtOrderSearch.Text, StringComparison.OrdinalIgnoreCase));
         }
 
         #region ComboboxOrderData
@@ -292,6 +329,14 @@ namespace InventoryManagementForms
             var sortExpression = OrderDictionary.SortingOptionsUser[sortOption];
             dGUser.ItemsSource = items.OrderBy(sortExpression);
         }
+        private async void cmbOrderSort_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (orderTask is null) return;
+            var selected = (OrderSort)cmbOrderSort.SelectedItem;
+            var dic = OrderDictionary.SortingOrderOptions[selected];
+            dGOrder.ItemsSource = (await orderTask).OrderBy(dic);
+
+        }
         #endregion
         #region Navigation
         // navigations product
@@ -338,7 +383,7 @@ namespace InventoryManagementForms
             dPUpdateSupplier.Visibility = Visibility.Visible;
         }
         // navigation inventory
- 
+
         private void btnAddInventoryGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             dPAddInvetory.Visibility = Visibility.Visible;
@@ -361,6 +406,18 @@ namespace InventoryManagementForms
         {
             dGridUserForm.Visibility = Visibility.Hidden;
             dGridUpdateUserForm.Visibility = Visibility.Visible;
+        }
+        // navigation add orders
+        private void btnAddOrderGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            dPAddOrder.Visibility = Visibility.Visible;
+            dPUpdateOrder.Visibility = Visibility.Hidden;
+        }
+
+        private void btnupdateOrdertGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            dPAddOrder.Visibility = Visibility.Hidden;
+            dPUpdateOrder.Visibility = Visibility.Visible;
         }
         #endregion
         #region PDFDocs
@@ -388,6 +445,11 @@ namespace InventoryManagementForms
         {
             dGUser.ExcelSaver("User.xlsx");
         }
+
+        private void btnPdfOrderGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            dGOrder.ExcelSaver("Order.xlsx");
+        }
         #endregion
         #region PrintButtons
         //print documents
@@ -414,6 +476,10 @@ namespace InventoryManagementForms
         {
             Printer.PrintData(dGUser, Data.User);
         }
+        private void btnPrintOrderGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            Printer.PrintData(dGOrder, Data.Order);
+        }
 
         #endregion
         // product forms
@@ -424,7 +490,7 @@ namespace InventoryManagementForms
             {
                 return;
             }
-            txtUpdateProductPrice.Text = txtUpdateProductPrice.Text.Replace(",",".");
+            txtUpdateProductPrice.Text = txtUpdateProductPrice.Text.Replace(",", ".");
             var productDto = new ProductDto();
             productDto.Name = txtProductName.Text;
             productDto.Description = txtProductDescription.Text;
@@ -443,7 +509,7 @@ namespace InventoryManagementForms
             if (dGProducts.SelectedValue is null) return;
             //TODO: map this
             var selectedProduct = dGProducts.SelectedValue as ProductEntity;
-           
+
             var productDto = new ProductDto();
             productDto.Name = txtUpdateProductName.Text;
             productDto.Description = txtUpdateProductDescription.Text;
@@ -633,8 +699,9 @@ namespace InventoryManagementForms
             txtInventoryUpdateProductID.Text = selectedInventoryItem.ProductId.ToString();
             txtInventoryUpdateQuantity.Text = selectedInventoryItem.Quantity.ToString();
             txtInventoryUpdateSupplierID.Text = selectedInventoryItem.SupplierId.ToString();
+
         }
-        
+
         // user form 
         private async void btnUpdateUserAddItem_Click(object sender, RoutedEventArgs e)
         {
@@ -686,22 +753,37 @@ namespace InventoryManagementForms
             txtUpdateUseremail.Text = selectedUser.Email;
             txtUpdateUserAddress.Text = selectedUser.Address;
         }
+        // order form
+
+        private void btnOrderUpdateItem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void dGOrder_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selectedOrder = (OrderEntity)dGOrder.SelectedItem;
+            if (selectedOrder is null) return;
+            txtUpdateCustomerId.Text = selectedOrder.CustomerId.ToString();
+            dPickerOrderUpdater.SelectedDate = selectedOrder.OrderDate;
+            txtUpdateOrderStatus.Text = selectedOrder.Status;
+        }
+
         #region DeleteButtons
         // delete buttons
 
-        private  void btnRemoveProductGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void btnRemoveProductGrid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            dGProducts.RemoveData<ProductEntity>(nameof(ProductOrder),nameof(ProductOrder.ProductId), _httpRequestProduct, Api.DELETEPRODUCT, async task => await UpdateData());
+            dGProducts.RemoveData<ProductEntity>(nameof(ProductOrder), nameof(ProductOrder.ProductId), _httpRequestProduct, Api.DELETEPRODUCT, async task => await UpdateData());
         }
 
         private void btnRemoveCategory_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            dGCategories.RemoveData<CategoryEntity>(nameof(InventoryManagementForms.Enums.Category), nameof(InventoryManagementForms.Enums.Category.CategoryId),  _httpRequestCategory, Api.DELETECATEGORY, async task => await UpdateData());
+            dGCategories.RemoveData<CategoryEntity>(nameof(InventoryManagementForms.Enums.Category), nameof(InventoryManagementForms.Enums.Category.CategoryId), _httpRequestCategory, Api.DELETECATEGORY, async task => await UpdateData());
         }
 
         private void btnRemoveSupplier_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            dGSupplier.RemoveData<SupplierEntity>(nameof(Supplier), nameof(Supplier.SupplierId),  _httpRequestSupplier, Api.DELETESUPPLIER, async task => await UpdateData());
+            dGSupplier.RemoveData<SupplierEntity>(nameof(Supplier), nameof(Supplier.SupplierId), _httpRequestSupplier, Api.DELETESUPPLIER, async task => await UpdateData());
         }
 
         private void btnRemoveInventoryItem_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -712,6 +794,11 @@ namespace InventoryManagementForms
         private void btnRemoveUser_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             dGInventory.RemoveData<UserEntity>(nameof(UserS), nameof(InventoryManagementForms.Enums.UserS.UserId), _httpRequestUser, Api.DELETEBYUSERBYID, async task => await UpdateData());
+        }
+        private void btnRemoveOrder_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            dGOrder.RemoveData<OrderEntity>(nameof(OrderSort), nameof(InventoryManagementForms.Enums.OrderSort.OrderId), _httpRequestOrder, Api.DELETEORDER, async task => await UpdateData());
+
         }
         #endregion
         //validations
@@ -828,7 +915,7 @@ namespace InventoryManagementForms
         }
         private bool ValideUser(string userName, string name, string password, string email, string addres, ComboBox role)
         {
-            if(string.IsNullOrEmpty(userName))
+            if (string.IsNullOrEmpty(userName))
             {
                 MessageBox.Show("Username is empty!");
                 return false;
@@ -869,7 +956,8 @@ namespace InventoryManagementForms
             inventoryTask = _httpRequestInventoryItem.GetRequestListAsync(Api.INVENTORY);
             supplierTask = _httpRequestSupplier.GetRequestListAsync(Api.SUPPLIER);
             userTask = _httpRequestUser.GetRequestListAsync(Api.USERS);
-            await Task.WhenAll(productsTask, categoriesTask, inventoryTask, supplierTask, userTask);
+            orderTask = _httpRequestOrder.GetRequestListAsync(Api.ORDERS);
+            await Task.WhenAll(productsTask, categoriesTask, inventoryTask, supplierTask, userTask, orderTask);
 
             Dispatcher.Invoke(() =>
             {
@@ -878,6 +966,7 @@ namespace InventoryManagementForms
                 dGInventory.ItemsSource = inventoryTask.Result;
                 dGSupplier.ItemsSource = supplierTask.Result;
                 dGUser.ItemsSource = userTask.Result;
+                dGOrder.ItemsSource = orderTask.Result;
             });
         }
         #region clearForms
@@ -966,17 +1055,17 @@ namespace InventoryManagementForms
         // chart order
         private async void cmbSortProductChart_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-      
+
             var sort = (ChartOrder)cmbSortProductChart.SelectedItem;
             if (sort == null) return;
             var sorted = OrderDictionary.SortingChartOptions[sort];
             chartColumProducts.ItemsSource = null;
-            if(sort == ChartOrder.QUANTITYPLUS)
+            if (sort == ChartOrder.QUANTITYPLUS)
             {
                 chartColumProducts.ItemsSource = Products.OrderByDescending<ProductChart>(Products.ToList(), sorted);
                 return;
             }
-            chartColumProducts.ItemsSource = Products.OrderBy<ProductChart>(Products.ToList(), sorted );
+            chartColumProducts.ItemsSource = Products.OrderBy<ProductChart>(Products.ToList(), sorted);
         }
 
         // tabitems
@@ -1012,7 +1101,7 @@ namespace InventoryManagementForms
 
         private void sPOrders_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            tbItemOrder.IsSelected = true;
+            tItemOrders.IsSelected = true;
         }
         // populate the comboboxes
         private void ComboboxPopulator()
@@ -1024,6 +1113,7 @@ namespace InventoryManagementForms
             cmbInventory.ItemsSource = Enum.GetValues(typeof(Inventory)).Cast<Inventory>();
             cmbUser.ItemsSource = Enum.GetValues(typeof(UserS)).Cast<UserS>();
             cmbSortProductChart.ItemsSource = Enum.GetValues(typeof(ChartOrder)).Cast<ChartOrder>();
+            cmbOrderSort.ItemsSource = Enum.GetValues(typeof(OrderSort)).Cast<OrderSort>();
             // user roles adder to user form
             cmbUserRole.Items.Add(Role.SUPERADMIN);
             cmbUserRole.Items.Add(Role.ADMIN);
@@ -1038,7 +1128,7 @@ namespace InventoryManagementForms
             dPUpdateSupplier.Visibility = Visibility.Hidden;
             dPUpdateInventory.Visibility = Visibility.Hidden;
             dGridUpdateUserForm.Visibility = Visibility.Hidden;
-
+            dPUpdateOrder.Visibility = Visibility.Hidden;
             // combobox chart product
             cmbSortProductChart.Visibility = Visibility.Hidden;
         }
@@ -1051,6 +1141,7 @@ namespace InventoryManagementForms
             lblTotalCategories.Content = (await categoriesTask).Count();
             lblTotalSupplier.Content = (await supplierTask).Count();
             lblTotalUsers.Content = (await userTask).Count();
+            lblTotalOrders.Content = (await orderTask).Count();
         }
         private void SuperAdminAccesTabs()
         {
@@ -1064,7 +1155,7 @@ namespace InventoryManagementForms
         private void sPNavHome_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             tbNavigation.IsSelected = true;
-          
+
         }
 
         private void sPNavProducts_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -1092,12 +1183,12 @@ namespace InventoryManagementForms
         }
         private void sPNavCustomer_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            tbItemCustomer.IsSelected = true;   
+            tbItemCustomer.IsSelected = true;
         }
 
         private void sPNavOrders_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            tbItemOrder.IsSelected = true;
+            tItemOrders.IsSelected = true;
         }
 
         private void sPNavClose_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -1106,7 +1197,7 @@ namespace InventoryManagementForms
             login.Show();
             this.Close();
         }
- 
+
         // hide tabitems 
         private void HideTabItems()
         {
@@ -1116,7 +1207,7 @@ namespace InventoryManagementForms
             tItemInventory.Visibility = Visibility.Hidden;
             tItemSupplier.Visibility = Visibility.Hidden;
             tbItemUsers.Visibility = Visibility.Hidden;
-            tbItemOrder.Visibility = Visibility.Hidden;
+            tItemOrders.Visibility = Visibility.Hidden;
             tbItemCustomer.Visibility = Visibility.Hidden;
             if (_user.Role is not Role.SUPERADMIN)
             {
@@ -1125,7 +1216,5 @@ namespace InventoryManagementForms
                 return;
             }
         }
-
-       
     }
 }

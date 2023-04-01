@@ -108,7 +108,7 @@ namespace InventoryManagementSystem.Controllers
             return Ok(orderS);
         }
 
-        [HttpPut("UpdateOrderById/{id}")]
+        [HttpPatch("UpdateOrderById/{id}")]
         public async Task<IActionResult> UpdateOrderById(int id, OrderDto orderDto)
         {
             var existingOrder = await _repository.GetByIdAsync(x => x.OrderId == id);
@@ -116,7 +116,7 @@ namespace InventoryManagementSystem.Controllers
             {
                 var inv = (await _repositoryInventoryItem.GetByIdAsync(x => x.InventoryItemId == order.InventoryItemId));
                 var product = await _repositoryProduct.GetByIdAsync(x => x.ProductId == inv.ProductId);
-                if (inv == null || product == null) continue;
+                if (inv == null && product == null) continue;
                 inv.Product.Quantity += order.Quantity;
                 product.Quantity += order.Quantity;
 
@@ -136,7 +136,7 @@ namespace InventoryManagementSystem.Controllers
                 await _repositoryProduct.UpdateAsync(x => x.ProductId == inv.ProductId, product);
             }
             if (existingOrder == null) return NotFound();
-            
+            existingOrder = OrderMapper.Map(orderDto,existingOrder.Id, id);
 
             await _repository.UpdateAsync(x => x.OrderId == id, existingOrder);
             _memoryCache.Remove(_resetCacheToken);
@@ -146,6 +146,18 @@ namespace InventoryManagementSystem.Controllers
         public async Task<IActionResult> DeleteOrderById(int id)
         {
             var existingOrder = await _repository.GetByIdAsync(x => x.OrderId == id);
+            foreach (var order in existingOrder.Items)
+            {
+                var inv = (await _repositoryInventoryItem.GetByIdAsync(x => x.InventoryItemId == order.InventoryItemId));
+                var product = await _repositoryProduct.GetByIdAsync(x => x.ProductId == inv.ProductId);
+                if (inv == null && product == null) continue;
+                inv.Product.Quantity += order.Quantity;
+                product.Quantity += order.Quantity;
+
+                await _repositoryInventoryItem.UpdateAsync(x => x.InventoryItemId == order.InventoryItemId, inv);
+                await _repositoryProduct.UpdateAsync(x => x.ProductId == inv.ProductId, product);
+
+            }
             if (existingOrder is null) return NotFound();
             _memoryCache.Remove(_resetCacheToken);
             await _repository.DeleteAsync(x => x.OrderId == id);
